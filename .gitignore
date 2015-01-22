@@ -1,5 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*/__pycache__/
+*/*/__pycache__/
+procafe/procafe/__pycache__/__init__.cpython-34.pyc
 *.py[cod]
 
 # C extensions
