@@ -3,15 +3,19 @@ from django.contrib.auth.models import User
 from django import utils
 
 
+
 class Department(models.Model):
-    departament_ID = models.IntegerField(primary_key = True)
+    id = models.IntegerField(primary_key = True)
     name = models.CharField()
+    
+    def __str__(self):
+        return str(self.id)
 
 
 
 class UserProfile(models.Model):  
-    user = models.ForeignKey(User)
-    ID_number = models.IntegerField(primary_key=True)
+    user = models.OneToOneField(User)
+    id = models.IntegerField(primary_key=True)
     type = models.CharField(choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")])
     job_title = models.CharField()
     finished_hours = models.IntegerField(default=0)
@@ -21,14 +25,10 @@ class UserProfile(models.Model):
     def __str__(self):  
         return "%s's profile" % self.user  
 
-    def create_user_profile(self):  #REVISARRRR
-        if created:
-            profile, created = UserProfile.objects.get_or_create(user=instance)  
-
 
 
 class Course(models.Model):
-    course_ID = models.IntegerField(primary_key = True)
+    id = models.IntegerField(primary_key = True)
     department_ID = models.ForeignKey(Department)
     name = models.CharField()
     type = models.CharField()
@@ -36,6 +36,9 @@ class Course(models.Model):
     end_date = models.DateTimeField()
     location = models.CharField(choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")])
     number_hours = models.IntegerField()
+    
+    def __str__(self):
+        return str(self.id)
 
 
 
@@ -45,7 +48,11 @@ class Takes(models.Model):
     term = models.CharField(choices=[("SEP-DIC", "Septiembre-Diciembre"), ("ENE-MAR", "Enero-Marzo"), ("ABR-JUL", "Abril-Julio")])
     year = models.IntegerField()
     status = models.CharField(choices=[("Aprobado", "APROBADO"), ("Reprobado", "REPROBADO"), ("Inscrito", "INSCRITO"), ("Retirado", "RETIRADO")])
-    
+
+
+
+
+
 
 
 
