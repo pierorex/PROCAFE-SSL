@@ -8,7 +8,7 @@ class Unit(models.Model):
 
 
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit, editable = False)
+    unit_ID = models.ForeignKey(Unit)
     name = models.CharField(max_length=200, verbose_name = "Nombre del Depto.")
     
     def __str__(self):
@@ -19,6 +19,11 @@ class Department(models.Model):
 class Section(models.Model):
     department_ID = models.ForeignKey(Department, editable = False)
     name = models.CharField(max_length=200, verbose_name = "Nombre de la Sección")
+
+
+
+class Position(models.Model):
+    name = models.CharField(max_length=200, verbose_name = "Cargo")
 
 
 
@@ -60,7 +65,8 @@ class Takes(models.Model):
 
     
 class Risks(models.Model):
-    risk_ID = models.IntegerField(primary_key = True, editable = False)
+    name = models.CharField(max_length=200, verbose_name = "Riesgo")
+    
     
     
     
