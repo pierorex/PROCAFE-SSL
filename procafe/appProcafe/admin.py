@@ -28,6 +28,11 @@ class UserProfileInLine(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInLine,)
+    list_display = ('username', 'email', 'get_hours')
+
+    def get_hours(self, obj):
+        return UserProfile.objects.get(user_id=obj.id).finished_hours
+    get_hours.short_description = "Horas completadas"
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
