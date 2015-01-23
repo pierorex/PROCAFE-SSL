@@ -8,6 +8,10 @@ class Unit(models.Model):
     def __str__(self):
         return str(self.name)
 
+    class Meta:
+        verbose_name = "Unidad"
+        verbose_name_plural = "Unidades"
+
 
 
 class Department(models.Model):
@@ -16,6 +20,10 @@ class Department(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    class Meta:
+        verbose_name = "Departamento"
+        verbose_name_plural = "Departamentos"
 
 
 
@@ -26,12 +34,20 @@ class Section(models.Model):
     def __str__(self):
         return str(self.department_ID) + ":" + str(self.name)
 
+    class Meta:
+        verbose_name = "Sección"
+        verbose_name_plural = "Secciones"
+
 
 class Position(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Cargo")
 
     def __str__(self):
         return str(self.name)
+
+    class Meta:
+        verbose_name = "Cargo"
+        verbose_name_plural = "Cargos"
 
 
 class UserProfile(models.Model):
@@ -62,6 +78,10 @@ class Course(models.Model):
     def __str__(self):
         return str(self.name)
 
+    class Meta:
+        verbose_name = "Curso"
+        verbose_name_plural = "Cursos"
+
 
 
 class Takes(models.Model):
@@ -71,6 +91,9 @@ class Takes(models.Model):
     year = models.IntegerField(max_length=4, verbose_name = "Año")
     status = models.CharField(max_length=200, choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")])
 
+    class Meta:
+        verbose_name = "Entidad Cursa"
+        verbose_name_plural = "Entidades Cursa"
 
 
 class Risk(models.Model):
@@ -78,6 +101,10 @@ class Risk(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+    class Meta:
+        verbose_name = "Riesgo"
+        verbose_name_plural = "Riesgos"
 
 
 
