@@ -49,7 +49,7 @@ class UserProfile(models.Model):
 
 
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department)
+    department_ID = models.ForeignKey(Department, verbose_name = "Departamento")
     name = models.CharField(max_length=200, verbose_name = "Nombre")
     type = models.CharField(max_length=200, verbose_name = "Tipo", choices=[("PRESENCIAL","Presencial"),("A DISTANCIA", "A distancia")])
     init_date = models.DateTimeField(verbose_name = "Fecha de Inicio")
