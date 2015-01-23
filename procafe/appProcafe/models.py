@@ -49,7 +49,7 @@ class UserProfile(models.Model):
 
 
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department)
+    department_ID = models.ForeignKey(Department, verbose_name = "Departamento")
     name = models.CharField(max_length=200, verbose_name = "Nombre")
     description = models.CharField(max_length=200, verbose_name = "Descripcion", default = None)
     video_url = models.CharField(max_length=1000, verbose_name = "URL del video")
