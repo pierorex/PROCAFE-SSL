@@ -8,7 +8,7 @@ class Unit(models.Model):
 
 
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit)
+    unit_ID = models.ForeignKey(Unit, default = 0)
     name = models.CharField(max_length=200, verbose_name = "Nombre del Depto.")
     
     def __str__(self):
@@ -29,9 +29,9 @@ class Position(models.Model):
 
 class UserProfile(models.Model):  
     user = models.OneToOneField(User)
-    ID_number = models.IntegerField(primary_key=True, verbose_name = "Cédula")
+    ID_number = models.IntegerField(primary_key=True, default = 0, verbose_name = "Cédula")
     type = models.CharField(max_length=200, choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")])
-    position = models.ForeignKey(Position, verbose_name = "Cargo")
+    position = models.ForeignKey(Position, default = 0, verbose_name = "Cargo")
     finished_hours = models.IntegerField(default=0, verbose_name = "Horas finalizadas")
     status = models.CharField(max_length=200, verbose_name = "Estado")
     is_enabled = models.BooleanField(default=1, verbose_name = "Habilitado")
