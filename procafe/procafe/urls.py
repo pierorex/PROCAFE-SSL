@@ -8,3 +8,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 )
+
+admin.site.site_header = 'Administración PROCAFE-SSL'
