@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Unidad de Adscripción")
 
+    def __str__(self):
+        return str(self.name)
+
 
 
 class Department(models.Model):
@@ -12,7 +15,7 @@ class Department(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Nombre del Depto.")
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 
@@ -20,11 +23,15 @@ class Section(models.Model):
     department_ID = models.ForeignKey(Department, editable = False)
     name = models.CharField(max_length=200, verbose_name = "Nombre de la Sección")
 
+    def __str__(self):
+        return str(self.department_ID) + ":" + str(self.name)
 
 
 class Position(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Cargo")
 
+    def __str__(self):
+        return str(self.name)
 
 
 class UserProfile(models.Model):
@@ -42,7 +49,7 @@ class UserProfile(models.Model):
 
 
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department, editable = False)
+    department_ID = models.ForeignKey(Department, editable = True)
     name = models.CharField(max_length=200, verbose_name = "Nombre")
     type = models.CharField(max_length=200, verbose_name = "Tipo", choices=[("PRESENCIAL", "Presencial"), ("A_DISTANCIA", "A distancia")])
     init_date = models.DateTimeField(verbose_name = "Fecha de Inicio")
@@ -51,7 +58,7 @@ class Course(models.Model):
     number_hours = models.IntegerField(verbose_name = "Número de Horas")
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 
@@ -64,10 +71,11 @@ class Takes(models.Model):
 
 
 
-class Risks(models.Model):
+class Risk(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Riesgo")
 
-
+    def __str__(self):
+        return str(self.name)
 
 
 
