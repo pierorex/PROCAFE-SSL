@@ -10,11 +10,11 @@ class Unit(models.Model):
 class Department(models.Model):
     unit_ID = models.ForeignKey(Unit, default = 0)
     name = models.CharField(max_length=200, verbose_name = "Nombre del Depto.")
-    
+
     def __str__(self):
         return str(self.id)
-    
-    
+
+
 
 class Section(models.Model):
     department_ID = models.ForeignKey(Department, editable = False)
@@ -27,7 +27,7 @@ class Position(models.Model):
 
 
 
-class UserProfile(models.Model):  
+class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, default = 0, verbose_name = "Cédula")
     type = models.CharField(max_length=200, choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")])
@@ -35,9 +35,9 @@ class UserProfile(models.Model):
     finished_hours = models.IntegerField(default=0, verbose_name = "Horas finalizadas")
     status = models.CharField(max_length=200, verbose_name = "Estado")
     is_enabled = models.BooleanField(default=1, verbose_name = "Habilitado")
-    
-    def __str__(self):  
-        return "%s's profile" % self.user  
+
+    def __str__(self):
+        return "%s's profile" % self.user
 
 
 
@@ -49,7 +49,7 @@ class Course(models.Model):
     end_date = models.DateTimeField(verbose_name = "Fecha de Fin")
     location = models.CharField(max_length=200, verbose_name = "Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")])
     number_hours = models.IntegerField(verbose_name = "Número de Horas")
-    
+
     def __str__(self):
         return str(self.id)
 
@@ -63,13 +63,12 @@ class Takes(models.Model):
     status = models.CharField(max_length=200, choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")])
 
 
-    
+
 class Risks(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Riesgo")
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
