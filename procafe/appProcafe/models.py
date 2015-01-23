@@ -51,6 +51,8 @@ class UserProfile(models.Model):
 class Course(models.Model):
     department_ID = models.ForeignKey(Department)
     name = models.CharField(max_length=200, verbose_name = "Nombre")
+    description = models.CharField(max_length=200, verbose_name = "Descripcion", default = None)
+    video_url = models.CharField(max_length=1000, verbose_name = "URL del video")
     type = models.CharField(max_length=200, verbose_name = "Tipo", choices=[("PRESENCIAL","Presencial"),("A DISTANCIA", "A distancia")])
     init_date = models.DateTimeField(verbose_name = "Fecha de Inicio")
     end_date = models.DateTimeField(verbose_name = "Fecha de Fin")
