@@ -1,9 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from appProcafe.models import *
 
-
-
-admin.site.register(UserProfile)
 admin.site.register(Department)
 admin.site.register(Unit)
 admin.site.register(Section)
@@ -14,6 +12,7 @@ admin.site.register(Takes)
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,     {'fields': ['name', 'department_ID', 'type', 'number_hours', 'location']}),
+        ('Descripción', {'fields': ['description', 'video_url']}),
         ('Fechas', {'fields': ['init_date', 'end_date']}),
     ]
 
@@ -21,3 +20,15 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 admin.site.register(Course, CourseAdmin)
+
+class UserProfileInLine(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = 'Profile'
+
+class UserAdmin(UserAdmin):
+    inlines = (UserProfileInLine,)
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+
