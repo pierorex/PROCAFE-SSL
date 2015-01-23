@@ -15,8 +15,8 @@ class Unit(models.Model):
 
 
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit, default = 0)
-    name = models.CharField(max_length=200, verbose_name = "Nombre del Depto.")
+    unit_ID = models.ForeignKey(Unit, verbose_name = "Unidad superior", default = 0)
+    name = models.CharField(max_length=200, verbose_name = "Nombre")
 
     def __str__(self):
         return str(self.name)
@@ -28,8 +28,8 @@ class Department(models.Model):
 
 
 class Section(models.Model):
-    department_ID = models.ForeignKey(Department, editable = False)
-    name = models.CharField(max_length=200, verbose_name = "Nombre de la Sección")
+    department_ID = models.ForeignKey(Department, verbose_name = "Departamento", editable = True)
+    name = models.CharField(max_length=200, verbose_name = "Nombre")
 
     def __str__(self):
         return str(self.department_ID) + ":" + str(self.name)
@@ -60,7 +60,7 @@ class UserProfile(models.Model):
     is_enabled = models.BooleanField(default=1, verbose_name = "Habilitado")
 
     def __str__(self):
-        return "%s's profile" % self.user
+        return self.user.first_name + " " + self.user.last_name
 
 
 
@@ -85,15 +85,15 @@ class Course(models.Model):
 
 
 class Takes(models.Model):
-    user_ID = models.ForeignKey(UserProfile, editable = False)
-    course_ID = models.ForeignKey(Course, editable = False)
-    term = models.CharField(max_length=200, choices=[("SEP-DIC", "Septiembre-Diciembre"), ("ENE-MAR", "Enero-Marzo"), ("ABR-JUL", "Abril-Julio")])
+    user_ID = models.ForeignKey(UserProfile, editable = True, verbose_name="Nombre")
+    course_ID = models.ForeignKey(Course, editable = True, verbose_name="Curso")
+    term = models.CharField(max_length=200, verbose_name = "Trimestre", choices=[("SEP-DIC", "Septiembre-Diciembre"), ("ENE-MAR", "Enero-Marzo"), ("ABR-JUL", "Abril-Julio")])
     year = models.IntegerField(max_length=4, verbose_name = "Año")
-    status = models.CharField(max_length=200, choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")])
+    status = models.CharField(max_length=200, verbose_name = "Estado", choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")])
 
     class Meta:
-        verbose_name = "Entidad Cursa"
-        verbose_name_plural = "Entidades Cursa"
+        verbose_name = "Cursa"
+        verbose_name_plural = "Cursa"
 
 
 class Risk(models.Model):

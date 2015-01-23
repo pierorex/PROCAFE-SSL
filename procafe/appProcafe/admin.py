@@ -7,7 +7,11 @@ admin.site.register(Unit)
 admin.site.register(Section)
 admin.site.register(Risk)
 admin.site.register(Position)
-admin.site.register(Takes)
+
+class TakesAdmin(admin.ModelAdmin):
+    list_display = ('user_ID', 'course_ID', 'term', 'year', 'status')
+
+admin.site.register(Takes, TakesAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
