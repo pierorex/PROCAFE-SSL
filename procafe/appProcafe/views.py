@@ -9,7 +9,7 @@ from appProcafe.models import Document
 from appProcafe.forms import DocumentForm
 
 def loadEmployees(request):
-    # Handle file upload
+    # Extract uploaded file from the form
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
