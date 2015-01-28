@@ -15,9 +15,8 @@ def loadEmployees(request):
         if form.is_valid():
             newdoc = Document(file = request.FILES['file'])
             newdoc.save()
-            return render(request, 'appProcafe/loadEmployees.html', {'a':'a'})
-        else: form = DocumentForm() # A empty, unbound form
-    else: form = DocumentForm() # A empty, unbound form
+        else: form = DocumentForm() # empty form
+    else: form = DocumentForm() # empty form
     return render_to_response('appProcafe/loadEmployees.html',
                               {'form': form},
                               context_instance=RequestContext(request)
