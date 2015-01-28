@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p><img src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></p>
+{% for i in UserProfile %}
+<p> i.id  ii</p>
+{% endfor %}
+<table width="1069" height="39" border="1">
+  <tr>
+    <td width="160" bgcolor="#999999"><blockquote>
+      <blockquote>
+        <p><a href="google.com">HOME</a></p>
+      </blockquote>
+    </blockquote></td>
+    <td width="204" bgcolor="#999999"><blockquote>
+      <blockquote>
+        <p><a href="http://www.gmail.com">REGISTRARSE</a></p>
+      </blockquote>
+    </blockquote></td>
+    <td width="208" bgcolor="#999999"><blockquote>
+      <blockquote>
+        <p><a href="galleta.com">GALLETA</a></p>
+      </blockquote>
+    </blockquote></td>
+    <td width="216" bgcolor="#999999"><blockquote>
+      <blockquote>
+        <p><a href="jamon.com">JAMON</a></p>
+      </blockquote>
+    </blockquote></td>
+    <td width="247" bgcolor="#999999"><blockquote>
+      <blockquote>
+        <p><a href="hola.com">HOLA</a></p>
+      </blockquote>
+    </blockquote></td>
+  </tr>
+</table>
+<table width="815" height="388" border="0" cellspacing="0">
+  <tr>
+    <td height="28" colspan="6">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="70" height="255">&nbsp;</td>
+    <td width="36" bgcolor="#CCCCCC">&nbsp;</td>
+    <td width="382" bgcolor="#CCCCCC"><form id="form1" name="form1" method="post" action="">
+      <p>
+        <label for="NombreUsuario">Nombre de Usuario<br />
+        </label>
+        <input name="NombreUsuario" type="text" id="NombreUsuario" value="" />
+      </p>
+      <p>
+        <label for="Password">Contraseña</label>
+      <br />
+        <input type="password" name="Password" id="Password" />
+      </p>
+      <p>
+        <input type="submit" name="IniciarSeccion" id="IniciarSeccion" value="Iniciar Seccion" />
+        <input type="reset" name="IniciarSeccion2" id="IniciarSeccion2" value="Limpiar" />
+        <p>
+        	<a href="../signup/">
+            	Registrase
+            </a>
+        </p> 
+         </p>
+    </form></td>
+    <td width="262" colspan="3" rowspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

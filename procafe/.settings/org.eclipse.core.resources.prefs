@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//appProcafe/admin.py=utf-8
+encoding//appProcafe/forms.py=utf-8
+encoding//appProcafe/models.py=utf-8
+encoding//appProcafe/tests.py=utf-8
+encoding//appProcafe/views.py=utf-8
+encoding//procafe/settings.py=utf-8
+encoding//procafe/templates/index.html=UTF-8
+encoding//procafe/templates/signup.html=UTF-8
+encoding//procafe/urls.py=utf-8
+encoding//procafe/wsgi.py=utf-8
