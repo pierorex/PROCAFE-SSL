@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for procafe project.
 
@@ -11,6 +12,15 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+TEMPLATE_DIRS = ( os.path.join(BASE_DIR, 'procafe/templates/'),)
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'procafe/media/')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'procafe/static/')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = ( os.path.join(BASE_DIR,'procafe/static/media/'),
+                     os.path.join(BASE_DIR,'procafe/static/admin'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,6 +36,15 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Templates processors
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+)
 
 # Application definition
 
@@ -81,4 +100,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
+
+
+
