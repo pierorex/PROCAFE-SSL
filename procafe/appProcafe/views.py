@@ -11,11 +11,9 @@ def loadEmployees(request):
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
-    if form.is_valid():
-        newdoc = Document(file = request.FILES['file'])
-        newdoc.save()
-        
-        # Redirect to the document list after POST
-        #return HttpResponseRedirect(reverse('procafe.appProcafe.views.loadEmployees'))
-        return render(request, 'appProcafe/loadEmployees.html', {'a':None})
-    else: form = DocumentForm() # A empty, unbound form
+        if form.is_valid():
+            newdoc = Document(file = request.FILES['file'])
+            newdoc.save()
+            return render(request, 'appProcafe/loadEmployees.html', {'a':'a'})
+        else: form = DocumentForm() # A empty, unbound form
+    return render(request, 'appProcafe/loadEmployees.html', {'error': 'error'})

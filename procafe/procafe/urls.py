@@ -11,6 +11,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^appProcafe/', include('appProcafe.urls',namespace='appProcafe')),
-)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 admin.site.site_header = 'Administración PROCAFE-SSL'
