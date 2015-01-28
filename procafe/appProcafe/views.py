@@ -8,13 +8,14 @@ from django.core.urlresolvers import reverse
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm
 
-def loadEmployees(request, ):
+def loadEmployees(request):
     # Handle file upload
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
     if form.is_valid():
-        newdoc = Document(docfile = request.FILES['docfile'])
+        newdoc = Document(file = request.FILES['file'])
         newdoc.save()
         # Redirect to the document list after POST
-        return HttpResponseRedirect(reverse('myproject.myapp.views.list'))
+        
+        return HttpResponseRedirect(reverse('procafe.appProcafe.views.loadEmployees'))
     else: form = DocumentForm() # A empty, unbound form
