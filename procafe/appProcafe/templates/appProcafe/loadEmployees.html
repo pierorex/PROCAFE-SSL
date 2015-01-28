@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Cargar Nomina de Empleados</title>   
     </head>
-
+        {{ file_path }}
     <body>
         <!-- Upload form. Note enctype attribute! -->
         <form action="{% url "appProcafe:loadEmployees" %}" method="post" enctype="multipart/form-data">
