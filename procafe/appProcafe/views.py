@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
+from django.template import RequestContext
 
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm
@@ -16,4 +17,8 @@ def loadEmployees(request):
             newdoc.save()
             return render(request, 'appProcafe/loadEmployees.html', {'a':'a'})
         else: form = DocumentForm() # A empty, unbound form
-    return render(request, 'appProcafe/loadEmployees.html', {'error': 'error'})
+    else: form = DocumentForm() # A empty, unbound form
+    return render_to_response('appProcafe/loadEmployees.html',
+                              {'form': form},
+                              context_instance=RequestContext(request)
+                            )
