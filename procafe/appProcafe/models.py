@@ -107,5 +107,6 @@ class Risk(models.Model):
         verbose_name_plural = "Riesgos"
 
 
-
+class Document(models.Model):
+    file = models.FileField (upload_to='documents/%Y/%m/%d')
 
