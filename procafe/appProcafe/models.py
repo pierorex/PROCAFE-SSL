@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -107,5 +109,6 @@ class Risk(models.Model):
         verbose_name_plural = "Riesgos"
 
 
-
+class Document(models.Model):
+    file = models.FileField (upload_to='documents')
 
