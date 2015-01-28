@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Functions used all over the appProcafe
+# Functions used all over appProcafe
 from appProcafe.models import UserProfile, User
 
 
@@ -10,8 +10,8 @@ def csv_to_UserProfile(file_path):
         line = line.split(",")
         if (not UserProfile.objects.filter(ID_number = int(line[0])).exists()):
             u = User.objects.create_user(line[1],'a@a.com','hola')
-            u.first_name=line[1]  
-            u.last_name=line[2]
+            u.first_name = line[1]
+            u.last_name = line[2]
             u.save()
             p = UserProfile(user_id = u.id,
                             ID_number = int(line[0]),

@@ -8,18 +8,20 @@ from django.template import RequestContext
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm
 from appProcafe.functions import csv_to_UserProfile
+from procafe import settings
 
 
 def loadEmployees(request):
     form = DocumentForm() # empty form
     file_path = ''
-    # Extract uploaded file from the form
+    
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
+            # Extract uploaded file from the form
             newdoc = Document(file = request.FILES['file'])
             newdoc.save()
-            file_path = newdoc.file.name
+            file_path = settings.MEDIA_ROOT + newdoc.file.name
             csv_to_UserProfile(file_path)
     return render_to_response('appProcafe/loadEmployees.html',
                               {'form': form,
