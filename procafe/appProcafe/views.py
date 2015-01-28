@@ -21,9 +21,10 @@ def signup(request):
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
                 mensaje = ''' Nombre: %s 
-Cedula: %d 
-Contrasena: jamonsito '''%(user,user.ID_number)
-                send_mail('Contraseña Dsi', mensaje, 'carlos.25896@gmail.com',['carlos.25896@gmail.com'], fail_silently=False)
+Cedula: %d
+User: %s
+Contrasena: jamonsito '''%(user, user.ID_number,user.user)
+                send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',['carlos.25896@gmail.com'], fail_silently=False)
                 
                 return HttpResponseRedirect('/index/')
             
