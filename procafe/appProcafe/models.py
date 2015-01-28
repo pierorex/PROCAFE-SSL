@@ -53,7 +53,7 @@ class Position(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    ID_number = models.IntegerField(primary_key=True, default = 0, verbose_name = "CAdula")
+    ID_number = models.IntegerField(primary_key=True, default = 0, verbose_name = "Cédula")
     type = models.CharField(max_length=200, choices=[("ACADEMICO", "AcadAmico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")])
     position = models.ForeignKey(Position, default = 0, verbose_name = "Cargo")
     finished_hours = models.IntegerField(default=0, verbose_name = "Horas finalizadas")
@@ -106,7 +106,5 @@ class Risk(models.Model):
     class Meta:
         verbose_name = "Riesgo"
         verbose_name_plural = "Riesgos"
-
-
 
 

@@ -10,8 +10,8 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'appProcafe.views.index'),
-    url(r'^homepage/', 'appProcafe.views.homepage'),
+    url(r'^$|index/', 'appProcafe.views.index'),
+    url(r'^signup/', 'appProcafe.views.signup'),
     )
 
 admin.site.site_header = 'Administración PROCAFE-SSL'

@@ -36,6 +36,12 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'carlos.25896@gmail.com'
+EMAIL_HOST_PASSWORD = 'vikita2533'
+
 # Templates processors
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
@@ -44,6 +50,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
 )
 
 # Application definition
