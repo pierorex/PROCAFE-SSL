@@ -95,4 +95,4 @@ TEMPLATE_DIRS = (
 )
 
 LOGIN_URL = 'django.contrib.auth.views.login'
-LOGIN_REDIRECT_URL = "/appProcafe/loadEmployees"
+LOGIN_REDIRECT_URL = "/appProcafe/index/"

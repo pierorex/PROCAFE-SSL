@@ -14,14 +14,6 @@
 {% load i18n %}
 
 <body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
-<div>
-    {{ user }}
-    {% if user.is_anonymous %}
-        <a href="{% url 'django.contrib.auth.views.login' %}">Iniciar Sesión</a>
-    {% else %}
-        <a href="{% url 'django.contrib.auth.views.logout' %}">Cerrar Sesión</a>
-    {% endif %}
-</div>
 <!-- Container -->
 <div id="container">
 

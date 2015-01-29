@@ -12,11 +12,18 @@ from appProcafe.forms import DocumentForm
 from appProcafe.functions import csv_to_UserProfile
 from procafe import settings
 
+
+@login_required
+def index(request):
+    context = {}
+    render(request, 'appProcafe/index.html', context)
+
+
 #@permission_required(, raise_exception=True)
-def loadEmployees(self, request):
+def loadEmployees(request):
     if not request.user.is_authenticated(): # and user.is_admin()
         return redirect('/login/')
-    
+
     form = DocumentForm() # empty form
     file_path = ''
 
