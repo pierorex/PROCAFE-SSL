@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-TEMPLATE_DIRS = ( os.path.join(BASE_DIR, 'procafe/templates/'),)
+TEMPLATE_DIRS = ( os.path.join(BASE_DIR, 'procafe/templates/'),
+                  os.path.dirname(BASE_DIR) + '/procafe/templates/',)
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'procafe/media/')
 
@@ -102,7 +103,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
@@ -112,13 +112,6 @@ STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(REPOSITORY_ROOT, 'media/')
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    REPOSITORY_ROOT + '/procafe/templates/',
-)
 
 LOGIN_URL = 'django.contrib.auth.views.login'
 LOGIN_REDIRECT_URL = "/appProcafe/index/"
