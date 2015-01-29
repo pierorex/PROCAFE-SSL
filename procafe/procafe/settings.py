@@ -23,7 +23,6 @@ SECRET_KEY = 'e$h4gpt@rv*!gxp5+1+-8%s=w9fa=szcwi6t+vuw5=_i_z^ja_'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -87,3 +86,13 @@ STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(REPOSITORY_ROOT, 'media/')
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    REPOSITORY_ROOT + '/procafe/templates/',
+)
+
+LOGIN_URL = 'django.contrib.auth.views.login'
+LOGIN_REDIRECT_URL = "/appProcafe/loadEmployees"
