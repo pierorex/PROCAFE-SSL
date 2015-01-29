@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$|index/', 'appProcafe.views.index'),
     url(r'^signup/', 'appProcafe.views.signup'),
-    )
+)
 
 admin.site.site_header = 'Administración PROCAFE-SSL'
