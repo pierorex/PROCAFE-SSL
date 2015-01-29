@@ -33,13 +33,13 @@
 </head>
 
 <body>
-<div class="container">
+<div class="container" >
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-			<a href="/"><img src="{{ STATIC_URL }}banner.jpg" ></a>
+			<a href="/"><img src="{{ STATIC_URL }}banner.jpg" class="img-responsive"></a>
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Sistema de Cursos</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Navegación</a>
 				</div>			
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
@@ -50,7 +50,7 @@
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inicio<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#">Inicio de sesiAn</a>
+									<a href="#">Inicio de sesión</a>
 								</li>
 								<li>
 									<a href="solicitudcuenta">Solicitud de cuenta</a>
@@ -61,7 +61,7 @@
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="infopersonal.html">InformaciAn personal</a>
+									<a href="infopersonal.html">Información personal</a>
 								</li>
 								<li>
 									<a href="trimestreactual.html">Estado del trimestre actual</a>
@@ -84,46 +84,8 @@
 							</ul>
 						</li>
 						
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">AdministraciAn<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									Usuarios
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									<a href="#">Activar</a>
-								</li>
-								<li>
-									<a href="#">Desactivar</a>
-								</li>
-								<li>
-									<a href="#">Modificar</a>
-								</li>
-								<li>
-									<a href="#">Notificar a usuario</a>
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									Cursos
-								</li>
-								<li class="divider">
-								</li>
-								<li>
-									<a href="activarcursos.html">Activar</a>
-								</li>
-								<li>
-									<a href="#">Desactivar</a>
-								</li>
-								<li>
-									<a href="#">Modificar</a>
-								</li>
-								<li>
-									<a href="#">Notificar en curso</a>
-								</li>
-							</ul>
+						<li>
+							<a href="/admin">Administración</a>
 						</li>
 						
 					</ul>
@@ -137,10 +99,10 @@
 							<a href="#">Salir</a>
 						</li>
 						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">MAs informaciAn<strong class="caret"></strong></a>
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Más información<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#">DirecciAn de Seguridad Integral</a>
+									<a href="#">Dirección de Seguridad Integral</a>
 								</li>
 								<li class="divider">
 								</li>
@@ -158,9 +120,41 @@
 		</div>
 	</div>
 	<div class="row clearfix">
+		<div class="col-md-4 column">
+			<h3>
+				Inicio de sesión
+			</h3>
+			<br />
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					 <label for="inputCI" class="col-sm-3 control-label">Cédula</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control" id="inputCI" placeholder="Introducir cédula">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-3 control-label">Contraseña</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="inputPassword3" placeholder="Introducir contraseña">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							 <label><input type="checkbox">Recuérdame</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 <button type="submit" class="btn btn-default">Acceder</button>
+					</div>
+				</div>
+			</form>
+		</div>
 		<div class="col-md-8 column">
 			<h3>
-				Cursos Promovidos
+				Cursos
 			</h3>
 			<div class="row">
 				<div class="col-md-4">
@@ -174,7 +168,7 @@
 								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Ver mAs</a>
+								<a class="btn btn-primary" href="#">Ver más</a>
 							</p>
 						</div>
 					</div>
@@ -190,7 +184,7 @@
 								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Ver mAs</a>
+								<a class="btn btn-primary" href="#">Ver más</a>
 							</p>
 						</div>
 					</div>
@@ -206,44 +200,12 @@
 								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 							<p>
-								<a class="btn btn-primary" href="#">Ver mAs</a>
+								<a class="btn btn-primary" href="#">Ver más</a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div> <button type="button" class="btn btn-link">Ir a Cursos Disponibles</button>
-		</div>
-		<div class="col-md-4 column">
-			<h3>
-				Inicio de sesiAn
-			</h3>
-			<br />
-			<form class="form-horizontal" role="form">
-				<div class="form-group">
-					 <label for="inputEmail3" class="col-sm-3 control-label">E-mail</label>
-					<div class="col-sm-9">
-						<input type="email" class="form-control" id="inputEmail3">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputPassword3" class="col-sm-3 control-label">ContraseAa</label>
-					<div class="col-sm-9">
-						<input type="password" class="form-control" id="inputPassword3">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<div class="checkbox">
-							 <label><input type="checkbox"> RecuArdame</label>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						 <button type="submit" class="btn btn-default">Ingresar</button>
-					</div>
-				</div>
-			</form>
 		</div>
 	</div>
 	<div class="row clearfix well">
@@ -251,22 +213,22 @@
 			<div class="row clearfix">
 				<div class="col-md-6 column">
 					<h3>
-						AQuiAnes somos?
+						¿Quiénes somos?
 					</h3>
 					
 					<p>
-						El ComitAde Seguridad y Salud Laboral  es el Argano de participaciAn destinado a la consulta regular y periAdica de las polAticas, programas y actuaciones en materia de seguridad y salud en el trabajo, en donde se promueven iniciativas sobre mAtodos y procedimientos para el control efectivo de las condiciones de riesgo de los trabajadores. EstAconformado por los delegados de prevenciAn e igual nAmero de representantes del patrono.
+						El Comité de Seguridad y Salud Laboral es el Órgano de participación destinado a la consulta regular y periódica de las políticas, programas y actuaciones en materia de seguridad y salud en el trabajo, en donde se promueven iniciativas sobre métodos y procedimientos para el control efectivo de las condiciones de riesgo de los trabajadores. Está conformado por los delegados de prevención e igual número de representantes del patrono.
 					</p>
-					 <button type="button" class="btn btn-link">MAs informaciAn</button>
+					 <button type="button" class="btn btn-link">Más información</button>
 				</div>
 				<div class="col-md-6 column">
 					<h3>
-						ACAmo usar la pAgina?
+						¿Cómo usar la página?
 					</h3>
 					<p>
 						Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum.
 					</p> 
-					<button type="button" class="btn btn-link">MAs informaciAn</button>
+					<button type="button" class="btn btn-link">Más información</button>
 				</div>
 			</div>
 		</div>
@@ -277,29 +239,29 @@
 						Contactos
 					</h3>
 					<p>
-						<strong>UbicaciAn:</strong>
+						<strong>Ubicación:</strong>
 						<br />
-						Edif. Ciencias BAsicas II-Piso 1
+						Edif. Ciencias Básicas II-Piso 1
 						<br /><br />
-						<strong>TelAfono:</strong>
+						<strong>Teléfono:</strong>
 						<br />
 						58-0212-9063435-36
 						<br /><br />
-						<strong>Correo ElectrAnico:</strong>
+						<strong>Correo Electrónico:</strong>
 						<br />
 						cssl@usb.ve
 						<br /><br />
-						<strong>PAgina Web:</strong>
+						<strong>Página Web:</strong>
 						<br />
 						<a href="http://www.vradmin.usb.ve/">www.vradmin.usb.ve</a>
 					</p>
 				</div>
 				<div class="col-md-6 column">
 					<h3>
-						PAginas Relacionadas
+						Páginas Relacionadas
 					</h3>
 					<p>
-						<strong>PAgina Web de la Universidad:</strong>
+						<strong>Página Web de la Universidad:</strong>
 						<br />
 						<a href="http://www.usb.ve/">www.usb.ve</a>
 					</p>
@@ -313,7 +275,7 @@
 				<a href="http://www.usb.ve/home/node/68" data-cke-saved-href="http://www.usb.ve/home/node/68">e-virtual</a> | <a target="_blank" href="https://webmail.usb.ve/" data-cke-saved-href="https://webmail.usb.ve/">Correo</a> |<a href="https://esopo.usb.ve/" data-cke-saved-href="https://esopo.usb.ve">esopo</a> |<a target="_blank" href="http://www.youtube.com/canalusb" data-cke-saved-href="http://www.youtube.com/canalusb">canalUSB</a> | <a target="_blank" href="http://www.usb.ve/agenda.php" data-cke-saved-href="http://www.usb.ve/agenda.php">Agenda Cultural</a> | <a target="_blank" href="http://usbnoticias.info/" data-cke-saved-href="http://usbnoticias.info/">USBnoticias</a> |<span> </span><span> </span><a href="http://www.usb.ve/home/node/55" data-cke-saved-href="http://www.usb.ve/home/node/55">Calendario</a> |<br />
 				Sede Sartenejas, Baruta, Edo. Miranda - Apartado 89000 - Cable Unibolivar - Caracas Venezuela. Tel&eacute;fono +58 0212-9063111<br />
 				Sede Litoral, Camur&iacute; Grande, Edo. Vargas Parroquia Naiguat&aacute;. Tel&eacute;fono +58 0212-9069000<br />
-				Dise&ntilde;ada y desarrollada por estudiantes de Sistemas de InformaciAn. <a href="mailto:webmaster@usb.ve" data-cke-saved-href="mailto:webmaster@usb.ve">webmaster@usb.ve</a>
+				Dise&ntilde;ada y desarrollada por estudiantes de Sistemas de Información. <a href="mailto:webmaster@usb.ve" data-cke-saved-href="mailto:webmaster@usb.ve">webmaster@usb.ve</a>
 			</p>
 		</div>
 	</div>
