@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for procafe project.
 
@@ -12,6 +13,15 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+TEMPLATE_DIRS = ( os.path.join(BASE_DIR, 'procafe/templates/'),)
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'procafe/media/')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'procafe/static/')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = ( os.path.join(BASE_DIR,'procafe/static/media/'),
+                     os.path.join(BASE_DIR,'procafe/static/admin'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -25,6 +35,22 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'procafeusb@gmail.com'
+EMAIL_HOST_PASSWORD = 'jamonsito'
+
+# Templates processors
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.request',
+)
 
 # Application definition
 

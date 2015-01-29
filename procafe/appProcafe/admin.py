@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from appProcafe.models import *
@@ -16,7 +17,7 @@ admin.site.register(Takes, TakesAdmin)
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,     {'fields': ['name', 'department_ID', 'type', 'number_hours', 'location']}),
-        ('Descripción', {'fields': ['description', 'video_url']}),
+        ('Descripci��n', {'fields': ['description', 'video_url']}),
         ('Fechas', {'fields': ['init_date', 'end_date']}),
     ]
 
