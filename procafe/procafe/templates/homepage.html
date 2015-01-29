@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Homepage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+	<!--script src="js/less-1.3.3.min.js"></script-->
+	<!--append ���#!watch��� to the browser URL, then refresh the page. -->
+	
+	<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="img/favicon.png">
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<a href="/appProcafe/"><img src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Sistema de Cursos</a>
+				</div>			
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="/appProcafe/">Home</a>
+						</li>
+						<li>
+							 <a href="/appProcafe/signup">Registrarse</a>
+						</li>
+						<li>
+							 <a href="/appProcafe/profile">Perfil</a>
+						</li>
+						
+						<li >
+							 <a href="/appProcafe/courses">Cursos</a>
+						</li>
+						
+						<li>
+							 <a href="/admin">Administracion</a>
+						</li>
+						
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control">
+						</div> <button type="submit" class="btn btn-default">Buscar</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Salir</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">M��s informaci��n<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Direcci��n de Seguridad Integral</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">Manual del usuario</a>
+								</li>
+								<li>
+									<a href="#">Manual del administrador</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-8 column">
+			<h3>
+				Cursos Promovidos
+			</h3>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="300x200" src="http://lorempixel.com/600/200/people">
+						<div class="caption">
+							<h3>
+								Manejo de podadoras
+							</h3>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">Ver m��s</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="300x200" src="http://lorempixel.com/600/200/city">
+						<div class="caption">
+							<h3>
+								Manejo de los extintores
+							</h3>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">Ver m��s</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="300x200" src="http://lorempixel.com/600/200/sports">
+						<div class="caption">
+							<h3>
+								Seguridad de escaleras
+							</h3>
+							<p>
+								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">Ver m��s</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div> <button type="button" class="btn btn-link">Ir a Cursos Disponibles</button>
+		</div>
+		<div class="col-md-4 column">
+			<h3>
+				Inicio de sesi��n
+			</h3>
+			<br />
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					 <label for="inputEmail3" class="col-sm-3 control-label">E-mail</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control" id="inputEmail3">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-3 control-label">Contrase��a</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="inputPassword3">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							 <label><input type="checkbox"> Recu��rdame</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						 <button type="submit" class="btn btn-default">Ingresar</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row clearfix well">
+		<div class="col-md-6 column">
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<h3>
+						��Qui��nes somos?
+					</h3>
+					
+					<p>
+						El Comit�� de Seguridad y Salud Laboral  es el ��rgano de participaci��n destinado a la consulta regular y peri��dica de las pol��ticas, programas y actuaciones en materia de seguridad y salud en el trabajo, en donde se promueven iniciativas sobre m��todos y procedimientos para el control efectivo de las condiciones de riesgo de los trabajadores. Est�� conformado por los delegados de prevenci��n e igual n��mero de representantes del patrono.
+					</p>
+					 <button type="button" class="btn btn-link">M��s informaci��n</button>
+				</div>
+				<div class="col-md-6 column">
+					<h3>
+						��C��mo usar la p��gina?
+					</h3>
+					<p>
+						Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum.
+					</p> 
+					<button type="button" class="btn btn-link">M��s informaci��n</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 column">
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<h3>
+						Contactos
+					</h3>
+					<p>
+						<strong>Ubicaci��n:</strong>
+						<br />
+						Edif. Ciencias B��sicas II-Piso 1
+						<br /><br />
+						<strong>Tel��fono:</strong>
+						<br />
+						58-0212-9063435-36
+						<br /><br />
+						<strong>Correo Electr��nico:</strong>
+						<br />
+						cssl@usb.ve
+						<br /><br />
+						<strong>P��gina Web:</strong>
+						<br />
+						<a href="http://www.vradmin.usb.ve/">www.vradmin.usb.ve</a>
+					</p>
+				</div>
+				<div class="col-md-6 column">
+					<h3>
+						P��ginas Relacionadas
+					</h3>
+					<p>
+						<strong>P��gina Web de la Universidad:</strong>
+						<br />
+						<a href="http://www.usb.ve/">www.usb.ve</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<p align="center">
+				<a href="http://www.usb.ve/home/node/68" data-cke-saved-href="http://www.usb.ve/home/node/68">e-virtual</a> | <a target="_blank" href="https://webmail.usb.ve/" data-cke-saved-href="https://webmail.usb.ve/">Correo</a> |<a href="https://esopo.usb.ve/" data-cke-saved-href="https://esopo.usb.ve">esopo</a> |<a target="_blank" href="http://www.youtube.com/canalusb" data-cke-saved-href="http://www.youtube.com/canalusb">canalUSB</a> | <a target="_blank" href="http://www.usb.ve/agenda.php" data-cke-saved-href="http://www.usb.ve/agenda.php">Agenda Cultural</a> | <a target="_blank" href="http://usbnoticias.info/" data-cke-saved-href="http://usbnoticias.info/">USBnoticias</a> |<span> </span><span> </span><a href="http://www.usb.ve/home/node/55" data-cke-saved-href="http://www.usb.ve/home/node/55">Calendario</a> |<br />
+				Sede Sartenejas, Baruta, Edo. Miranda - Apartado 89000 - Cable Unibolivar - Caracas Venezuela. Tel&eacute;fono +58 0212-9063111<br />
+				Sede Litoral, Camur&iacute; Grande, Edo. Vargas Parroquia Naiguat&aacute;. Tel&eacute;fono +58 0212-9069000<br />
+				Dise&ntilde;ada y desarrollada por estudiantes de Sistemas de Informaci��n. <a href="mailto:webmaster@usb.ve" data-cke-saved-href="mailto:webmaster@usb.ve">webmaster@usb.ve</a>
+			</p>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

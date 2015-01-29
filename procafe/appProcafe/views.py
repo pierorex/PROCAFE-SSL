@@ -41,7 +41,13 @@ def loadEmployees(request):
 # Create your views here.
 
 def index(request):
-    return render_to_response('index.html', context_instance=RequestContext(request))
+    return render_to_response('homepage.html', context_instance=RequestContext(request))
+    
+def profile(request):
+    return render_to_response('infopersonal.html', context_instance=RequestContext(request))
+    
+def courses(request):
+    return render_to_response('cursos.html', context_instance=RequestContext(request))
     
 def signup(request): 
     if request.method == 'POST':
@@ -49,23 +55,20 @@ def signup(request):
         if form.is_valid():
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
-                mensaje = ''' Nombre: %s 
-Cedula: %d
-User: %s
-Contrasena: jamonsito '''%(user, user.ID_number,user.user)
+                mensaje = ''' Nombre: '''
                 send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',['carlos.25896@gmail.com'], fail_silently=False)
                 
-                return HttpResponseRedirect('/index/')
+                return HttpResponseRedirect('/appProcafe/')
             
             except UserProfile.DoesNotExist:
                
                 failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema"
                 
-                return render_to_response('signup.html', {'failure':failure}, context_instance=RequestContext(request))
+                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form}, context_instance=RequestContext(request))
 
                 
     form = UserIdForm()
-    return render_to_response('signup.html', {'form':form}, context_instance=RequestContext(request))
+    return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
 
 def homepage(request):
     return render_to_response('homepage.html', context_instance=RequestContext(request))

@@ -10,4 +10,4 @@ class DocumentForm(forms.Form):
 
 
 class UserIdForm(forms.Form):
-    id = forms.IntegerField(label = 'Cedula')
+    id = forms.IntegerField(label = '')
