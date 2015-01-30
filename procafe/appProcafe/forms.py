@@ -14,5 +14,9 @@ class UserIdForm(forms.Form):
     
 
 class UserLogin(forms.Form):
-    id = forms.CharField(max_length=10)
-    password = forms.CharField(max_length=50)
+    id = forms.CharField(max_length=10, label = "Cédula")
+    password = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        widgets = {
+            'password': forms.PasswordInput(),
+        }

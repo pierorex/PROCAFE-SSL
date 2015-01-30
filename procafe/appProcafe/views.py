@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -41,13 +43,21 @@ def loadEmployees(request):
 # Create your views here.
 
 def index(request):
+    failure = "Cedula o contraseña incorrectas"
     if request.POST:
         form = UserLogin(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/appProcafe/profile')
+            userName = request.POST['id']
+            userPassword = request.POST['password']
+            user = authenticate(username=userName, password=userPassword)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/appProcafe/profile')
+            else:
+                return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
+ 
         else:
-            failure = "Cedula o contraseña incorrectas"
-            return render_to_response('homepage.html', {'failure':failure}, context_instance=RequestContext(request))
+            return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
 
     form = UserLogin()
     return render_to_response('homepage.html',{'form':form}, context_instance=RequestContext(request))
