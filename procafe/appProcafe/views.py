@@ -8,7 +8,7 @@ from django.template.context import RequestContext
 from django.core.mail import send_mail
 
 from appProcafe.models import Document
-from appProcafe.forms import DocumentForm
+from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
 from appProcafe.forms import UserIdForm
 from appProcafe.models import UserProfile
@@ -42,21 +42,28 @@ def loadEmployees(request):
 
 def index(request):
     if request.POST:
-        form = DocumentForm(request.POST, request.FILES)
+        form = UserLogin(request.POST)
         if form.is_valid():
             return HttpResponseRedirect('/appProcafe/profile')
         else:
             failure = "Cedula o contraseña incorrectas"
             return render_to_response('homepage.html', {'failure':failure}, context_instance=RequestContext(request))
 
-
-    return render_to_response('homepage.html', context_instance=RequestContext(request))
+    form = UserLogin()
+    return render_to_response('homepage.html',{'form':form}, context_instance=RequestContext(request))
     
 def profile(request):
     return render_to_response('infopersonal.html', context_instance=RequestContext(request))
     
+    
+    
+    
+    
 def courses(request):
     return render_to_response('cursos.html', context_instance=RequestContext(request))
+    
+    
+    
     
 def signup(request): 
     if request.method == 'POST':
