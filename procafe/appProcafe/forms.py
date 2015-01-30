@@ -11,3 +11,8 @@ class DocumentForm(forms.Form):
 
 class UserIdForm(forms.Form):
     id = forms.IntegerField(label = '')
+    
+
+class UserLogin(forms.Form):
+    id = forms.CharField(max_length=10)
+    password = forms.CharField(max_length=50)

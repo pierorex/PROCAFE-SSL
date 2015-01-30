@@ -41,6 +41,15 @@ def loadEmployees(request):
 # Create your views here.
 
 def index(request):
+    if request.POST:
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            return HttpResponseRedirect('/appProcafe/profile')
+        else:
+            failure = "Cedula o contraseña incorrectas"
+            return render_to_response('homepage.html', {'failure':failure}, context_instance=RequestContext(request))
+
+
     return render_to_response('homepage.html', context_instance=RequestContext(request))
     
 def profile(request):
@@ -56,7 +65,7 @@ def signup(request):
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
                 mensaje = ''' Nombre: '''
-                send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',['carlos.25896@gmail.com'], fail_silently=False)
+                send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',[user.user.email], fail_silently=False)
                 
                 return HttpResponseRedirect('/appProcafe/')
             
@@ -70,6 +79,4 @@ def signup(request):
     form = UserIdForm()
     return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
 
-def homepage(request):
-    return render_to_response('homepage.html', context_instance=RequestContext(request))
 
