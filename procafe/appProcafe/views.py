@@ -81,7 +81,8 @@ def signup(request):
         if form.is_valid():
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
-                mensaje = ''' Nombre: '''
+                mensaje = ''' Nombre de Usuario: %d
+ Contraseña: password''' %(user.ID_number)
                 send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',[user.user.email], fail_silently=False)
                 
                 return HttpResponseRedirect('/appProcafe/')

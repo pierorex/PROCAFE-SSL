@@ -27,9 +27,9 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
   
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<script src="{{ STATIC_URL }}js/scripts.js"></script>
 </head>
 
 <body>
@@ -58,7 +58,7 @@
 						</li>
 						
 						<li>
-							 <a href="/admin">Administracion</a>
+							 <a href="/admin">Administración</a>
 						</li>
 						
 					</ul>
@@ -101,13 +101,13 @@
 			<form role="form" method="post">
 				{% csrf_token %}
 				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">Cedula</label>
+					<label for="inputEmail3" class="col-sm-3 control-label">Cédula</label>
 					<div class="col-sm-9">
 						{{ form.id }}
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">Password</label>
+					<label for="inputEmail3" class="col-sm-3 control-label">Contraseña</label>
 					<div class="col-sm-9">
 						{{ form.password }}
 					</div>
@@ -195,7 +195,7 @@
 					</h3>
 					
 					<p>
-						El Comité de Seguridad y Salud Laboral  es el órgano de participación destinado a la consulta regular y peri��dica de las pol��ticas, programas y actuaciones en materia de seguridad y salud en el trabajo, en donde se promueven iniciativas sobre m��todos y procedimientos para el control efectivo de las condiciones de riesgo de los trabajadores. Est�� conformado por los delegados de prevenci��n e igual n��mero de representantes del patrono.
+						El Comité de Seguridad y Salud Laboral  es el órgano de participación destinado a la consulta regular y periódica de las políticas, programas y actuaciones en materia de seguridad y salud en el trabajo, en donde se promueven iniciativas sobre métodos y procedimientos para el control efectivo de las condiciones de riesgo de los trabajadores. Está conformado por los delegados de prevención e igual número de representantes del patrono.
 					</p>
 					 <button type="button" class="btn btn-link">Más información</button>
 				</div>
