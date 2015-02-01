@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Unidad de Adscripción")
+    sede = models.CharField(max_length=10, verbose_name = "Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.name)
@@ -18,6 +19,7 @@ class Unit(models.Model):
 class Department(models.Model):
     unit_ID = models.ForeignKey(Unit, verbose_name = "Unidad superior", default = 0)
     name = models.CharField(max_length=200, verbose_name = "Nombre")
+    sede = models.CharField(max_length=10, verbose_name = "Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.name)
@@ -31,6 +33,7 @@ class Department(models.Model):
 class Section(models.Model):
     department_ID = models.ForeignKey(Department, verbose_name = "Departamento", editable = True)
     name = models.CharField(max_length=200, verbose_name = "Nombre")
+    sede = models.CharField(max_length=10, verbose_name = "Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.department_ID) + ":" + str(self.name)
