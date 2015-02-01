@@ -3,11 +3,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from appProcafe.models import *
 
+
 admin.site.register(Department)
 admin.site.register(Unit)
 admin.site.register(Section)
 admin.site.register(Risk)
 admin.site.register(Position)
+admin.site.register(Telephone)
+admin.site.register(Document)
 
 class TakesAdmin(admin.ModelAdmin):
     list_display = ('user_ID', 'course_ID', 'term', 'year', 'status')
@@ -16,8 +19,8 @@ admin.site.register(Takes, TakesAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,     {'fields': ['name', 'department_ID', 'type', 'number_hours', 'location']}),
-        ('Descripci��n', {'fields': ['description', 'video_url']}),
+        (None,     {'fields': ['name', 'department_ID', 'modality', 'number_hours', 'location']}),
+        ('Descripción', {'fields': ['description', 'video_url']}),
         ('Fechas', {'fields': ['init_date', 'end_date']}),
     ]
 
