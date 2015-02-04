@@ -10,5 +10,7 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout'),
     url(r'^profile/$', 'appProcafe.views.profile'),
+    url(r'^profile/$', 'appProcafe.views.editProfile'),
     url(r'^courses/$', 'appProcafe.views.courses'),
+    url(r'^actualQuarter/$', 'appProcafe.views.actualQuarter'),
 )

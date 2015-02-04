@@ -98,3 +98,5 @@ def signup(request):
     return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
 
 
+def actualQuarter(request):
+    return render_to_response('trimestreactual.html', context_instance=RequestContext(request))
