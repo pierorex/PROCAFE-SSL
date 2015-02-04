@@ -34,7 +34,6 @@
 
 <body>
 <div class="container">
-	<div id="full-width">
 	<div class="row clearfix">
 		<div class="col-md-12 column nopadding">
 			<a href="/appProcafe/"><img class="img-responsive" src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
@@ -57,11 +56,10 @@
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#">Información Personal</a>
-								</li>
+									<a href="/appProcafe/profile">Información Personal</a>
 								</li>
 								<li>
-									<a href="#">Edital perfil</a>
+									<a href="/appProcafe/editProfile">Edital perfil</a>
 								</li>
 							</ul>
 						</li>
@@ -71,7 +69,6 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="/appProcafe/actualQuarter">Trimestre actual</a>
-								</li>
 								</li>
 								<li>
 									<a href="/appProcafe/courses">Cursos activos</a>
@@ -113,7 +110,6 @@
 				</div>
 			</nav>
 		</div>
-	</div>
 	</div>
 	<div class="row clearfix">
 	<div class="col-md-4 column">
@@ -205,7 +201,7 @@
 						</div>
 					</div>
 				</div>
-			</div> <button type="button" class="btn btn-link">Ir a Cursos Disponibles</button>
+			</div> <button type="button" class="btn btn-link"><a href="/appProcafe/courses">Ir a Cursos Disponibles </a></button>
 		</div>
 		
 	</div>
@@ -214,7 +210,7 @@
 			<div class="row clearfix">
 				<div class="col-md-6 column">
 					<h3>
-						Quiénes somos?
+						¿Quiénes somos?
 					</h3>
 					
 					<p>
@@ -224,7 +220,7 @@
 				</div>
 				<div class="col-md-6 column">
 					<h3>
-						Cómo usar la página?
+						¿Cómo usar la página?
 					</h3>
 					<p>
 						Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum.

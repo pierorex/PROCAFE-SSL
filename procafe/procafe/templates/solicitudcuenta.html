@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Homepage</title>
+  <title>Registrarse</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -35,7 +35,7 @@
 <body>
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
+		<div class="col-md-12 column nopadding">
 			<a href="/appProcafe/"><img class="img-responsive" src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
@@ -43,9 +43,11 @@
 				</div>			
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
+					
 						<li>
 							<a href="/appProcafe/">Home</a>
 						</li>
+						
 						<li class="active">
 							 <a href="/appProcafe/signup">Registrarse</a>
 						</li>
@@ -56,9 +58,8 @@
 								<li>
 									<a href="/appProcafe/profile">Información Personal</a>
 								</li>
-								</li>
 								<li>
-									<a href="/appProcafe/profile">Edital perfil</a>
+									<a href="/appProcafe/editProfile">Edital perfil</a>
 								</li>
 							</ul>
 						</li>
@@ -68,7 +69,6 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="/appProcafe/actualQuarter">Trimestre actual</a>
-								</li>
 								</li>
 								<li>
 									<a href="/appProcafe/courses">Cursos activos</a>

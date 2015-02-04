@@ -35,7 +35,7 @@
 <body>
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
+		<div class="col-md-12 column nopadding">
 			<a href="/appProcafe/"><img class="img-responsive" src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
@@ -43,48 +43,32 @@
 				</div>			
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active">
+					
+						<li>
 							<a href="/appProcafe/">Home</a>
 						</li>
+						
 						<li>
 							 <a href="/appProcafe/signup">Registrarse</a>
-						</li>
-						<li>
-							 <a href="/appProcafe/profile">Perfil</a>
 						</li>
 						
 						<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#">Información Personal</a>
-								</li>
+									<a href="/appProcafe/profile">Información Personal</a>
 								</li>
 								<li>
-									<a href="#">Edital perfil</a>
+									<a href="/appProcafe/editProfile">Edital perfil</a>
 								</li>
 							</ul>
 						</li>
 						
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos<strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#">Información Personal</a>
-								</li>
-								</li>
-								<li>
-									<a href="#">Edital perfil</a>
-								</li>
-							</ul>
-						</li>
-						
-						<li class="dropdown">
+						<li class="dropdown active">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="/appProcafe/actualQuarter">Trimestre actual</a>
-								</li>
 								</li>
 								<li>
 									<a href="/appProcafe/courses">Cursos activos</a>
@@ -143,16 +127,16 @@
 					<div class="row clearfix well">
 						<div class="col-md-9 column">
 							<div class="media">
-								 <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=""></a>
+								 <a href="#" class="pull-left"><img src="http://lorempixel.com/65/65/" class="media-object" alt=""></a>
 								<div class="media-body">
 									<h4 class="media-heading">
 										Seguridad de escaleras
 									</h4>
 									<div>
-										Per��odo: 20 de febrero a 4 de marzo.
+										Período: 20 de febrero a 4 de marzo.
 									</div>
 									<div>
-										Horario: Lunes y Mi��rcoles a las 2:00pm
+										Horario: Lunes y Miércoles a las 2:00pm
 									</div>
 								</div>
 							</div>
@@ -191,7 +175,7 @@
 										Manejo de extintores
 									</h4>
 									<div>
-										Per��odo: 25 de marzo al 26 de abril.
+										Período: 25 de marzo al 26 de abril.
 									</div>
 									<div>
 										Horario: Martes y Jueves a las 3:00pm
@@ -199,7 +183,7 @@
 								</div>
 							</div>
 							<br/>
-							<div class="progress">
+							<div class="progress progress-danger">
 							  <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 								40%
 							  </div>
@@ -225,17 +209,17 @@
 				</div>
 				<div class="col-md-4 column">
 					<h3>
-						��ltimas notificaciones
+						Últimas notificaciones
 					</h3>
 					<br />
 					<div class="panel-group" id="panel-1435">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1435" href="#panel-element-134755">Notificaciones No Le��das</a>
+								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1435" href="#panel-element-134755">Notificaciones No Leídas</a>
 							</div>
 							<div id="panel-element-134755" class="panel-collapse collapse">
 								<div class="panel-body">
-									Informaci��n sobre la pr��xima clase
+									Información sobre la próxima clase
 								</div>
 								<div class="panel-body">
 									Material para el manejo de extintores
@@ -248,16 +232,16 @@
 							</div>
 							<div id="panel-element-293839" class="panel-collapse collapse">
 								<div class="panel-body">
-									Informaci��n sobre la pr��xima clase
+									Información sobre la próxima clase
 								</div>
 								<div class="panel-body">
 									Material para el manejo de extintores
 								</div>
 								<div class="panel-body">
-									Tema 1: ��Qu�� es seguridad?
+									Tema 1: ¿Qué es seguridad?
 								</div>
 								<div class="panel-body">
-									Informaci��n de contacto
+									Información de contacto
 								</div>
 							</div>
 						</div>

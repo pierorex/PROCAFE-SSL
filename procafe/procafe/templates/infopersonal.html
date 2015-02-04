@@ -14,6 +14,7 @@
 	
 	<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -26,34 +27,53 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
   
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<script src="{{ STATIC_URL }}js/scripts.js"></script>
 </head>
 
 <body>
 <div class="container">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<a href="/appProcafe/"><img src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
+		<div class="col-md-12 column nopadding">
+			<a href="/appProcafe/"><img class="img-responsive" src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Sistema de Cursos</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
 				</div>			
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
+					
 						<li>
 							<a href="/appProcafe/">Home</a>
 						</li>
+						
 						<li>
 							 <a href="/appProcafe/signup">Registrarse</a>
 						</li>
-						<li class="active">
-							 <a href="/appProcafe/profile">Perfil</a>
+						
+						<li class="dropdown active">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/appProcafe/profile">Información Personal</a>
+								</li>
+								<li>
+									<a href="/appProcafe/editProfile">Edital perfil</a>
+								</li>
+							</ul>
 						</li>
 						
-						<li >
-							 <a href="/appProcafe/courses">Cursos</a>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/appProcafe/actualQuarter">Trimestre actual</a>
+								</li>
+								<li>
+									<a href="/appProcafe/courses">Cursos activos</a>
+								</li>
+							</ul>
 						</li>
 						
 						<li>
@@ -140,6 +160,12 @@
 					Trabajador
 				</dd>
 				<dt>
+					Sexo
+				</dt>
+				<dd>
+					Masculino
+				</dd>
+				<dt>
 					Edad
 				</dt>
 				<dd>
@@ -189,143 +215,9 @@
 					<a href="#editprofile">Editar perfil</a>
 				</li>
 				<li>
-					<a href="#">Mensajes</a>
-				</li>
-				<li>
 					<a href="#">Preferencias</a>
 				</li>
 			</ul>
-		</div>
-	</div>
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1 id="editprofile">
-					Editar Perfil
-				</h1>
-			</div>
-		</div>
-	</div>
-	<div class="row clearfix">
-		<div class="col-md-4 column">
-			<h3>
-				Imagen de Perfil
-			</h3><img alt="160x160" src="http://lorempixel.com/160/160/">
-			<form role="form">
-				</br>
-				<div class="form-group">
-					 <label for="exampleInputFile">Ingreso de archivo</label><input type="file" id="exampleInputFile">
-					<p class="help-block">
-						Tamaño recomendado de 160x160px
-					</p>
-				</div>
-				<button type="submit" class="btn btn-default">Subir</button>
-			</form>
-		</div>
-		<div class="col-md-4 column">
-			<h3>
-				Información de Contacto
-			</h3>
-			<dl>
-				<dt>
-					Correo Electrónico
-				</dt>
-				<dd>
-					johnsmith85@gmail.com
-				</dd>
-				<dt>
-					Teléfono
-				</dt>
-				<dd>
-					Casa: 0212-5557788
-				</dd>
-				<dd>
-					Celular: 0424-3332211
-				</dd>
-				<dt>
-					Departamento u Oficina
-				</dt>
-				<dd>
-					Departamento de Seguridad Integral, CB2 Piso 1, CB2-104
-				</dd>
-			</dl>
-			<form role="form">
-				<div class="form-group">
-					 <label>Correo Electrónico</label><input type="email" class="form-control" id="inputEmail">
-				</div>
-				<div class="form-group">
-					 <label>Teléfono de Casa</label><input type="password" class="form-control" id="inputHomePhone">
-					 <label>Teléfono Celular</label><input type="password" class="form-control" id="inputCellphone">
-				</div>
-				<div class="form-group">
-					 <label>Departamento u Oficina</label><input type="email" class="form-control" id="inputOffice">
-				</div>
-				</br>
-				<button type="submit" class="btn btn-default">Actualizar</button>
-			</form>
-		</div>
-		<div class="col-md-4 column">
-			<h3>
-				Detalles Personales
-			</h3>
-			<dl>
-				<dt>
-					Nombre(s)
-				</dt>
-				<dd>
-					John
-				</dd>
-				<dt>
-					Apellido(s)
-				</dt>
-				<dd>
-					Smith
-				</dd>
-				<dt>
-					Cédula de Identidad
-				</dt>
-				<dd>
-					15.000.000
-				</dd>
-				<dt>
-					Biografía
-				</dt>
-				<dd>
-					Soy un empleado del Departamento de Seguridad Integral de la Universidad Simón Bolívar. He trabajado aquí por más de 5 años.
-				</dd>
-				<dt>
-					Cargo
-				</dt>
-				<dd>
-					Administrador
-				</dd>
-				<dt>
-					Edad
-				</dt>
-				<dd>
-					36
-				</dd>
-			</dl>
-			<form role="form">
-				<div class="form-group">
-					 <label>Nombre(s)</label><input type="text" class="form-control" id="inputName">
-					 <label>Apellido(s)</label><input type="text" class="form-control" id="inputSurname">
-				</div>
-				<div class="form-group">
-					 <label>Cédula de Identidad</label><input type="text" class="form-control" id="inputId">
-				</div>
-				<div class="form-group">
-					 <label>Biografía</label>
-						<textarea rows="6" cols="50">
-						</textarea>
-					 <label>Cargo</label><input type="text" class="form-control" id="inputJob">
-					 <label>Edad</label><input type="text" class="form-control" id="inputAge">
-				</div>
-				</br>
-				<button type="submit" class="btn btn-default">Actualizar</button>
-					</p>
-				</div>
-			</form>
 		</div>
 	</div>
 	<br />

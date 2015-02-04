@@ -66,7 +66,8 @@ def profile(request):
     return render_to_response('infopersonal.html', context_instance=RequestContext(request))
     
     
-    
+def editProfile(request):
+    return render_to_response('editarperfil.html', context_instance=RequestContext(request))    
     
     
 def courses(request):
