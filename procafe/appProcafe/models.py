@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
+from datetime import datetime
 
 
 class Unit(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Unidad de Adscripción")
+    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
+    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.name)
@@ -16,8 +19,9 @@ class Unit(models.Model):
 
 
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit, verbose_name = "Unidad superior", default = 0)
-    name = models.CharField(max_length=200, verbose_name = "Nombre")
+    unit_ID = models.ForeignKey(Unit, verbose_name="Unidad", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombre")
+    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.name)
@@ -29,8 +33,9 @@ class Department(models.Model):
 
 
 class Section(models.Model):
-    department_ID = models.ForeignKey(Department, verbose_name = "Departamento", editable = True)
-    name = models.CharField(max_length=200, verbose_name = "Nombre")
+    department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=True)
+    name = models.CharField(max_length=200, verbose_name="Nombre")
+    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.department_ID) + ":" + str(self.name)
@@ -41,7 +46,7 @@ class Section(models.Model):
 
 
 class Position(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Cargo")
+    name = models.CharField(max_length=200, verbose_name="Cargo")
 
     def __str__(self):
         return str(self.name)
@@ -53,28 +58,49 @@ class Position(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    ID_number = models.IntegerField(primary_key=True, default = 0, verbose_name = "Cédula")
-    type = models.CharField(max_length=200, choices=[("ACADEMICO", "AcadAmico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")])
-    position = models.ForeignKey(Position, default = 0, verbose_name = "Cargo")
-    finished_hours = models.IntegerField(default=0, verbose_name = "Horas finalizadas")
-    status = models.CharField(max_length=200, verbose_name = "Estado")
-    is_enabled = models.BooleanField(default=1, verbose_name = "Habilitado")
+    ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
+    USB_ID = models.CharField(max_length=8, unique=True, validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", message="El USB-ID debe ser de la forma xx-xxxxx.", code="invalid_usbid")], null=True)
+    firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
+    lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
+    birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
+    paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
+    type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
+    location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
+    position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
+    email = models.EmailField(verbose_name="E-mail", default=None)
+    
+    finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
+    is_enabled = models.BooleanField(default=1, verbose_name="Habilitado")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
 
 
 
+class Telephone(models.Model):
+    user_ID = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula del Trabajador", default=0)
+    number = models.CharField(max_length=12, verbose_name="Número (xxxx-xxxxxxx)", validators=[RegexValidator(regex="^[0-9]{4}-[0-9]{7}$", message="El número telefónico debe ser de la forma xxxx-xxxxxxx.", code="invalid_phone")], default=None)
+    
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Teléfono"
+        verbose_name_plural = "Teléfonos"
+
+
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department, verbose_name = "Departamento")
-    name = models.CharField(max_length=200, verbose_name = "Nombre")
-    description = models.CharField(max_length=200, verbose_name = "Descripcion", default = None)
-    video_url = models.CharField(max_length=1000, verbose_name = "URL del video")
-    type = models.CharField(max_length=200, verbose_name = "Tipo", choices=[("PRESENCIAL","Presencial"),("A DISTANCIA", "A distancia")])
-    init_date = models.DateTimeField(verbose_name = "Fecha de Inicio")
-    end_date = models.DateTimeField(verbose_name = "Fecha de Fin")
-    location = models.CharField(max_length=200, verbose_name = "Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")])
-    number_hours = models.IntegerField(verbose_name = "NAmero de Horas")
+    department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=None)
+    name = models.CharField(primary_key=True, max_length=200, verbose_name="Nombre", default=None)
+    description = models.CharField(max_length=200, verbose_name = "Descripción", default=None)
+    content = models.CharField(max_length=200, verbose_name="Contenido", default=None)
+    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None)
+    modality = models.CharField(max_length=200, verbose_name="Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="Instructor", default=None)
+    init_date = models.DateTimeField(verbose_name="Fecha de Inicio")
+    end_date = models.DateTimeField(verbose_name="Fecha de Fin")
+    location = models.CharField(max_length=200, verbose_name="Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="Número de Horas")
 
     def __str__(self):
         return str(self.name)
@@ -86,11 +112,11 @@ class Course(models.Model):
 
 
 class Takes(models.Model):
-    user_ID = models.ForeignKey(UserProfile, editable = True, verbose_name="Nombre")
-    course_ID = models.ForeignKey(Course, editable = True, verbose_name="Curso")
-    term = models.CharField(max_length=200, verbose_name = "Trimestre", choices=[("SEP-DIC", "Septiembre-Diciembre"), ("ENE-MAR", "Enero-Marzo"), ("ABR-JUL", "Abril-Julio")])
-    year = models.IntegerField(max_length=4, verbose_name = "AAo")
-    status = models.CharField(max_length=200, verbose_name = "Estado", choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")])
+    user_ID = models.ForeignKey(UserProfile, verbose_name="Nombre", default=None)
+    course_ID = models.ForeignKey(Course, verbose_name="Curso", default=None)
+    term = models.CharField(max_length=200, verbose_name="Trimestre", choices=[("SEP-DIC", "Septiembre-Diciembre"), ("ENE-MAR", "Enero-Marzo"), ("ABR-JUL", "Abril-Julio")], default="SEP-DIC")
+    year = models.IntegerField(max_length=4, verbose_name="Año")
+    status = models.CharField(max_length=200, verbose_name="Estado", choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")], default=None)
 
     class Meta:
         verbose_name = "Cursa"
@@ -107,4 +133,13 @@ class Risk(models.Model):
         verbose_name = "Riesgo"
         verbose_name_plural = "Riesgos"
 
+class Document(models.Model):
+    file = models.FileField(upload_to='documents')
+    
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Documento"
+        verbose_name_plural = "Documentos"
 

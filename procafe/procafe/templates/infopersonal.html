@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Información Personal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+	<!--script src="js/less-1.3.3.min.js"></script-->
+	<!--append ���#!watch��� to the browser URL, then refresh the page. -->
+	
+	<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+	<link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="img/favicon.png">
+  
+	<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+	<script src="{{ STATIC_URL }}js/scripts.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column nopadding">
+			<a href="/appProcafe/"><img class="img-responsive" src="{{ STATIC_URL }}banner.jpg" width="1140" height="150" /></a>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+				</div>			
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+					
+						<li>
+							<a href="/appProcafe/">Home</a>
+						</li>
+						
+						<li>
+							 <a href="/appProcafe/signup">Registrarse</a>
+						</li>
+						
+						<li class="dropdown active">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/appProcafe/profile">Información Personal</a>
+								</li>
+								<li>
+									<a href="/appProcafe/editProfile">Edital perfil</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/appProcafe/actualQuarter">Trimestre actual</a>
+								</li>
+								<li>
+									<a href="/appProcafe/courses">Cursos activos</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							 <a href="/admin">Administración</a>
+						</li>
+						
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control">
+						</div> <button type="submit" class="btn btn-default">Buscar</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Salir</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Más información<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Dirección de Seguridad Integral</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">Manual del usuario</a>
+								</li>
+								<li>
+									<a href="#">Manual del administrador</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1>
+					Información Personal
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+			<img alt="160x160" src="http://lorempixel.com/160/160/">
+			<h3>
+				John Smith
+			</h3> <address> <strong>Twitter, Inc.</strong><br> 795 Folsom Ave, Suite 600<br> San Francisco, CA 94107<br> <abbr title="Phone">P:</abbr> (123) 456-7890</address>
+		</div>
+		<div class="col-md-5 column">
+			<dl>
+				<dt>
+					Nombre(s)
+				</dt>
+				<dd>
+					John
+				</dd>
+				<dt>
+					Apellido(s)
+				</dt>
+				<dd>
+					Smith
+				</dd>
+				<dt>
+					Cédula de Identidad
+				</dt>
+				<dd>
+					12
+				</dd>
+				<dt>
+					Biografía
+				</dt>
+				<dd>
+					Soy un empleado del Departamento de Seguridad Integral de la Universidad Simón Bolívar. He trabajado aquí por más de 5 años.
+				</dd>
+				<dt>
+					Cargo
+				</dt>
+				<dd>
+					Trabajador
+				</dd>
+				<dt>
+					Sexo
+				</dt>
+				<dd>
+					Masculino
+				</dd>
+				<dt>
+					Edad
+				</dt>
+				<dd>
+					36
+				</dd>
+				<br />
+				<dt>
+					Correo Electrónico
+				</dt>
+				<dd>
+					johnsmith85@gmail.com
+				</dd>
+				<dt>
+					Teléfono
+				</dt>
+				<dd>
+					Casa: 0212-5557788
+				</dd>
+				<dd>
+					Celular: 0424-3332211
+				</dd>
+				<dt>
+					Departamento u Oficina
+				</dt>
+				<dd>
+					Departamento de Seguridad Integral, CB2 Piso 1, CB2-104
+				</dd>
+			</dl>
+		</div>
+		<div class="col-md-4 column">
+			<ul class="nav nav-stacked nav-pills">
+				<li class="active">
+					<a>Opciones de perfil</a>
+				</li>
+				<li class="dropdown">
+					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Mis cursos<strong class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">Trimestre actual</a>
+						</li>
+						<li>
+							<a href="#">Trimestres pasados</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#editprofile">Editar perfil</a>
+				</li>
+				<li>
+					<a href="#">Preferencias</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<br />
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<p align="center">
+				<a href="http://www.usb.ve/home/node/68" data-cke-saved-href="http://www.usb.ve/home/node/68">e-virtual</a> | <a target="_blank" href="https://webmail.usb.ve/" data-cke-saved-href="https://webmail.usb.ve/">Correo</a> |<a href="https://esopo.usb.ve/" data-cke-saved-href="https://esopo.usb.ve">esopo</a> |<a target="_blank" href="http://www.youtube.com/canalusb" data-cke-saved-href="http://www.youtube.com/canalusb">canalUSB</a> | <a target="_blank" href="http://www.usb.ve/agenda.php" data-cke-saved-href="http://www.usb.ve/agenda.php">Agenda Cultural</a> | <a target="_blank" href="http://usbnoticias.info/" data-cke-saved-href="http://usbnoticias.info/">USBnoticias</a> |<span> </span><span> </span><a href="http://www.usb.ve/home/node/55" data-cke-saved-href="http://www.usb.ve/home/node/55">Calendario</a> |<br />
+				Sede Sartenejas, Baruta, Edo. Miranda - Apartado 89000 - Cable Unibolivar - Caracas Venezuela. Tel&eacute;fono +58 0212-9063111<br />
+				Sede Litoral, Camur&iacute; Grande, Edo. Vargas Parroquia Naiguat&aacute;. Tel&eacute;fono +58 0212-9069000<br />
+				Dise&ntilde;ada y desarrollada por estudiantes de Sistemas de Información. <a href="coffeesystemsusb@gmail.com" data-cke-saved-href="mailto:coffeesystemsusb@gmail.com">coffeesystemsusb@gmail.com</a>
+			</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>
