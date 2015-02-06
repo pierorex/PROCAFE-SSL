@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -17,7 +18,7 @@ from appProcafe.models import UserProfile
 from procafe import settings
 
 
-#@permission_required(, raise_exception=True)
+@staff_member_required
 def loadEmployees(request):
     if not request.user.is_authenticated(): # and user.is_admin()
         return redirect('/login/')
@@ -40,7 +41,6 @@ def loadEmployees(request):
                               context_instance=RequestContext(request)
                             )
 
-# Create your views here.
 
 def index(request):
     failure = "Cedula o contraseña incorrectas"
@@ -62,20 +62,21 @@ def index(request):
     form = UserLogin()
     return render_to_response('homepage.html',{'form':form}, context_instance=RequestContext(request))
     
+    
+@login_required
 def profile(request):
     return render_to_response('infopersonal.html', context_instance=RequestContext(request))
     
-    
+
+@login_required
 def editProfile(request):
     return render_to_response('editarperfil.html', context_instance=RequestContext(request))    
-    
+
     
 def courses(request):
     return render_to_response('cursos.html', context_instance=RequestContext(request))
     
-    
-    
-    
+     
 def signup(request): 
     if request.method == 'POST':
         form = UserIdForm(request.POST)
