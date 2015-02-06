@@ -124,8 +124,8 @@
 		<div class="col-md-3 column">
 			<img alt="160x160" src="http://lorempixel.com/160/160/">
 			<h3>
-				John Smith
-			</h3> <address> <strong>Twitter, Inc.</strong><br> 795 Folsom Ave, Suite 600<br> San Francisco, CA 94107<br> <abbr title="Phone">P:</abbr> (123) 456-7890</address>
+				{{ user.firstname }} {{ user.lastname }}
+			</h3> <address> <strong>{{ user.USB_ID }}</strong><br> {{ user.location }}<br></address>
 		</div>
 		<div class="col-md-5 column">
 			<dl>
@@ -152,12 +152,6 @@
 				</dt>
 				<dd>
 					{{ user.type }}
-				</dd>
-				<dt>
-					Sexo
-				</dt>
-				<dd>
-					Masculino
 				</dd>
 				<dt>
 					Fecha de Nacimiento

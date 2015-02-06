@@ -65,9 +65,11 @@ def index(request):
     
 @login_required
 def profile(request):
-    user = request.user.userprofile
-    return render(request,'infopersonal.html', {'user':user})
-    
+    if hasattr(request.user,'userprofile'):
+        user = request.user.userprofile
+        return render(request,'infopersonal.html', {'user':user})
+    else:
+        return HttpResponseRedirect('/')
 
 @login_required
 def editProfile(request):
