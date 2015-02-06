@@ -65,7 +65,8 @@ def index(request):
     
 @login_required
 def profile(request):
-    return render_to_response('infopersonal.html', context_instance=RequestContext(request))
+    user = request.user.userprofile
+    return render(request,'infopersonal.html', {'user':user})
     
 
 @login_required

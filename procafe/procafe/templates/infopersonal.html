@@ -133,31 +133,25 @@
 					Nombre(s)
 				</dt>
 				<dd>
-					John
+					{{ user.firstname }}
 				</dd>
 				<dt>
 					Apellido(s)
 				</dt>
 				<dd>
-					Smith
+					{{ user.lastname }}
 				</dd>
 				<dt>
 					Cédula de Identidad
 				</dt>
 				<dd>
-					12
-				</dd>
-				<dt>
-					Biografía
-				</dt>
-				<dd>
-					Soy un empleado del Departamento de Seguridad Integral de la Universidad Simón Bolívar. He trabajado aquí por más de 5 años.
+					{{ user.ID_number }}
 				</dd>
 				<dt>
 					Cargo
 				</dt>
 				<dd>
-					Trabajador
+					{{ user.type }}
 				</dd>
 				<dt>
 					Sexo
@@ -166,32 +160,28 @@
 					Masculino
 				</dd>
 				<dt>
-					Edad
+					Fecha de Nacimiento
 				</dt>
 				<dd>
-					36
+					{{ user.birthday }}
 				</dd>
-				<br />
 				<dt>
 					Correo Electrónico
 				</dt>
 				<dd>
-					johnsmith85@gmail.com
+					{{ user.email }}
 				</dd>
 				<dt>
-					Teléfono
+					Nómina
 				</dt>
 				<dd>
-					Casa: 0212-5557788
-				</dd>
-				<dd>
-					Celular: 0424-3332211
+					{{ user.paysheet }}
 				</dd>
 				<dt>
-					Departamento u Oficina
+					Cargo
 				</dt>
 				<dd>
-					Departamento de Seguridad Integral, CB2 Piso 1, CB2-104
+					{{ user.position }}
 				</dd>
 			</dl>
 		</div>
