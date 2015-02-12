@@ -18,11 +18,7 @@ class TakesAdmin(admin.ModelAdmin):
 admin.site.register(Takes, TakesAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None,     {'fields': ['name', 'department_ID', 'modality', 'number_hours', 'location']}),
-        ('Descripción', {'fields': ['description', 'video_url']}),
-        ('Fechas', {'fields': ['init_date', 'end_date']}),
-    ]
+    
 
     list_display = ('name', 'department_ID', 'number_hours')
     search_fields = ['name']
