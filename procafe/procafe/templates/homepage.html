@@ -119,18 +119,28 @@
 			<br />
 			<form role="form" method="post">
 				{% csrf_token %}
+				{% for field in form %}
 				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">Cédula</label>
 					<div class="col-sm-9">
-						{{ form.id }}
+						<input type="text" class="form-control" 
+						       name="{{field.name}}" placeholder="{{field.label}}" 
+						       for="id_{{field.name}}">
+						{% if field.error %}
+					 		<p>{{ field.error }}</p>
+					 	{% else %}
+					 		<p></p>
+					 	{% endif %}
 					</div>
 				</div>
+				{% endfor %}
+				
+				{% if failure %}
 				<div class="form-group">
-					<label for="inputEmail3" class="col-sm-3 control-label">Contraseña</label>
-					<div class="col-sm-9">
-						{{ form.password }}
+					<div class="col-sm-offset-2 col-sm-10">
+						<p style="color:red">{{ failure }}</p>
 					</div>
 				</div>
+				{% endif %}
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="checkbox">
@@ -143,9 +153,6 @@
 						 <button type="submit" class="btn btn-default">Ingresar</button>
 					</div>
 				</div>
-				{% if failure %}
-					<p style="color:red">{{ failure }}</p>
-				{% endif %}
 			</form>
 			<div></div>
 			<div> 

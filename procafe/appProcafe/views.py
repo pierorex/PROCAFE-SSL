@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
-from appProcafe.forms import UserIdForm
+from appProcafe.forms import UserSignUpForm
 from appProcafe.models import UserProfile
 from procafe import settings
 
@@ -79,7 +79,7 @@ def courses(request):
      
 def signup(request): 
     if request.method == 'POST':
-        form = UserIdForm(request.POST)
+        form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
@@ -96,7 +96,7 @@ def signup(request):
                 return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form}, context_instance=RequestContext(request))
 
                 
-    form = UserIdForm()
+    form = UserSignUpForm()
     return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
 
 

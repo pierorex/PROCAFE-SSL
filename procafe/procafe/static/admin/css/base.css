@@ -84,6 +84,10 @@ h5 {
     letter-spacing: 1px;
 }
 
+a {
+    font-size: 13px;
+}
+
 ul li {
     list-style-type: square;
     padding: 1px 0;

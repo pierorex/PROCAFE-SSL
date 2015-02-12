@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms.widgets import TextInput
+from django.core.validators import RegexValidator
 
 
 class DocumentForm(forms.Form):
@@ -9,13 +10,26 @@ class DocumentForm(forms.Form):
     )
 
 
-class UserIdForm(forms.Form):
-    id = forms.IntegerField(label = '')
-    
+class UserSignUpForm(forms.Form):
+    id = forms.CharField(required = True,
+                    label = "Cedula",
+                    validators = [
+                          RegexValidator(
+                                regex = '^[0-9]+$',
+                                message = 'Cedula Invalida.'
+                        )
+                    ])
 
 class UserLogin(forms.Form):
-    id = forms.CharField(max_length=10, label = "Cédula")
-    password = forms.CharField(widget=forms.PasswordInput)
+    id = forms.CharField(required = True,
+                    label = "Cedula",
+                    validators = [
+                          RegexValidator(
+                                regex = '^[0-9]+$',
+                                message = 'Cedula Invalida.'
+                        )
+                    ])
+    password = forms.CharField(required = True, widget=forms.PasswordInput)
     class Meta:
         widgets = {
             'password': forms.PasswordInput(),
