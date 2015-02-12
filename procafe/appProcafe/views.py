@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import logout
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -60,15 +61,18 @@ def index(request):
             return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
 
     form = UserLogin()
-    return render_to_response('homepage.html',{'form':form}, context_instance=RequestContext(request))
+    return render_to_response('homepage.html',
+                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                              context_instance=RequestContext(request))
+
+
     
-    
-@login_required
+@login_required(login_url='/appProcafe/login/')
 def profile(request):
     return render_to_response('infopersonal.html', context_instance=RequestContext(request))
-    
 
-@login_required
+
+@login_required(login_url='/appProcafe/login/')
 def editProfile(request):
     return render_to_response('editarperfil.html', context_instance=RequestContext(request))    
 
@@ -85,8 +89,7 @@ def signup(request):
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
                 mensaje = ''' Nombre de Usuario: %d
  Contraseña: password''' %(user.ID_number)
-                send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',[user.user.email], fail_silently=False)
-                
+
                 return HttpResponseRedirect('/appProcafe/')
             
             except UserProfile.DoesNotExist:
@@ -97,7 +100,14 @@ def signup(request):
 
                 
     form = UserSignUpForm()
-    return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
+    return render_to_response('solicitudcuenta.html', 
+                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+
+def logoutUser(request):
+    if request.user.is_authenticated():
+        logout(request)
+    return HttpResponseRedirect('/appProcafe/')
 
 
 def actualQuarter(request):

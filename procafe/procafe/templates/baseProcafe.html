@@ -1,8 +1,11 @@
+
+{% block title %}{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Trimestre Actual</title>
+  <title>Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -32,7 +35,8 @@
 	<script src="{{ STATIC_URL }}js/scripts.js"></script>
 </head>
 
-<body>
+
+
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column nopadding">
@@ -44,15 +48,21 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					
-						<li>
+						<li class={% if actual_page == "/appProcafe/index/" or actual_page == "/appProcafe/" %}
+										"active"
+								  {% endif %}>
 							<a href="/appProcafe/">Home</a>
 						</li>
 						
-						<li>
+						<li class={% if actual_page == "/appProcafe/signup/"%}
+										"dropdown active"
+								  {% endif %}>
 							 <a href="/appProcafe/signup">Registrarse</a>
 						</li>
 						
-						<li class="dropdown">
+						<li class={% if actual_page == "/appProcafe/profile/"%}
+										"dropdown active"
+								  {% endif %}>
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
@@ -64,7 +74,10 @@
 							</ul>
 						</li>
 						
-						<li class="dropdown active">
+
+						<li class={% if actual_page == "/appProcafe/actualQuarter"%}
+										"dropdown active"
+								  {% endif %}>
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cursos<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
@@ -81,15 +94,8 @@
 						</li>
 						
 					</ul>
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control">
-						</div> <button type="submit" class="btn btn-default">Buscar</button>
-					</form>
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-							<a href="#">Salir</a>
-						</li>
+
 						<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Más información<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
@@ -106,154 +112,19 @@
 								</li>
 							</ul>
 						</li>
+						<li>
+							<a href="/appProcafe/logout">Salir</a>
+						</li>
 					</ul>
 				</div>
 			</nav>
 		</div>
 	</div>
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1>
-					Trimestre Enero-Marzo 2015
-				</h1>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-8 column">
-					<h3>
-						Cursos en progreso
-					</h3>
-					<br/>
-					<div class="row clearfix well">
-						<div class="col-md-9 column">
-							<div class="media">
-								 <a href="#" class="pull-left"><img src="http://lorempixel.com/65/65/" class="media-object" alt=""></a>
-								<div class="media-body">
-									<h4 class="media-heading">
-										Seguridad de escaleras
-									</h4>
-									<div>
-										Período: 20 de febrero a 4 de marzo.
-									</div>
-									<div>
-										Horario: Lunes y Miércoles a las 2:00pm
-									</div>
-								</div>
-							</div>
-							<br/>
-							<div class="progress">
-							  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-								60%
-							  </div>
-							</div>
-						</div>
-						<div class="col-md-3 column">
-							<div class="btn-group">
-								 <button class="btn btn-default">Detalles</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Ver curso</a>
-									</li>
-									<li>
-										<a href="#">Ver notificaciones</a>
-									</li>
-									<li>
-										<a href="#">Ver calendario</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<br/>
-					<br/>
-					<div class="row clearfix well">
-						<div class="col-md-9 column">
-							<div class="media">
-								 <a href="#" class="pull-left"><img src="http://lorempixel.com/64/64/" class="media-object" alt=""></a>
-								<div class="media-body">
-									<h4 class="media-heading">
-										Manejo de extintores
-									</h4>
-									<div>
-										Período: 25 de marzo al 26 de abril.
-									</div>
-									<div>
-										Horario: Martes y Jueves a las 3:00pm
-									</div>
-								</div>
-							</div>
-							<br/>
-							<div class="progress progress-danger">
-							  <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-								40%
-							  </div>
-							</div>
-						</div>
-						<div class="col-md-3 column">
-							<div class="btn-group">
-								 <button class="btn btn-default">Detalles</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Ver curso</a>
-									</li>
-									<li>
-										<a href="#">Ver notificaciones</a>
-									</li>
-									<li>
-										<a href="#">Ver calendario</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 column">
-					<h3>
-						Últimas notificaciones
-					</h3>
-					<br />
-					<div class="panel-group" id="panel-1435">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1435" href="#panel-element-134755">Notificaciones No Leídas</a>
-							</div>
-							<div id="panel-element-134755" class="panel-collapse collapse">
-								<div class="panel-body">
-									Información sobre la próxima clase
-								</div>
-								<div class="panel-body">
-									Material para el manejo de extintores
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-1435" href="#panel-element-293839">Notificaciones Recientes</a>
-							</div>
-							<div id="panel-element-293839" class="panel-collapse collapse">
-								<div class="panel-body">
-									Información sobre la próxima clase
-								</div>
-								<div class="panel-body">
-									Material para el manejo de extintores
-								</div>
-								<div class="panel-body">
-									Tema 1: ¿Qué es seguridad?
-								</div>
-								<div class="panel-body">
-									Información de contacto
-								</div>
-							</div>
-						</div>
-					</div> 
-					<br />
-					<button type="button" class="btn btn-link">Ver todas las notificaciones</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br />
-	<div class="row clearfix">
+	{% block content %}
+
+
+ 	{% endblock %}
+ 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<p align="center">
 				<a href="http://www.usb.ve/home/node/68" data-cke-saved-href="http://www.usb.ve/home/node/68">e-virtual</a> | <a target="_blank" href="https://webmail.usb.ve/" data-cke-saved-href="https://webmail.usb.ve/">Correo</a> |<a href="https://esopo.usb.ve/" data-cke-saved-href="https://esopo.usb.ve">esopo</a> |<a target="_blank" href="http://www.youtube.com/canalusb" data-cke-saved-href="http://www.youtube.com/canalusb">canalUSB</a> | <a target="_blank" href="http://www.usb.ve/agenda.php" data-cke-saved-href="http://www.usb.ve/agenda.php">Agenda Cultural</a> | <a target="_blank" href="http://usbnoticias.info/" data-cke-saved-href="http://usbnoticias.info/">USBnoticias</a> |<span> </span><span> </span><a href="http://www.usb.ve/home/node/55" data-cke-saved-href="http://www.usb.ve/home/node/55">Calendario</a> |<br />
@@ -264,5 +135,10 @@
 		</div>
 	</div>
 </div>
-</body>
-</html>
+
+
+
+{% block branding %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -12,7 +12,8 @@ class DocumentForm(forms.Form):
 
 class UserSignUpForm(forms.Form):
     id = forms.CharField(required = True,
-                    label = "Cedula",
+                    label = "Cédula",
+                    max_length = 10,
                     validators = [
                           RegexValidator(
                                 regex = '^[0-9]+$',
@@ -22,14 +23,16 @@ class UserSignUpForm(forms.Form):
 
 class UserLogin(forms.Form):
     id = forms.CharField(required = True,
-                    label = "Cedula",
+                    label = "Cédula",
                     validators = [
                           RegexValidator(
                                 regex = '^[0-9]+$',
                                 message = 'Cedula Invalida.'
                         )
                     ])
-    password = forms.CharField(required = True, widget=forms.PasswordInput)
+    password = forms.CharField(required = True, 
+                               label = 'Contraseña',
+                               widget=forms.PasswordInput())
     class Meta:
         widgets = {
             'password': forms.PasswordInput(),
