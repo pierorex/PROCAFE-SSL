@@ -23,13 +23,13 @@ class UserSignUpForm(forms.Form):
 
 class UserLogin(forms.Form):
     id = forms.CharField(required = True,
-                    label = "Cédula",
-                    validators = [
-                          RegexValidator(
-                                regex = '^[0-9]+$',
-                                message = 'Cedula Invalida.'
-                        )
-                    ])
+                    label = "Cédula")
+                    # validators = [
+                    #       RegexValidator(
+                    #             regex = '^[0-9]+$',
+                    #             message = 'Cedula Invalida.'
+                    #     )
+                    # ])
     password = forms.CharField(required = True, 
                                label = 'Contraseña',
                                widget=forms.PasswordInput())

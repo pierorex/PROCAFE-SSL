@@ -33,6 +33,11 @@
 	<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
 	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
 	<script src="{{ STATIC_URL }}js/scripts.js"></script>
+
+	<style>
+    #container     {width:30ex; outline:1px solid black; padding:0 .2em; background:white;}
+    #container>div {display:inline-block; margin:.2em 0; background:#fca;}
+</style>
 </head>
 
 
@@ -45,49 +50,60 @@
 	</div>
 	<br><br>
 	<div class="row clearfix">
-		<div class="col-md-2 column">
-			<div>
-				<p align="right">
-					 <b><a href="/">Dirección</a></b>
-				</p>
-				{% if user.is_authenticated %}
+		<div class="container">
+			<div class="col-md-2 column">
+				<div>
 					<p align="right">
-						 <b><a href="/appProcafe/profile">Perfil</a>	</b>	
+						 <b><a href="/">Dirección</a></b>
 					</p>
-					<p align="right">
-						 <b><a href="/appProcafe/courses">Cursos</a>	</b>	
-					</p>
-					<p align="right">
-						 <b><a href="/admin">Contacto</a></b>	
-					</p>
-					<p align="right">
-						 <b><a href="/appProcafe/logout">Salir</a>	</b>	
-					</p>
-				{% else %}
-					<p align="right">
-						 <b><a href="/appProcafe/login">Iniciar Sesión</a>	</b>	
-					</p>
-					<p align="right">
-						 <b><a href="/appProcafe/courses">Cursos</a>	</b>	
-					</p>
-					<p align="right">
-						 <b><a href="/admin">Contacto</a></b>	
-					</p>
-				{% endif %}
-				
+					{% if user.is_authenticated %}
+						{% if user.is_superuser %}
+                            <p align="right">
+                                 <b><a href="/admin">Administración</a>    </b>    
+                            </p>
+                        {% else %}
+                            <p align="right">
+                                 <b><a href="/appProcafe/profile">Perfil</a>    </b>    
+                            </p>
+                        {% endif %}
+						<p align="right">
+							 <b><a href="/appProcafe/courses">Cursos</a>	</b>	
+						</p>
+						<p align="right">
+							 <b><a href="/admin">Contacto</a></b>	
+						</p>
+						<p align="right">
+							 <b><a href="/appProcafe/logout">Salir</a>	</b>	
+						</p>
+					{% else %}
+						<p align="right">
+							 <b><a href="/appProcafe/login">Iniciar Sesión</a>	</b>	
+						</p>
+						<p align="right">
+							 <b><a href="/appProcafe/courses">Cursos</a>	</b>	
+						</p>
+						<p align="right">
+							 <b><a href="/admin">Contacto</a></b>	
+						</p>
+					{% endif %}
+					
+				</div>
+			</div>
+			<div class="col-md-7 column">
+			{% block content %}
+
+
+		 	{% endblock %}
+		 	</div>	
+			<div class="col-md-2 column">
+					<img src="{{ STATIC_URL }}sticker.tif" width="300" height="150"  />
 			</div>
 		</div>
-		<div class="col-md-7 column">
-		{% block content %}
-
-
-	 	{% endblock %}
-	 	</div>	
-		<div class="col-md-2 column">
-				<img src="{{ STATIC_URL }}sticker.tif" width="300" height="150"  />
-		</div>
 	</div>
- 	<div class="row clearfix">
+	<div>
+	<br><br>
+	</div>
+ 	<div class="row clearfix"	>
 		<div class="col-md-12 column">
 			<p align="center">
 				<a href="http://www.usb.ve/home/node/68" data-cke-saved-href="http://www.usb.ve/home/node/68">e-virtual</a> | <a target="_blank" href="https://webmail.usb.ve/" data-cke-saved-href="https://webmail.usb.ve/">Correo</a> |<a href="https://esopo.usb.ve/" data-cke-saved-href="https://esopo.usb.ve">esopo</a> |<a target="_blank" href="http://www.youtube.com/canalusb" data-cke-saved-href="http://www.youtube.com/canalusb">canalUSB</a> | <a target="_blank" href="http://www.usb.ve/agenda.php" data-cke-saved-href="http://www.usb.ve/agenda.php">Agenda Cultural</a> | <a target="_blank" href="http://usbnoticias.info/" data-cke-saved-href="http://usbnoticias.info/">USBnoticias</a> |<span> </span><span> </span><a href="http://www.usb.ve/home/node/55" data-cke-saved-href="http://www.usb.ve/home/node/55">Calendario</a> |<br />

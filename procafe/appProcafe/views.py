@@ -113,7 +113,7 @@ def signup(request):
 def userLogout(request):
     if request.user.is_authenticated():
         logout(request)
-    return HttpResponseRedirect('/appProcafe/')
+    return render_to_response('logout.html', context_instance=RequestContext(request))
 
 
 def actualQuarter(request):
