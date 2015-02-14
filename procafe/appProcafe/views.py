@@ -44,7 +44,10 @@ def loadEmployees(request):
 
 
 def index(request):
-    failure = "Cedula o contraseña incorrectas"
+    return render_to_response('homepage.html',context_instance=RequestContext(request))
+
+def userLogin(request):
+    failure = "Cédula o contraseña incorrectas"
     if request.POST:
         form = UserLogin(request.POST)
         if form.is_valid():
@@ -53,15 +56,18 @@ def index(request):
             user = authenticate(username=userName, password=userPassword)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/appProcafe/profile')
+                if user.is_superuser:
+                    return HttpResponseRedirect('/admin')
+                else:
+                    return HttpResponseRedirect('/appProcafe/profile')
             else:
-                return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
+                return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
  
         else:
-            return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
+            return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
 
     form = UserLogin()
-    return render_to_response('homepage.html',
+    return render_to_response('login.html',
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                               context_instance=RequestContext(request))
 
@@ -104,7 +110,7 @@ def signup(request):
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
 
-def logoutUser(request):
+def userLogout(request):
     if request.user.is_authenticated():
         logout(request)
     return HttpResponseRedirect('/appProcafe/')
