@@ -90,6 +90,11 @@
 				</div>
 			</div>
 			<div class="col-md-7 column">
+			{% ifnotequal request.path "/"%}
+			{% ifnotequal request.path "/appProcafe"%}
+				<b><a href="/">Inicio</a></b>	
+			{% endifnotequal %}
+			{% endifnotequal %}
 			{% block content %}
 
 
