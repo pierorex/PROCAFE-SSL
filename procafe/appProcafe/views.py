@@ -20,9 +20,6 @@ from procafe import settings
 
 @staff_member_required
 def loadEmployees(request):
-    if not request.user.is_authenticated(): # and user.is_admin()
-        return redirect('/login/')
-
     form = DocumentForm() # empty form
     file_path = ''
 
