@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms.widgets import TextInput
-
+from django.core.validators import RegexValidator
 
 class DocumentForm(forms.Form):
     file = forms.FileField (
@@ -14,7 +14,7 @@ class UserIdForm(forms.Form):
     
 
 class UserLogin(forms.Form):
-    id = forms.CharField(max_length=10, label = "Cédula")
+    id = forms.CharField(max_length=8, label = "Cédula", validators=[RegexValidator(regex="^[1-9][0-9]{0,7}$", message="La cédula debe contener a lo sumo 8 caracteres numéricos.", code="invalid_id")])
     password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         widgets = {

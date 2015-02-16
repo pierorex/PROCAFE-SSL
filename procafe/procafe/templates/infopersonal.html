@@ -124,8 +124,8 @@
 		<div class="col-md-3 column">
 			<img alt="160x160" src="http://lorempixel.com/160/160/">
 			<h3>
-				John Smith
-			</h3> <address> <strong>Twitter, Inc.</strong><br> 795 Folsom Ave, Suite 600<br> San Francisco, CA 94107<br> <abbr title="Phone">P:</abbr> (123) 456-7890</address>
+				{{ user.firstname }} {{ user.lastname }}
+			</h3> <address> <strong>{{ user.USB_ID }}</strong><br> {{ user.location }}<br></address>
 		</div>
 		<div class="col-md-5 column">
 			<dl>
@@ -133,65 +133,49 @@
 					Nombre(s)
 				</dt>
 				<dd>
-					John
+					{{ user.firstname }}
 				</dd>
 				<dt>
 					Apellido(s)
 				</dt>
 				<dd>
-					Smith
+					{{ user.lastname }}
 				</dd>
 				<dt>
 					Cédula de Identidad
 				</dt>
 				<dd>
-					12
-				</dd>
-				<dt>
-					Biografía
-				</dt>
-				<dd>
-					Soy un empleado del Departamento de Seguridad Integral de la Universidad Simón Bolívar. He trabajado aquí por más de 5 años.
+					{{ user.ID_number }}
 				</dd>
 				<dt>
 					Cargo
 				</dt>
 				<dd>
-					Trabajador
+					{{ user.type }}
 				</dd>
 				<dt>
-					Sexo
+					Fecha de Nacimiento
 				</dt>
 				<dd>
-					Masculino
+					{{ user.birthday }}
 				</dd>
-				<dt>
-					Edad
-				</dt>
-				<dd>
-					36
-				</dd>
-				<br />
 				<dt>
 					Correo Electrónico
 				</dt>
 				<dd>
-					johnsmith85@gmail.com
+					{{ user.email }}
 				</dd>
 				<dt>
-					Teléfono
+					Nómina
 				</dt>
 				<dd>
-					Casa: 0212-5557788
-				</dd>
-				<dd>
-					Celular: 0424-3332211
+					{{ user.paysheet }}
 				</dd>
 				<dt>
-					Departamento u Oficina
+					Cargo
 				</dt>
 				<dd>
-					Departamento de Seguridad Integral, CB2 Piso 1, CB2-104
+					{{ user.position }}
 				</dd>
 			</dl>
 		</div>
