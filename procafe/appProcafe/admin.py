@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from appProcafe.models import *
+from appProcafe.models import Department, Unit, Section, Risk, Position, Telephone, Document, Takes, Course, UserProfile, User
 
 
 admin.site.register(Department)

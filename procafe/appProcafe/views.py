@@ -2,18 +2,16 @@
 
 from django.contrib.auth import authenticate, login
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
-from appProcafe.forms import UserIdForm
+from appProcafe.forms import UserIdForm, RequestForm
 from appProcafe.models import UserProfile
 from procafe import settings
 
@@ -93,7 +91,9 @@ def signup(request):
                
                 failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema"
                 
-                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form}, context_instance=RequestContext(request))
+                application = RequestForm(request.POST)
+                
+                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form, 'application':application}, context_instance=RequestContext(request))
 
                 
     form = UserIdForm()
