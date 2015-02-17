@@ -51,6 +51,7 @@ class Section(models.Model):
         verbose_name_plural = "Secciones"
 
 
+
 class Position(models.Model):
     name = models.CharField(max_length=200, verbose_name="Cargo")
 
@@ -60,6 +61,7 @@ class Position(models.Model):
     class Meta:
         verbose_name = "Cargo"
         verbose_name_plural = "Cargos"
+
 
 
 class UserProfile(models.Model):
@@ -93,6 +95,7 @@ class Telephone(models.Model):
     class Meta:
         verbose_name = "Teléfono"
         verbose_name_plural = "Teléfonos"
+
 
 
 class Course(models.Model):
@@ -129,6 +132,7 @@ class Takes(models.Model):
         verbose_name_plural = "Cursa"
 
 
+
 class Risk(models.Model):
     name = models.CharField(max_length=200, verbose_name = "Riesgo")
 
@@ -149,6 +153,7 @@ class Document(models.Model):
         verbose_name = "Documento"
         verbose_name_plural = "Documentos"
         
+
 
 class UserApplication(models.Model):
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
@@ -171,13 +176,15 @@ class UserApplication(models.Model):
         verbose_name = "Solicitud de Registro"
         verbose_name_plural = "Solicitudes de Registro"
         
+        
+        
 class RemoveRequest(models.Model):
     ID_number = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula", default=0)
     USB_ID = models.ForeignKey(UserProfile, to_field='USB_ID', validators=[USBIDValidator], default=None)
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
     lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
-    course_ID = models.ForeignKey(Course, verbose_name="Curso", default=None)
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
+    course_ID = models.ForeignKey(Course, verbose_name="Curso", default=None)
     request_type = models.CharField(verbose_name="Tipo de Solicitud", choices=[("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
     request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
     is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
