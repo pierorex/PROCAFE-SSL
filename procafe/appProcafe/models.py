@@ -179,13 +179,13 @@ class UserApplication(models.Model):
         
         
 class RemoveRequest(models.Model):
-    ID_number = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula", default=0)
-    USB_ID = models.ForeignKey(UserProfile, to_field='USB_ID', validators=[USBIDValidator], default=None)
+    ID_number = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula", default=0, related_name='ID_number_remove_reques')
+    USB_ID = models.ForeignKey(UserProfile, to_field='USB_ID', validators=[USBIDValidator], default=None, related_name='USB_ID_remove_reques')
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
     lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
     course_ID = models.ForeignKey(Course, verbose_name="Curso", default=None)
-    request_type = models.CharField(verbose_name="Tipo de Solicitud", choices=[("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
+    request_type = models.CharField(max_length=12, verbose_name="Tipo de Solicitud", choices=[("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
     request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
     is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
     
