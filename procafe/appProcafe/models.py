@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from datetime import datetime
 
+USBIDValidator = RegexValidator(
+                    regex="^[0-9]{2}-[0-9]{5}$", 
+                    message="El USB-ID debe ser de la forma xx-xxxxx.", 
+                    code="invalid_usbid"
+                )
+
 
 class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
@@ -59,7 +65,7 @@ class Position(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
-    USB_ID = models.CharField(max_length=8, unique=True, validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", message="El USB-ID debe ser de la forma xx-xxxxx.", code="invalid_usbid")], null=True)
+    USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
     lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
@@ -144,9 +150,9 @@ class Document(models.Model):
         verbose_name_plural = "Documentos"
         
         
-class UserApplication(models.Model):
+class UserRequest(models.Model):
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
-    USB_ID = models.CharField(max_length=8, unique=True, validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", message="El USB-ID debe ser de la forma xx-xxxxx.", code="invalid_usbid")], null=True)
+    USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
     lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
@@ -154,9 +160,14 @@ class UserApplication(models.Model):
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
     location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
-    email = models.EmailField(verbose_name="E-mail", default=None)
+    email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
+    request_type = models.CharField(verbose_name="Tipo de Solicitud", choices=[("REGISTRO", "Registro"), ("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
+    request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
     is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
-
+    
+    class Meta:
+        verbose_name = "Solicitud"
+        verbose_name_plural = "Solicitudes"
