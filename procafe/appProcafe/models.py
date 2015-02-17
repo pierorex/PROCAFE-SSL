@@ -3,8 +3,23 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from datetime import datetime
+from django.dispatch.dispatcher import receiver
+from django.db.models.signals import pre_delete
+from django.core.exceptions import PermissionDenied
 
 
+# Signal handlers
+@receiver (pre_delete, sender=User)
+def userProfile_pre_delete_handler(sender, instance, **kwargs):
+    if instance.is_superuser:
+        admins_list = []
+        for user in User.objects.all():
+            if user.is_superuser: admins_list.append(user)
+        if len(admins_list) == 1:
+            raise PermissionDenied
+
+
+# Models
 class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
@@ -142,4 +157,3 @@ class Document(models.Model):
     class Meta:
         verbose_name = "Documento"
         verbose_name_plural = "Documentos"
-
