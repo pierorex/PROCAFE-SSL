@@ -149,8 +149,8 @@ class Document(models.Model):
         verbose_name = "Documento"
         verbose_name_plural = "Documentos"
         
-        
-class UserRequest(models.Model):
+
+class UserApplication(models.Model):
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
@@ -161,7 +161,6 @@ class UserRequest(models.Model):
     location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
-    request_type = models.CharField(verbose_name="Tipo de Solicitud", choices=[("REGISTRO", "Registro"), ("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
     request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
     is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
 
@@ -169,5 +168,23 @@ class UserRequest(models.Model):
         return self.user.first_name + " " + self.user.last_name
     
     class Meta:
-        verbose_name = "Solicitud"
-        verbose_name_plural = "Solicitudes"
+        verbose_name = "Solicitud de Registro"
+        verbose_name_plural = "Solicitudes de Registro"
+        
+class RemoveRequest(models.Model):
+    ID_number = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula", default=0)
+    USB_ID = models.ForeignKey(UserProfile, to_field='USB_ID', validators=[USBIDValidator], default=None)
+    firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
+    lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
+    course_ID = models.ForeignKey(Course, verbose_name="Curso", default=None)
+    email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
+    request_type = models.CharField(verbose_name="Tipo de Solicitud", choices=[("INSCRIPCION", "Inscripción"), ("RETIRO", "Retiro")], default=None)
+    request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
+    is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
+    
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+    
+    class Meta:
+        verbose_name = "Solicitud de Cursos"
+        verbose_name_plural = "Solicitudes de Cursos"

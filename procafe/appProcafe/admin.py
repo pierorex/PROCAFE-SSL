@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from appProcafe.models import Department, Unit, Section, Risk, Position, Telephone, Document, Takes, Course, UserProfile, User
+from appProcafe.models import *
 
 
 admin.site.register(Department)
@@ -40,4 +40,13 @@ class UserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+class UserApplicationAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('Datos del Solicitante', {'fields': ('ID_number', 'USB_ID', 'firstname', 'lastname', 'birthday', 'paysheet', 'type', 'location', 'position', 'email')}),
+        ('Solicitud', {'fields': ('request_date', 'is_pending')}),
+    )
+
+admin.site.register(UserApplication, UserApplicationAdmin)
+
 
