@@ -2,23 +2,35 @@
 from django import forms
 from django.core.validators import RegexValidator
 
+
 class DocumentForm(forms.Form):
     file = forms.FileField (
         label='Seleccione el archivo de nomina en formato .csv:'
     )
 
 
-class UserIdForm(forms.Form):
-    id = forms.IntegerField(label = '')
-    
+class UserSignUpForm(forms.Form):
+    id = forms.CharField(required = True,
+                    label = "Cédula",
+                    max_length = 10,
+                    validators = [
+                          RegexValidator(
+                                regex = '^[0-9]+$',
+                                message = 'Cedula Invalida.'
+                        )
+                    ])
 
 class UserLogin(forms.Form):
     id = forms.CharField(max_length=8, label = "Cédula", validators=[RegexValidator(regex="^[1-9][0-9]{0,7}$", message="La cédula debe contener a lo sumo 8 caracteres numéricos.", code="invalid_id")])
-    password = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(required = True, 
+                               label = 'Contraseña',
+                               widget=forms.PasswordInput())
+
     class Meta:
         widgets = {
             'password': forms.PasswordInput(),
         }
+
         
 class RequestForm(forms.Form):
     ID_number = forms.IntegerField(required = False,label="Cédula")

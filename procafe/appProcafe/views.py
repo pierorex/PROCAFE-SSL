@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import logout
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,8 @@ from django.core.mail import send_mail
 from appProcafe.models import Document
 from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
-from appProcafe.forms import UserIdForm, RequestForm
+from appProcafe.forms import RequestForm
+from appProcafe.forms import UserSignUpForm
 from appProcafe.models import UserProfile
 from procafe import settings
 
@@ -38,7 +40,10 @@ def loadEmployees(request):
 
 
 def index(request):
-    failure = "Cedula o contraseña incorrectas"
+    return render_to_response('homepage.html',context_instance=RequestContext(request))
+
+def userLogin(request):
+    failure = "Cédula o contraseña incorrectas"
     if request.POST:
         form = UserLogin(request.POST)
         if form.is_valid():
@@ -47,18 +52,24 @@ def index(request):
             user = authenticate(username=userName, password=userPassword)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/appProcafe/profile')
+                if user.is_superuser:
+                    return HttpResponseRedirect('/admin')
+                else:
+                    return HttpResponseRedirect('/appProcafe/profile')
             else:
-                return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
+                return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
  
         else:
-            return render_to_response('homepage.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
+            return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
 
     form = UserLogin()
-    return render_to_response('homepage.html',{'form':form}, context_instance=RequestContext(request))
+    return render_to_response('login.html',
+                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                              context_instance=RequestContext(request))
+
+
     
-    
-@login_required
+@login_required(login_url='/appProcafe/login/')
 def profile(request):
     if hasattr(request.user,'userprofile'):
         user = request.user.userprofile
@@ -66,7 +77,8 @@ def profile(request):
     else:
         return HttpResponseRedirect('/')
 
-@login_required
+
+@login_required(login_url='/appProcafe/login/')
 def editProfile(request):
     return render_to_response('editarperfil.html', context_instance=RequestContext(request))    
 
@@ -77,27 +89,28 @@ def courses(request):
      
 def signup(request): 
     if request.method == 'POST':
-        form = UserIdForm(request.POST)
+        form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
                 user = UserProfile.objects.get(ID_number=request.POST['id'])
-                mensaje = ''' Nombre de Usuario: %d
- Contraseña: password''' %(user.ID_number)
-                send_mail('Contraseña Dsi', mensaje, 'procafeusb@gmail.com',[user.user.email], fail_silently=False)
-                
+                mensaje = ''' Nombre de Usuario: %d Contraseña: password''' %(user.ID_number)
                 return HttpResponseRedirect('/appProcafe/')
-            
             except UserProfile.DoesNotExist:
-               
                 failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema"
-                
                 application = RequestForm(request.POST)
-                
                 return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form, 'application':application}, context_instance=RequestContext(request))
 
                 
-    form = UserIdForm()
-    return render_to_response('solicitudcuenta.html', {'form':form}, context_instance=RequestContext(request))
+    form = UserSignUpForm()
+    return render_to_response('solicitudcuenta.html', 
+                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+
+@login_required(login_url='/appProcafe/login/')
+def userLogout(request):
+    if request.user.is_authenticated():
+        logout(request)
+    return render_to_response('logout.html', context_instance=RequestContext(request))
 
 
 def actualQuarter(request):

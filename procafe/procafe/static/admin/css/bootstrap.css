@@ -10,6 +10,36 @@ html {
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
+
+
+
+
+.region-navigation .block-menu .inner,
+.region-navigation .block-menu-block .inner,
+.region-highligted .inner,
+.region-help .inner {
+  padding: 0;
+}
+.region-highligted .block,
+.region-help .block,
+.sidebar .block {
+  margin: 0 0 0 0;
+}
+.sidebar .block {
+  border-top: solid 1px #e6e4de;
+}
+.sidebar .block.first {
+  border-top: none;
+}
+.sidebar .content {
+  padding: 0.5em 0;
+}
+.content {
+  margin: 0 15px 0 10px;
+}
+
+
+
 body {
   margin: 0;
 }
