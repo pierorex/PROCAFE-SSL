@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from datetime import datetime
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_save
 from django.core.exceptions import PermissionDenied
 
 USBIDValidator = RegexValidator(
@@ -23,6 +23,7 @@ def userProfile_pre_delete_handler(sender, instance, **kwargs):
             if user.is_superuser: admins_list.append(user)
         if len(admins_list) == 1:
             raise PermissionDenied
+
 
 
 # Models
@@ -158,6 +159,8 @@ class Risk(models.Model):
         verbose_name = "Riesgo"
         verbose_name_plural = "Riesgos"
 
+
+
 class Document(models.Model):
     file = models.FileField(upload_to='documents')
     
@@ -176,20 +179,53 @@ class UserApplication(models.Model):
     firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
     lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
-    paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
-    type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
+    paysheet = models.CharField(max_length=14, 
+                                verbose_name="Tipo de Nómina", 
+                                choices=[("ACADEMICO", "Académico"), 
+                                         ("ADMINISTRATIVO", "Administrativo"), 
+                                         ("OBRERO", "Obrero")], 
+                                default=None)
+    type = models.CharField(max_length=20, 
+                            choices=[("----", "----")], 
+                            verbose_name="Tipo de Personal", 
+                            default=None)
     location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
     request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
-    is_pending = models.BooleanField(default=1, verbose_name="Aprobación Pendiente")
+    status = models.CharField(max_length=20, 
+                              verbose_name="Estado de la Solicitud", 
+                              choices = [('PENDIENTE','Pendiente'),
+                                         ('APROBADA','Aprobada'),
+                                         ('RECHAZADA','Rechazada')], 
+                              default='PENDIENTE')
 
     def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
+        return str(self.ID_number) + " " + str(self.request_date)
     
     class Meta:
         verbose_name = "Solicitud de Registro"
         verbose_name_plural = "Solicitudes de Registro"
+        
+        
+        
+@receiver (post_save, sender=UserApplication)
+def userApplication_postsave_handler(sender, instance, **kwargs):
+    if not instance.status == 'PENDIENTE':
+        new_user = UserProfile.objects.create_user
+        new_user = UserProfile (ID_number = instance.ID_number,
+                                USB_ID = instance.USB_ID,
+                                firstname = instance.firstname,
+                                lastname = instance.lastname,
+                                birthday = instance.birthday,
+                                paysheet = instance.paysheet,
+                                type = instance.type,
+                                location = instance.location,
+                                position = instance.position,
+                                email = instance.email
+                            )
+        instance.delete()
+        new_user.save()
         
         
         
