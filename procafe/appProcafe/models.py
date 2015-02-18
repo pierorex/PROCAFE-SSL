@@ -210,7 +210,7 @@ class UserApplication(models.Model):
 
 @receiver (post_save, sender=UserApplication)
 def userApplication_postsave_handler(sender, instance, **kwargs):
-    if not instance.status == 'PENDIENTE':
+    if instance.status == 'APROBADA':
         new_user = User.objects.create_user(
                                             username = instance.firstname,
                                             email = instance.email,
@@ -230,7 +230,9 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                       position = instance.position,
                                     )
         new_userProfile.save()
-        instance.delete()
+    
+    # Delete solicitud in 2 cases: aprovada/rechazada
+    if instance.status != 'PENDIENTE': instance.delete()
         
         
         
