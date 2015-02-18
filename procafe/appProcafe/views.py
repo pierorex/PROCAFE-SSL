@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-from appProcafe.models import Document
+from appProcafe.models import Document, UserApplication
 from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
 from appProcafe.forms import RequestForm
@@ -99,8 +99,26 @@ def signup(request):
             except UserProfile.DoesNotExist:
                 failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
                 application = RequestForm(request.POST)
+                """new_userApplication = UserApplication(
+                                                      ID_number = request.POST['ID_number'],
+                                                      USB_ID = request.POST['USB_ID'],
+                                                      first_name = request.POST['first_name'],
+                                                      last_name = request.POST['last_name'],
+                                                      birthday = request.POST['birthday'],
+                                                      paysheet = request.POST['paysheet'],
+                                                      type = request.POST['type'],
+                                                      location = request.POST['location'],
+                                                      position = request.POST['position'],
+                                                      email = request.POST['email']
+                                                      )
+                """
                 query_results = UserProfile.objects.all()
-                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form, 'query_results':query_results, 'application':application}, context_instance=RequestContext(request))
+                return render_to_response('solicitudcuenta.html', 
+                                          {'failure':failure, 
+                                           'form':form, 
+                                           'query_results':query_results, 
+                                           'application':application}, 
+                                          context_instance=RequestContext(request))
                 
     form = UserSignUpForm()
     return render_to_response('solicitudcuenta.html', 

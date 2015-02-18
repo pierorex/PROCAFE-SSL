@@ -68,8 +68,21 @@ class Section(models.Model):
 
 
 
+class Risk(models.Model):
+    name = models.CharField(max_length=200, verbose_name = "Riesgo")
+
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Riesgo"
+        verbose_name_plural = "Riesgos"
+
+
+
 class Position(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Cargo")
+    name = models.CharField(max_length=200, verbose_name="Cargo", unique=True)
+    risks = models.ManyToManyField(Risk)
 
     def __str__(self):
         return str(self.name)
@@ -80,6 +93,19 @@ class Position(models.Model):
 
 
 
+class Location(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Ubicación', unique=True)
+    risks = models.ManyToManyField(Risk)
+    
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Ubicación"
+        verbose_name_plural = "Ubicaciones"
+
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
@@ -87,10 +113,9 @@ class UserProfile(models.Model):
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
-    location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
+    location = models.ForeignKey(Location, verbose_name='Ubicación', defaukt=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
     finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
-
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -145,18 +170,6 @@ class Takes(models.Model):
 
 
 
-class Risk(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Riesgo")
-
-    def __str__(self):
-        return str(self.name)
-
-    class Meta:
-        verbose_name = "Riesgo"
-        verbose_name_plural = "Riesgos"
-
-
-
 class Document(models.Model):
     file = models.FileField(upload_to='documents')
     
@@ -205,6 +218,7 @@ class UserApplication(models.Model):
         
         
 
+# Signal handler to process UserApplications in case they get updated
 @receiver (post_save, sender=UserApplication)
 def userApplication_postsave_handler(sender, instance, **kwargs):
     if instance.status == 'APROBADA':
@@ -228,7 +242,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                     )
         new_userProfile.save()
     
-    # Delete solicitud in 2 cases: aprovada/rechazada
+    # Delete application in 2 cases: aprovada/rechazada
     if instance.status != 'PENDIENTE': instance.delete()
         
         
@@ -250,3 +264,5 @@ class RemoveRequest(models.Model):
     class Meta:
         verbose_name = "Solicitud de Cursos"
         verbose_name_plural = "Solicitudes de Cursos"
+
+
