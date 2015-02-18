@@ -16,7 +16,7 @@ USBIDValidator = RegexValidator(
 
 # Signal handlers
 @receiver (pre_delete, sender=User)
-def userProfile_pre_delete_handler(sender, instance, **kwargs):
+def userProfile_predelete_handler(sender, instance, **kwargs):
     if instance.is_superuser:
         admins_list = []
         for user in User.objects.all():
@@ -84,16 +84,13 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
-    firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
-    lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
     location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
-    position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
-    
+    position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
     finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
-    is_enabled = models.BooleanField(default=1, verbose_name="Habilitado")
+
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -175,8 +172,8 @@ class Document(models.Model):
 class UserApplication(models.Model):
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
-    firstname = models.CharField(max_length=50, verbose_name="Nombre", default="")
-    lastname = models.CharField(max_length=50, verbose_name="Apellido", default="")
+    first_name = models.CharField(max_length=50, verbose_name="Nombre", default="")
+    last_name = models.CharField(max_length=50, verbose_name="Apellido", default="")
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, 
                                 verbose_name="Tipo de Nómina", 
@@ -214,15 +211,15 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
         new_user = User.objects.create_user(
                                             username = instance.firstname,
                                             email = instance.email,
-                                            password = 'testing'
+                                            password = 'testing',
+                                            firs_tname = instance.first_name,
+                                            last_name = instance.last_name
                                         )
         new_user.save()
         new_userProfile = UserProfile(
                                       user = new_user,
                                       ID_number = instance.ID_number,
                                       USB_ID = instance.USB_ID,
-                                      firstname = instance.firstname,
-                                      lastname = instance.lastname,
                                       birthday = instance.birthday,
                                       paysheet = instance.paysheet,
                                       type = instance.type,
