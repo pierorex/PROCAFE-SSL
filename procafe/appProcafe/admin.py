@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from appProcafe.models import Department, Unit, Section, Risk, Position
+from appProcafe.models import Department, Unit, Section, Risk, Position, Location
 from appProcafe.models import Telephone, Document, Takes, Course
 from appProcafe.models import User, UserProfile, UserApplication, RemoveRequest
 
@@ -11,6 +11,7 @@ admin.site.register(Unit)
 admin.site.register(Section)
 admin.site.register(Risk)
 admin.site.register(Position)
+admin.site.register(Location)
 admin.site.register(Telephone)
 admin.site.register(Document)
 
@@ -20,8 +21,6 @@ class TakesAdmin(admin.ModelAdmin):
 admin.site.register(Takes, TakesAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
-    
-
     list_display = ('name', 'department_ID', 'number_hours')
     search_fields = ['name']
 
@@ -58,4 +57,3 @@ class RemoveRequestAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(RemoveRequest, RemoveRequestAdmin)
-
