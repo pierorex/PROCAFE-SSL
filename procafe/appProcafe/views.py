@@ -93,8 +93,12 @@ def signup(request):
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
-                user = UserProfile.objects.get(ID_number=request.POST['id'])
-                mensaje = ''' Nombre de Usuario: %d Contraseña: password''' %(user.ID_number)
+                new_userProfile = UserProfile.objects.get(ID_number=request.POST['id'])
+                new_userProfile.user.set_password('test')
+                new_userProfile.user.save()
+                new_userProfile.save()
+                mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'test')
+                send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com'], fail_silently=False)
                 return HttpResponseRedirect('/appProcafe/')
             except UserProfile.DoesNotExist:
                 failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
@@ -104,14 +108,14 @@ def signup(request):
                                                       USB_ID = request.POST['USB_ID'],
                                                       first_name = request.POST['first_name'],
                                                       last_name = request.POST['last_name'],
-                                                      birthday = request.POST['birthday'],
+                                                      birthdate = request.POST['birthdate'],
                                                       paysheet = request.POST['paysheet'],
                                                       type = request.POST['type'],
                                                       location = request.POST['location'],
                                                       position = request.POST['position'],
                                                       email = request.POST['email']
                                                       )
-                """
+                new_userApplication.save()"""
                 query_results = UserProfile.objects.all()
                 return render_to_response('solicitudcuenta.html', 
                                           {'failure':failure, 

@@ -110,7 +110,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
-    birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
+    birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
     location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
@@ -187,7 +187,7 @@ class UserApplication(models.Model):
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     first_name = models.CharField(max_length=50, verbose_name="Nombre", default="")
     last_name = models.CharField(max_length=50, verbose_name="Apellido", default="")
-    birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
+    birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, 
                                 verbose_name="Tipo de Nómina", 
                                 choices=[("ACADEMICO", "Académico"), 
@@ -198,7 +198,7 @@ class UserApplication(models.Model):
                             choices=[("----", "----")], 
                             verbose_name="Tipo de Personal", 
                             default=None)
-    location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
+    location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)
     request_date = models.DateField(verbose_name="Fecha de la Solicitud", default=datetime.today())
@@ -223,10 +223,10 @@ class UserApplication(models.Model):
 def userApplication_postsave_handler(sender, instance, **kwargs):
     if instance.status == 'APROBADA':
         new_user = User.objects.create_user(
-                                            username = instance.firstname,
+                                            username = instance.first_name,
                                             email = instance.email,
                                             password = 'testing',
-                                            firs_tname = instance.first_name,
+                                            first_name = instance.first_name,
                                             last_name = instance.last_name
                                         )
         new_user.save()
@@ -234,7 +234,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                       user = new_user,
                                       ID_number = instance.ID_number,
                                       USB_ID = instance.USB_ID,
-                                      birthday = instance.birthday,
+                                      birthdate = instance.birthdate,
                                       paysheet = instance.paysheet,
                                       type = instance.type,
                                       location = instance.location,
