@@ -113,7 +113,7 @@ class UserProfile(models.Model):
     birthday = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
-    location = models.ForeignKey(Location, verbose_name='Ubicación', defaukt=None)
+    location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
     finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
 
