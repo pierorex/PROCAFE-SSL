@@ -91,7 +91,6 @@ class UserProfile(models.Model):
     type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
     location = models.CharField(max_length=200, verbose_name="Ubicación de Trabajo", default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
-    email = models.EmailField(verbose_name="E-mail", default=None)
     
     finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
     is_enabled = models.BooleanField(default=1, verbose_name="Habilitado")
@@ -208,24 +207,30 @@ class UserApplication(models.Model):
         verbose_name_plural = "Solicitudes de Registro"
         
         
-        
+
 @receiver (post_save, sender=UserApplication)
 def userApplication_postsave_handler(sender, instance, **kwargs):
     if not instance.status == 'PENDIENTE':
-        new_user = UserProfile.objects.create_user
-        new_user = UserProfile (ID_number = instance.ID_number,
-                                USB_ID = instance.USB_ID,
-                                firstname = instance.firstname,
-                                lastname = instance.lastname,
-                                birthday = instance.birthday,
-                                paysheet = instance.paysheet,
-                                type = instance.type,
-                                location = instance.location,
-                                position = instance.position,
-                                email = instance.email
-                            )
-        instance.delete()
+        new_user = User.objects.create_user(
+                                            username = instance.firstname,
+                                            email = instance.email,
+                                            password = 'testing'
+                                        )
         new_user.save()
+        new_userProfile = UserProfile(
+                                      user = new_user,
+                                      ID_number = instance.ID_number,
+                                      USB_ID = instance.USB_ID,
+                                      firstname = instance.firstname,
+                                      lastname = instance.lastname,
+                                      birthday = instance.birthday,
+                                      paysheet = instance.paysheet,
+                                      type = instance.type,
+                                      location = instance.location,
+                                      position = instance.position,
+                                    )
+        new_userProfile.save()
+        instance.delete()
         
         
         
