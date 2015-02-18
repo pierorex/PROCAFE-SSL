@@ -47,9 +47,10 @@ def userLogin(request):
     if request.POST:
         form = UserLogin(request.POST)
         if form.is_valid():
-            userName = request.POST['id']
+            cedula = request.POST['id']
+            nombre = UserProfile.objects.get(ID_number=cedula).user.username
             userPassword = request.POST['password']
-            user = authenticate(username=userName, password=userPassword)
+            user = authenticate(username=nombre, password=userPassword)
             if user is not None:
                 login(request, user)
                 if user.is_superuser:
