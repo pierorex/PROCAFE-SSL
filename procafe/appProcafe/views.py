@@ -96,10 +96,10 @@ def signup(request):
                 mensaje = ''' Nombre de Usuario: %d Contraseña: password''' %(user.ID_number)
                 return HttpResponseRedirect('/appProcafe/')
             except UserProfile.DoesNotExist:
-                failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema"
+                failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
                 application = RequestForm(request.POST)
-                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form, 'application':application}, context_instance=RequestContext(request))
-
+                query_results = UserProfile.objects.all()
+                return render_to_response('solicitudcuenta.html', {'failure':failure, 'form':form, 'query_results':query_results, 'application':application}, context_instance=RequestContext(request))
                 
     form = UserSignUpForm()
     return render_to_response('solicitudcuenta.html', 
