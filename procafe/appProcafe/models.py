@@ -139,7 +139,7 @@ class UserProfile(models.Model):
     type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
     location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
-    finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
+    finished_hours = models.PositiveIntegerField(default=0, verbose_name="Horas finalizadas")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
