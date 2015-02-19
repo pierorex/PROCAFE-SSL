@@ -6,6 +6,7 @@ from datetime import datetime
 from django.dispatch.dispatcher import receiver
 from django.db.models.signals import pre_delete, post_save
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 
 USBIDValidator = RegexValidator(
                     regex="^[0-9]{2}-[0-9]{5}$", 
@@ -247,6 +248,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                             last_name = instance.last_name
                                         )
         new_user.save()
+
         new_userProfile = UserProfile(
                                       user = new_user,
                                       ID_number = instance.ID_number,
@@ -258,6 +260,8 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                       position = instance.position,
                                     )
         new_userProfile.save()
+        mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'testing')
+        send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com',new_user.email], fail_silently=False)
     
     # Delete application in 2 cases: aprovada/rechazada
     if instance.status != 'PENDIENTE': instance.delete()
