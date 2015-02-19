@@ -134,6 +134,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
+    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
     birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
     type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
@@ -169,7 +170,6 @@ class Course(models.Model):
     instructor = models.CharField(max_length=200, verbose_name="Instructor", default=None)
     init_date = models.DateTimeField(verbose_name="Fecha de Inicio")
     end_date = models.DateTimeField(verbose_name="Fecha de Fin")
-    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
     location = models.CharField(max_length=200, verbose_name="Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
     number_hours = models.IntegerField(verbose_name="Número de Horas")
 
