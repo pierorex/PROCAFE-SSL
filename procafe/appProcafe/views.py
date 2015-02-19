@@ -42,6 +42,8 @@ def loadEmployees(request):
 
 def index(request):
     return render_to_response('homepage.html',context_instance=RequestContext(request))
+def contact(request):
+    return render_to_response('contacto.html',context_instance=RequestContext(request))
 
 def userLogin(request):
     failure = "Cédula o contraseña incorrectas"
@@ -76,11 +78,9 @@ def userLogin(request):
     
 @login_required(login_url='/appProcafe/login/')
 def profile(request):
-    if hasattr(request.user,'userprofile'):
-        user = request.user.userprofile
-        return render(request,'infopersonal.html', {'user':user})
-    else:
-        return HttpResponseRedirect('/')
+      user = request.user.userprofile
+      return render(request,'infopersonal.html', {'loggedUser':user})
+
 
 
 @login_required(login_url='/appProcafe/login/')
@@ -97,12 +97,15 @@ def signup(request):
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
+
                 new_userProfile = UserProfile.objects.get(ID_number=request.POST['id'])
-                new_userProfile.user.set_password('test')
-                new_userProfile.user.save()
-                new_userProfile.save()
-                mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'test')
-                send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com'], fail_silently=False)
+                if not new_userProfile.user.is_active:
+                  new_userProfile.user.set_password('test')
+                  new_userProfile.user.is_active = True
+                  new_userProfile.user.save()
+                  new_userProfile.save()
+                  mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (new_userProfile.ID_number, 'test')
+                  send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['%s@cedula.usb.ve'%(new_userProfile.ID_number)], fail_silently=False)
                 return HttpResponseRedirect('/appProcafe/')
             except UserProfile.DoesNotExist:
                 return HttpResponseRedirect('/appProcafe/formulariosolicitud')
