@@ -147,11 +147,11 @@ class UserProfile(models.Model):
 
 
 class Telephone(models.Model):
-    user_ID = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Cédula del Trabajador", default=0)
+    user_ID = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Username del Trabajador", default=0)
     number = models.CharField(max_length=12, verbose_name="Número (xxxx-xxxxxxx)", validators=[RegexValidator(regex="^[0-9]{4}-[0-9]{7}$", message="El número telefónico debe ser de la forma xxxx-xxxxxxx.", code="invalid_phone")], default=None)
     
     def __str__(self):
-        return str(self.name)
+        return str(self.number)
 
     class Meta:
         verbose_name = "Teléfono"

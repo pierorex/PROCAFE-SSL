@@ -106,6 +106,11 @@ def signup(request):
                 return HttpResponseRedirect('/appProcafe/')
             except UserProfile.DoesNotExist:
                 return HttpResponseRedirect('/appProcafe/formulariosolicitud')
+        else:
+            #form = UserSignUpForm()
+            return render_to_response('solicitudcuenta.html', 
+                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
     form = UserSignUpForm()
     return render_to_response('solicitudcuenta.html', 
                              {'form':form, 'actual_page' : request.get_full_path()}, 
