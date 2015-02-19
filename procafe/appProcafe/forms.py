@@ -39,29 +39,42 @@ class RequestForm(forms.Form):
     first_name = forms.CharField(required = False,max_length=50, label="Nombre")
     last_name = forms.CharField(required = False,max_length=50, label="Apellido")
     birthdate = forms.DateField(required = False,label="Fecha de Nacimiento")
-    pp = []
-    p = Paysheet.objects.all()
-    for pay in p:
-        pp.append((pay.name,pay.name))
-    pp.sort()
-    tt = []
-    t = Type.objects.all()
-    for typ in t:
-        tt.append((typ.name,typ.name))
-    tt.sort()
-    paysheet = forms.ChoiceField(required = False, label="Tipo de Nómina",choices=pp)
-    type = forms.ChoiceField(required = False, label="Tipo de Personal",choices=tt)
-    lugares = []
-    l = Location.objects.all()
-    for lugar in l:
-        lugares.append((lugar.name,lugar.name))
-    lugares.sort()
-    cargos = []
-    c = Position.objects.all()
-    for cargo in c:
-        cargos.append((cargo.name,cargo.name))
-    cargos.sort()
-    location = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=lugares)
-    position = forms.ChoiceField(required = False,label="Cargo",choices=cargos)
+    paysheet = forms.ChoiceField(required = False, label="Tipo de Nómina",choices=[])
+    type = forms.ChoiceField(required = False, label="Tipo de Personal",choices=[])
+    location = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=[])
+    position = forms.ChoiceField(required = False,label="Cargo",choices=[])
     sex = forms.ChoiceField(required = False,label="Sexo",choices=[("Masculino","Masculino"),("Femenino","Femenino")])
     email = forms.EmailField(required = False,label="E-mail")
+    
+    def __init__(self, data = None):
+        
+            if data:
+                super(RequestForm,self).__init__(data)
+            else:
+                super(RequestForm,self).__init__()
+    
+            pp = []
+            p = Paysheet.objects.all()
+            for pay in p:
+                pp.append((pay.name,pay.name))
+            pp.sort()
+            tt = []
+            t = Type.objects.all()
+            for typ in t:
+                tt.append((typ.name,typ.name))
+            tt.sort()
+            lugares = []
+            l = Location.objects.all()
+            for lugar in l:
+                lugares.append((lugar.name,lugar.name))
+            lugares.sort()
+            cargos = []
+            c = Position.objects.all()
+            for cargo in c:
+                cargos.append((cargo.name,cargo.name))
+            cargos.sort()
+            
+            self.fields['paysheet'] = forms.ChoiceField(required = False, label="Tipo de Nómina",choices=pp)
+            self.fields['type'] = forms.ChoiceField(required = False, label="Tipo de Personal",choices=tt)
+            self.fields['location'] = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=lugares)
+            self.fields['position'] = forms.ChoiceField(required = False,label="Cargo",choices=cargos)
