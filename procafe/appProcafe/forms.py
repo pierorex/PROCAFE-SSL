@@ -10,7 +10,7 @@ class DocumentForm(forms.Form):
     )
 
 
-class UserSignUpForm(forms.Form):
+class UserSignUpForm(forms.Form):    
     id = forms.CharField(required = True,
                     label = "Cédula",
                     max_length = 10,
