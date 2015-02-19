@@ -42,6 +42,8 @@ def loadEmployees(request):
 
 def index(request):
     return render_to_response('homepage.html',context_instance=RequestContext(request))
+def contact(request):
+    return render_to_response('contacto.html',context_instance=RequestContext(request))
 
 def userLogin(request):
     failure = "Cédula o contraseña incorrectas"
@@ -76,11 +78,9 @@ def userLogin(request):
     
 @login_required(login_url='/appProcafe/login/')
 def profile(request):
-    if hasattr(request.user,'userprofile'):
-        user = request.user.userprofile
-        return render(request,'infopersonal.html', {'user':user})
-    else:
-        return HttpResponseRedirect('/')
+      user = request.user.userprofile
+      return render(request,'infopersonal.html', {'loggedUser':user})
+
 
 
 @login_required(login_url='/appProcafe/login/')
