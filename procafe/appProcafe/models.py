@@ -258,6 +258,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                       type = instance.type,
                                       location = instance.location,
                                       position = instance.position,
+                                      sex = instance.sex
                                     )
         new_userProfile.save()
         mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'testing')
