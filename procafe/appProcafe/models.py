@@ -6,6 +6,7 @@ from datetime import datetime
 from django.dispatch.dispatcher import receiver
 from django.db.models.signals import pre_delete, post_save
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 
 USBIDValidator = RegexValidator(
                     regex="^[0-9]{2}-[0-9]{5}$", 
@@ -28,7 +29,7 @@ def userProfile_predelete_handler(sender, instance, **kwargs):
 
 # Models
 class Unit(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
+    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None, unique=True)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -42,7 +43,7 @@ class Unit(models.Model):
 
 class Department(models.Model):
     unit_ID = models.ForeignKey(Unit, verbose_name="Unidad", default=None)
-    name = models.CharField(max_length=200, verbose_name="Nombre")
+    name = models.CharField(max_length=200, verbose_name="Nombre", unique=True)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -56,7 +57,7 @@ class Department(models.Model):
 
 class Section(models.Model):
     department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=True)
-    name = models.CharField(max_length=200, verbose_name="Nombre")
+    name = models.CharField(max_length=200, verbose_name="Nombre", unique=True)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -69,7 +70,7 @@ class Section(models.Model):
 
 
 class Risk(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Riesgo")
+    name = models.CharField(max_length=200, verbose_name = "Riesgo", unique=True)
 
     def __str__(self):
         return str(self.name)
@@ -138,7 +139,7 @@ class UserProfile(models.Model):
     type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
     location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
-    finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
+    finished_hours = models.PositiveIntegerField(default=0, verbose_name="Horas finalizadas")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -247,6 +248,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                             last_name = instance.last_name
                                         )
         new_user.save()
+
         new_userProfile = UserProfile(
                                       user = new_user,
                                       ID_number = instance.ID_number,
@@ -258,6 +260,8 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                       position = instance.position,
                                     )
         new_userProfile.save()
+        mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'testing')
+        send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com',new_user.email], fail_silently=False)
     
     # Delete application in 2 cases: aprovada/rechazada
     if instance.status != 'PENDIENTE': instance.delete()
