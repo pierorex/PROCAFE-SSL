@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^editProfile/$', 'appProcafe.views.editProfile'),
     url(r'^courses/$', 'appProcafe.views.courses'),
     url(r'^actualQuarter/$', 'appProcafe.views.actualQuarter'),
+    url(r'^formulariosolicitud/$', 'appProcafe.views.new_userApp'),
 )

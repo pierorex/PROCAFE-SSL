@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.core.validators import RegexValidator
+from appProcafe.models import Location, Position, Paysheet, Type
 
 
 class DocumentForm(forms.Form):
@@ -38,8 +39,29 @@ class RequestForm(forms.Form):
     first_name = forms.CharField(required = False,max_length=50, label="Nombre")
     last_name = forms.CharField(required = False,max_length=50, label="Apellido")
     birthdate = forms.DateField(required = False,label="Fecha de Nacimiento")
-    paysheet = forms.CharField(required = False,max_length=14, label="Tipo de Nómina")
-    type = forms.CharField(required = False,max_length=20, label="Tipo de Personal")
-    location = forms.CharField(required = False,max_length=200, label="Ubicación de Trabajo")
-    position = forms.ChoiceField(required = False,label="Cargo")
+    pp = []
+    p = Paysheet.objects.all()
+    for pay in p:
+        pp.append((pay.name,pay.name))
+    pp.sort()
+    tt = []
+    t = Type.objects.all()
+    for typ in t:
+        tt.append((typ.name,typ.name))
+    tt.sort()
+    paysheet = forms.ChoiceField(required = False, label="Tipo de Nómina",choices=pp)
+    type = forms.ChoiceField(required = False, label="Tipo de Personal",choices=tt)
+    lugares = []
+    l = Location.objects.all()
+    for lugar in l:
+        lugares.append((lugar.name,lugar.name))
+    lugares.sort()
+    cargos = []
+    c = Position.objects.all()
+    for cargo in c:
+        cargos.append((cargo.name,cargo.name))
+    cargos.sort()
+    location = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=lugares)
+    position = forms.ChoiceField(required = False,label="Cargo",choices=cargos)
+    sex = forms.ChoiceField(required = False,label="Sexo",choices=[("Masculino","Masculino"),("Femenino","Femenino")])
     email = forms.EmailField(required = False,label="E-mail")

@@ -105,14 +105,37 @@ class Location(models.Model):
         verbose_name_plural = "Ubicaciones"
 
 
+class Paysheet(models.Model):
+    name = models.CharField(max_length=20, verbose_name='Tipo de Nómina', unique=True)
+    
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Tipo de Nómina"
+        verbose_name_plural = "Tipos de Nómina"
+
+
+
+class Type(models.Model):
+    name = models.CharField(max_length=20, verbose_name='Tipo de Personal', unique=True)
+    
+    def __str__(self):
+        return str(self.name)
+
+    class Meta:
+        verbose_name = "Tipo de Personal"
+        verbose_name_plural = "Tipos de Personal"
+
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
-    paysheet = models.CharField(max_length=14, verbose_name="Tipo de Nómina", choices=[("ACADEMICO", "Académico"), ("ADMINISTRATIVO", "Administrativo"), ("OBRERO", "Obrero")], default=None)
-    type = models.CharField(max_length=20, choices=[("----", "----")], verbose_name="Tipo de Personal", default=None)
+    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
+    type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
     location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
     finished_hours = models.IntegerField(default=0, verbose_name="Horas finalizadas")
@@ -145,6 +168,7 @@ class Course(models.Model):
     instructor = models.CharField(max_length=200, verbose_name="Instructor", default=None)
     init_date = models.DateTimeField(verbose_name="Fecha de Inicio")
     end_date = models.DateTimeField(verbose_name="Fecha de Fin")
+    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
     location = models.CharField(max_length=200, verbose_name="Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
     number_hours = models.IntegerField(verbose_name="Número de Horas")
 
@@ -187,17 +211,10 @@ class UserApplication(models.Model):
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     first_name = models.CharField(max_length=50, verbose_name="Nombre", default="")
     last_name = models.CharField(max_length=50, verbose_name="Apellido", default="")
+    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
     birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
-    paysheet = models.CharField(max_length=14, 
-                                verbose_name="Tipo de Nómina", 
-                                choices=[("ACADEMICO", "Académico"), 
-                                         ("ADMINISTRATIVO", "Administrativo"), 
-                                         ("OBRERO", "Obrero")], 
-                                default=None)
-    type = models.CharField(max_length=20, 
-                            choices=[("----", "----")], 
-                            verbose_name="Tipo de Personal", 
-                            default=None)
+    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
+    type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
     location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
     position = models.ForeignKey(Position, verbose_name="Cargo", default=None)
     email = models.EmailField(max_length=200, verbose_name="E-mail", default=None)

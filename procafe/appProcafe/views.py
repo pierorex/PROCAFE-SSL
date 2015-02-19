@@ -9,7 +9,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-from appProcafe.models import Document, UserApplication
+from appProcafe.models import Document, UserApplication, Location, Position,\
+    Paysheet, Type
 from appProcafe.forms import DocumentForm, UserLogin
 from appProcafe.functions import csv_to_UserProfile
 from appProcafe.forms import RequestForm
@@ -48,10 +49,13 @@ def userLogin(request):
         form = UserLogin(request.POST)
         if form.is_valid():
             cedula = request.POST['id']
-            nombre = UserProfile.objects.get(ID_number=cedula).user.username
+            try: 
+                nombre = UserProfile.objects.get(ID_number=cedula).user.username
+            except:
+                return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
             userPassword = request.POST['password']
             user = authenticate(username=nombre, password=userPassword)
-            if user is not None:
+            if user is not None and user.is_active:
                 login(request, user)
                 if user.is_superuser:
                     return HttpResponseRedirect('/admin')
@@ -101,34 +105,50 @@ def signup(request):
                 send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com'], fail_silently=False)
                 return HttpResponseRedirect('/appProcafe/')
             except UserProfile.DoesNotExist:
-                failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
-                application = RequestForm(request.POST)
-                """new_userApplication = UserApplication(
-                                                      ID_number = request.POST['ID_number'],
-                                                      USB_ID = request.POST['USB_ID'],
-                                                      first_name = request.POST['first_name'],
-                                                      last_name = request.POST['last_name'],
-                                                      birthdate = request.POST['birthdate'],
-                                                      paysheet = request.POST['paysheet'],
-                                                      type = request.POST['type'],
-                                                      location = request.POST['location'],
-                                                      position = request.POST['position'],
-                                                      email = request.POST['email']
-                                                      )
-                new_userApplication.save()"""
-                query_results = UserProfile.objects.all()
-                return render_to_response('solicitudcuenta.html', 
-                                          {'failure':failure, 
-                                           'form':form, 
-                                           'query_results':query_results, 
-                                           'application':application}, 
-                                          context_instance=RequestContext(request))
-                
+                return HttpResponseRedirect('/appProcafe/formulariosolicitud')
     form = UserSignUpForm()
     return render_to_response('solicitudcuenta.html', 
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
-
+    
+def new_userApp(request):
+    failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
+    if request.method == 'POST':
+        application = RequestForm(request.POST)
+        if application.is_valid():
+            new_userApplication = UserApplication(
+                                                  ID_number = application.cleaned_data['ID_number'],
+                                                  USB_ID = application.cleaned_data['USB_ID'],
+                                                  first_name = application.cleaned_data['first_name'],
+                                                  last_name = application.cleaned_data['last_name'],
+                                                  birthdate = application.cleaned_data['birthdate'],
+                                                  paysheet = Paysheet.objects.get(name=application.cleaned_data['paysheet']),
+                                                  type = Type.objects.get(name=application.cleaned_data['type']),
+                                                  sex = application.cleaned_data['sex'],
+                                                  location = Location.objects.get(name=application.cleaned_data['location']),
+                                                  position = Position.objects.get(name=application.cleaned_data['position']),
+                                                  email = application.cleaned_data['email']
+                                                )
+            new_userApplication.save()
+            failure = "Not fail"
+            success = "Success"
+            return render_to_response('solicitudcuenta.html', 
+                             {'success':success, 'failure':failure, 'application':application, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+        else:
+            failure = ''
+            for error in application.errors:
+                failure+=error+'\n'
+            failure = application.errors
+            return render_to_response('solicitudcuenta.html', 
+                             {'failure':failure,'application':application, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+            
+    form = RequestForm()
+    return render_to_response('solicitudcuenta.html', 
+                             {'failure':failure,'application':form, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+                
 @login_required(login_url='/appProcafe/login/')
 def userLogout(request):
     if request.user.is_authenticated():

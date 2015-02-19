@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from appProcafe.models import Department, Unit, Section, Risk, Position, Location
+from appProcafe.models import Department, Unit, Section, Risk, Position, Location,\
+    Paysheet, Type
 from appProcafe.models import Telephone, Document, Takes, Course
 from appProcafe.models import User, UserProfile, UserApplication, RemoveRequest
 
@@ -10,6 +11,8 @@ admin.site.register(Department)
 admin.site.register(Unit)
 admin.site.register(Section)
 admin.site.register(Risk)
+admin.site.register(Type)
+admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
 admin.site.register(Telephone)
@@ -44,7 +47,7 @@ admin.site.register(User, UserAdmin)
 
 class UserApplicationAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Datos del Solicitante', {'fields': ('ID_number', 'USB_ID', 'first_name', 'last_name', 'birthdate', 'paysheet', 'type', 'location', 'position', 'email')}),
+        ('Datos del Solicitante', {'fields': ('ID_number', 'USB_ID', 'first_name', 'last_name', 'birthdate', 'paysheet', 'type', 'sex', 'location', 'position', 'email')}),
         ('Solicitud', {'fields': ('request_date', 'status')}),
     )
 
