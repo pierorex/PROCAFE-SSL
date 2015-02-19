@@ -43,7 +43,7 @@ class RequestForm(forms.Form):
     type = forms.ChoiceField(required = False, label="Tipo de Personal",choices=[])
     location = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=[])
     position = forms.ChoiceField(required = False,label="Cargo",choices=[])
-    sex = forms.ChoiceField(required = False,label="Sexo",choices=[("Masculino","Masculino"),("Femenino","Femenino")])
+    sex = forms.ChoiceField(required = False,label="Sexo",choices=[("MASCULINO","Masculino"),("FEMENINO","Femenino")])
     email = forms.EmailField(required = False,label="E-mail")
     
     def __init__(self, data = None):

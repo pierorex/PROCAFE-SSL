@@ -134,7 +134,11 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
-    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
+    sex = models.CharField(max_length=10, 
+                           verbose_name="Sexo", 
+                           choices=[
+                                    ('MASCULINO','Masculino'),
+                                    ('FEMENINO','Femenino')])
     birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
     type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
