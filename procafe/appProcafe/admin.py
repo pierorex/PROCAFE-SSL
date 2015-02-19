@@ -16,7 +16,6 @@ admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
 admin.site.register(Telephone)
-admin.site.register(Document)
 
 class TakesAdmin(admin.ModelAdmin):
     list_display = ('user_ID', 'course_ID', 'term', 'year', 'status')
