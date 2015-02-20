@@ -40,10 +40,16 @@ def loadEmployees(request):
                             )
 
 
+
 def index(request):
     return render_to_response('homepage.html',context_instance=RequestContext(request))
+
+
+
 def contact(request):
     return render_to_response('contacto.html',context_instance=RequestContext(request))
+
+
 
 def userLogin(request):
     failure = "Cédula o contraseña incorrectas"
@@ -78,40 +84,45 @@ def userLogin(request):
     
 @login_required(login_url='/appProcafe/login/')
 def profile(request):
-      user = request.user.userprofile
-      return render(request,'infopersonal.html', {'loggedUser':user})
+    user = request.user.userprofile
+    return render(request,'infopersonal.html', {'loggedUser':user})
 
 
 
 @login_required(login_url='/appProcafe/login/')
 def editProfile(request):
-    return render_to_response('editarperfil.html', context_instance=RequestContext(request))    
+    return render_to_response('editarperfil.html', context_instance=RequestContext(request))
 
     
+
 def courses(request):
     return render_to_response('cursos.html', context_instance=RequestContext(request))
     
      
+
 def signup(request): 
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
-
                 new_userProfile = UserProfile.objects.get(ID_number=request.POST['id'])
                 if not new_userProfile.user.is_active:
-                  new_userProfile.user.set_password('test')
-                  new_userProfile.user.is_active = True
-                  new_userProfile.user.save()
-                  new_userProfile.save()
-                  mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (new_userProfile.ID_number, 'test')
-                  send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['%s@cedula.usb.ve'%(new_userProfile.ID_number)], fail_silently=False)
+                    new_userProfile.user.set_password('test')
+                    new_userProfile.user.is_active = True
+                    new_userProfile.user.save()
+                    new_userProfile.save()
+                    mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (new_userProfile.ID_number, 'test')
+                    send_mail('Cuenta PROCAFE',
+                            mensaje, 
+                            'appProcafe@procafe.usb.ve', 
+                            [ '%s@cedula.usb.ve'%(new_userProfile.ID_number),
+                              '%s@mailinator.com'%(new_userProfile.ID_number)], 
+                            fail_silently=False)
                 return HttpResponseRedirect('/appProcafe/')
-            except UserProfile.DoesNotExist:
-                return HttpResponseRedirect('/appProcafe/formulariosolicitud')
-        else:
-            #form = UserSignUpForm()
-            return render_to_response('solicitudcuenta.html', 
+            
+            except UserProfile.DoesNotExist: return HttpResponseRedirect('/appProcafe/formulariosolicitud')
+            
+        else: return render_to_response('solicitudcuenta.html', 
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
     form = UserSignUpForm()
@@ -119,24 +130,25 @@ def signup(request):
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
     
+    
+    
 def new_userApp(request):
     failure = "La cedula que usted ingreso no se \n encuentra registrada en el sistema. Suministre sus datos para solicitar su ingreso al sistema."
     if request.method == 'POST':
         application = RequestForm(request.POST)
         if application.is_valid():
             new_userApplication = UserApplication(
-                                                  ID_number = application.cleaned_data['ID_number'],
-                                                  USB_ID = application.cleaned_data['USB_ID'],
-                                                  first_name = application.cleaned_data['first_name'],
-                                                  last_name = application.cleaned_data['last_name'],
-                                                  birthdate = application.cleaned_data['birthdate'],
-                                                  paysheet = Paysheet.objects.get(name=application.cleaned_data['paysheet']),
-                                                  type = Type.objects.get(name=application.cleaned_data['type']),
-                                                  sex = application.cleaned_data['sex'],
-                                                  location = Location.objects.get(name=application.cleaned_data['location']),
-                                                  position = Position.objects.get(name=application.cleaned_data['position']),
-                                                  email = application.cleaned_data['email']
-                                                )
+                                      ID_number = application.cleaned_data['ID_number'],
+                                      USB_ID = application.cleaned_data['USB_ID'],
+                                      first_name = application.cleaned_data['first_name'],
+                                      last_name = application.cleaned_data['last_name'],
+                                      birthdate = application.cleaned_data['birthdate'],
+                                      paysheet = Paysheet.objects.get(name=application.cleaned_data['paysheet']),
+                                      type = Type.objects.get(name=application.cleaned_data['type']),
+                                      sex = application.cleaned_data['sex'],
+                                      location = Location.objects.get(name=application.cleaned_data['location']),
+                                      position = Position.objects.get(name=application.cleaned_data['position']),
+                                      email = application.cleaned_data['email'])
             new_userApplication.save()
             failure = "Not fail"
             success = "Success"
@@ -156,6 +168,8 @@ def new_userApp(request):
     return render_to_response('solicitudcuenta.html', 
                              {'failure':failure,'application':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
+    
+    
                 
 @login_required(login_url='/appProcafe/login/')
 def userLogout(request):
@@ -164,5 +178,13 @@ def userLogout(request):
     return render_to_response('logout.html', context_instance=RequestContext(request))
 
 
+
 def actualQuarter(request):
     return render_to_response('trimestreactual.html', context_instance=RequestContext(request))
+
+
+
+
+
+
+

@@ -266,7 +266,12 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                                     )
         new_userProfile.save()
         mensaje = 'Nombre de Usuario: %d Contraseña: %s' % (new_userProfile.ID_number, 'testing')
-        send_mail('Cuenta PROCAFE', mensaje, 'appProcafe@procafe.usb.ve', ['appProcafeTesting@mailinator.com',new_user.email], fail_silently=False)
+        send_mail('Cuenta PROCAFE', 
+                  mensaje, 
+                  'appProcafe@procafe.usb.ve', 
+                  [ '$s@mailinator.com'%(new_userProfile.ID_number),
+                    new_user.email],
+                  fail_silently=False)
     
     # Delete application in 2 cases: aprovada/rechazada
     if instance.status != 'PENDIENTE': instance.delete()
