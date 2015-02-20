@@ -15,7 +15,11 @@ admin.site.register(Type)
 admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
-admin.site.register(Telephone)
+
+class TelephoneAdmin(admin.ModelAdmin):
+    list_display = ('user_ID', 'number')
+    
+admin.site.register(Telephone, TelephoneAdmin)
 
 class TakesAdmin(admin.ModelAdmin):
     list_display = ('user_ID', 'course_ID', 'term', 'year', 'status')

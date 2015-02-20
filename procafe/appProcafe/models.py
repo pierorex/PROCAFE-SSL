@@ -152,7 +152,7 @@ class UserProfile(models.Model):
 
 
 class Telephone(models.Model):
-    user_ID = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Username del Trabajador", default=0)
+    user_ID = models.ForeignKey(UserProfile, to_field='ID_number', verbose_name="Nombre de usuario", default=0)
     number = models.CharField(max_length=12, verbose_name="Número (xxxx-xxxxxxx)", validators=[RegexValidator(regex="^[0-9]{4}-[0-9]{7}$", message="El número telefónico debe ser de la forma xxxx-xxxxxxx.", code="invalid_phone")], default=None)
     
     def __str__(self):
@@ -216,7 +216,12 @@ class UserApplication(models.Model):
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     first_name = models.CharField(max_length=50, verbose_name="Nombre", default="")
     last_name = models.CharField(max_length=50, verbose_name="Apellido", default="")
-    sex = models.CharField(max_length=10, verbose_name="Sexo", default="")
+    sex = models.CharField(max_length=10, 
+                           verbose_name="Sexo", 
+                           choices=[
+                                    ('MASCULINO','Masculino'),
+                                    ('FEMENINO','Femenino')],
+                           default="")
     birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
     paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
     type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
