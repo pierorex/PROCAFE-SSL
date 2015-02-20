@@ -274,7 +274,7 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
         send_mail('Cuenta PROCAFE', 
                   mensaje, 
                   'appProcafe@procafe.usb.ve', 
-                  [ '$s@mailinator.com'%(str(new_userProfile.ID_number)),
+                  [ '%s@mailinator.com'%(str(new_userProfile.ID_number)),
                     new_user.email],
                   fail_silently=False)
     
