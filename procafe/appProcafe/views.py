@@ -115,8 +115,8 @@ def signup(request):
                     send_mail('Cuenta PROCAFE',
                             mensaje, 
                             'appProcafe@procafe.usb.ve', 
-                            [ '%s@cedula.usb.ve'%(new_userProfile.ID_number),
-                              '%s@mailinator.com'%(new_userProfile.ID_number)], 
+                            [ '%s@cedula.usb.ve'%(str(new_userProfile.ID_number)),
+                              '%s@mailinator.com'%(str(new_userProfile.ID_number))], 
                             fail_silently=False)
                 return HttpResponseRedirect('/appProcafe/')
             
