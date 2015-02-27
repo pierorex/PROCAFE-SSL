@@ -187,11 +187,16 @@ def actualQuarter(request):
     return render_to_response('trimestreactual.html', context_instance=RequestContext(request))
 
 def passwordReset(request): 
+    form = UserSignUpForm()
+    mensaje = ''
+    failure = ''
+    success = ''
+    
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
         if form.is_valid():
             try:
-                userProfile = UserProfile.objects.get(ID_number=request.POST['id'])
+                userProfile = UserProfile.objects.get(ID_number=int(request.POST['id']))
                 userProfile.user.set_password('testing')
                 userProfile.user.is_active = True
                 userProfile.user.save()
@@ -203,16 +208,15 @@ def passwordReset(request):
                           '%s@mailinator.com'%(userProfile.ID_number),
                           userProfile.user.email, 'ProcafeTest@mailinator.com'], 
                         fail_silently=False)
-                return HttpResponseRedirect('/appProcafe/passwordresetdone')
+                mensaje = "Cambio exitoso, revise su correo."
+                failure = 'success'
+                success = 'success'
             
-            except UserProfile.DoesNotExist: return HttpResponseRedirect('/appProcafe/passwordreset')
-            
-        else: return render_to_response('requestpasswordreset.html',
-                             {'form' : form, 'actual_page' : request.get_full_path()}, 
-                             context_instance=RequestContext(request))
-    form = UserSignUpForm()
+            except UserProfile.DoesNotExist:
+                mensaje = "No existe cuenta con esta cedula."
+                
     return render_to_response('requestpasswordreset.html', 
-                             {'form':form, 'actual_page' : request.get_full_path()}, 
+                             {'mensaje':mensaje,'failure':failure, 'success':success, 'form':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
     # This view handles password reset confirmation links. See urls.py file for the mapping.
     # This view is not used here because the password reset emails with confirmation links
