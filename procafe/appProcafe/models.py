@@ -138,12 +138,13 @@ class UserProfile(models.Model):
                            verbose_name="Sexo", 
                            choices=[
                                     ('MASCULINO','Masculino'),
-                                    ('FEMENINO','Femenino')])
-    birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today())
-    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None)
-    type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None)
-    location = models.ForeignKey(Location, verbose_name='Ubicación', default=None)
-    position = models.ForeignKey(Position, verbose_name="Cargo", default=None)    
+                                    ('FEMENINO','Femenino')],
+                           null=True)
+    birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today(), null=True)
+    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None, null=True)
+    type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None, null=True)
+    location = models.ForeignKey(Location, verbose_name='Ubicación', default=None, null=True)
+    position = models.ForeignKey(Position, verbose_name="Cargo", default=None, null=True)    
     finished_hours = models.PositiveIntegerField(default=0, verbose_name="Horas finalizadas")
 
     def __str__(self):

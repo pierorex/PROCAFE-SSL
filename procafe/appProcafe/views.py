@@ -25,6 +25,7 @@ def loadEmployees(request):
     file_path = ''
 
     if request.method == 'POST':
+        print('hola2')
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             # Extract uploaded file from the form
