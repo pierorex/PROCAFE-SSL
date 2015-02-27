@@ -203,7 +203,7 @@ def passwordReset(request):
                 userProfile.user.set_password('testing')
                 userProfile.user.is_active = True
                 userProfile.user.save()
-                mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (userProfile.ID_number, 'test')
+                mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (userProfile.ID_number, 'testing')
                 send_mail('Cuenta PROCAFE',
                         mensaje, 
                         'appProcafe@procafe.usb.ve', 
