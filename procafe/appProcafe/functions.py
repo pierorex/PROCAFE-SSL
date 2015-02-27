@@ -46,7 +46,7 @@ def csv_to_UserProfile(file_path):
                                             first_name = nombre,
                                             last_name = apellido
                                         )
-                new_user.is_active = True
+                new_user.is_active = False
                 new_user.save()
                 new_userProfile = UserProfile(
                                       user = new_user,
