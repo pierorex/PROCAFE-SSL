@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import logout
+from django.contrib.auth.views import logout, password_reset,\
+    password_reset_confirm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -17,6 +18,9 @@ from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
 from appProcafe.models import UserProfile
 from procafe import settings
+from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
 
 
 @staff_member_required
@@ -185,9 +189,47 @@ def userLogout(request):
 def actualQuarter(request):
     return render_to_response('trimestreactual.html', context_instance=RequestContext(request))
 
+def passwordReset(request): 
+    form = UserSignUpForm()
+    mensaje = ''
+    failure = ''
+    success = ''
+    
+    if request.method == 'POST':
+        form = UserSignUpForm(request.POST)
+        if form.is_valid():
+            try:
+                userProfile = UserProfile.objects.get(ID_number=int(request.POST['id']))
+                userProfile.user.set_password('testing')
+                userProfile.user.is_active = True
+                userProfile.user.save()
+                mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (userProfile.ID_number, 'test')
+                send_mail('Cuenta PROCAFE',
+                        mensaje, 
+                        'appProcafe@procafe.usb.ve', 
+                        [ '%s@cedula.usb.ve'%(userProfile.ID_number),
+                          '%s@mailinator.com'%(userProfile.ID_number),
+                          userProfile.user.email, 'ProcafeTest@mailinator.com'], 
+                        fail_silently=False)
+                mensaje = "Cambio exitoso, revise su correo."
+                failure = 'success'
+                success = 'success'
+            
+            except UserProfile.DoesNotExist:
+                mensaje = "No existe cuenta con esta cedula."
+                
+    return render_to_response('requestpasswordreset.html', 
+                             {'mensaje':mensaje,'failure':failure, 'success':success, 'form':form, 'actual_page' : request.get_full_path()}, 
+                             context_instance=RequestContext(request))
+    # This view handles password reset confirmation links. See urls.py file for the mapping.
+    # This view is not used here because the password reset emails with confirmation links
+    # cannot be sent from this application.
+    #def reset_confirm(request, uidb64=None, token=None):
+    #    return password_reset_confirm(request, template_name='password_reset_confirm.html', post_reset_redirect=reverse('success'))
 
-
-
+    # This view renders a page with success message.
+    #def success(request):
+    #  return render(request, "success.html")
 
 
 
