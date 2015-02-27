@@ -23,6 +23,7 @@ from procafe import settings
 def loadEmployees(request):
     form = DocumentForm() # empty form
     file_path = ''
+    mensaje = ''
 
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -32,9 +33,11 @@ def loadEmployees(request):
             newdoc.save()
             file_path = settings.MEDIA_ROOT + newdoc.file.name
             csv_to_UserProfile(file_path)
+            mensaje = 'Nómina cargada exitosamente.'
     return render_to_response('appProcafe/loadEmployees.html',
                               {'form': form,
                                'file_path': file_path,
+                               'mensaje' : mensaje,
                                },
                               context_instance=RequestContext(request)
                             )
