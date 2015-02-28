@@ -122,7 +122,7 @@ class Location(models.Model):
     Riesgos = models.ManyToManyField(Risk,through=Risk.Ubicaciones.through)
     
     def __str__(self):
-        return str(self.lower)
+        return str(self.name)
 
     class Meta:
         verbose_name = "Ubicación"
