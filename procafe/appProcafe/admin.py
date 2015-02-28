@@ -6,13 +6,15 @@ from appProcafe.models import Department, Unit, Section, Risk, Position, Locatio
 from appProcafe.models import Telephone, Document, Takes, Course
 from appProcafe.models import User, UserProfile, UserApplication, RemoveRequest
 from django.utils.translation import ugettext_lazy as _
+from django import forms
+from django.core.exceptions import ValidationError
 
 
 admin.site.register(Department)
 admin.site.register(Unit)
 admin.site.register(Section)
-admin.site.register(Risk)
 admin.site.register(Type)
+admin.site.register(Risk)
 admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
@@ -37,6 +39,7 @@ class UserProfileInLine(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'Perfil'
+
 
 class MyUserAdmin(UserAdmin):
     staff_fieldsets = (

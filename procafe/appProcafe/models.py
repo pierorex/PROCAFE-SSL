@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from datetime import datetime
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import pre_delete, post_save
-from django.core.exceptions import PermissionDenied
+from django.db.models.signals import pre_delete, post_save, pre_save
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 
 USBIDValidator = RegexValidator(
@@ -28,8 +28,12 @@ def userProfile_predelete_handler(sender, instance, **kwargs):
 
 
 # Models
+def Unit_validate_name(name):
+    if Unit.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Unidad con este nombre.")
 class Unit(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None, unique=True)
+    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", validators=[Unit_validate_name], default=None)
+    lower = models.CharField(max_length=200, unique=True, editable=False)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -38,13 +42,19 @@ class Unit(models.Model):
     class Meta:
         verbose_name = "Unidad"
         verbose_name_plural = "Unidades"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Unit)
+def Unit_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
-
+def Department_validate_name(name):
+    if Department.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Departamento con este nombre.")
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit, verbose_name="Unidad", default=None)
-    name = models.CharField(max_length=200, verbose_name="Nombre", unique=True)
+    unit_ID = models.ForeignKey(Unit, verbose_name="Unidad de Adscripción", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombre", validators=[Department_validate_name])
+    lower = models.CharField(max_length=200, unique=True, editable=False)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -53,13 +63,19 @@ class Department(models.Model):
     class Meta:
         verbose_name = "Departamento"
         verbose_name_plural = "Departamentos"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Department)
+def Department_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
-
+def Section_validate_name(name):
+    if Section.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Seccion con este nombre.")
 class Section(models.Model):
     department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=True)
-    name = models.CharField(max_length=200, verbose_name="Nombre", unique=True)
+    name = models.CharField(max_length=200, verbose_name="Nombre", validators=[Section_validate_name])
+    lower = models.CharField(max_length=200, unique=True, editable=False)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
@@ -68,12 +84,19 @@ class Section(models.Model):
     class Meta:
         verbose_name = "Sección"
         verbose_name_plural = "Secciones"
-        ordering = ['name']
-
-
+        ordering = ['lower']
+@receiver (pre_save, sender=Section)
+def Section_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
+    
+    
+def Risk_validate_name(name):
+    if Risk.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Riesgo con este nombre.")
 
 class Risk(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Riesgo", unique=True)
+    name = models.CharField(max_length=200, verbose_name = "Riesgo", validators=[Risk_validate_name])
+    lower = models.CharField(max_length=200, unique=True, editable=False)
 
     def __str__(self):
         return str(self.name)
@@ -81,12 +104,18 @@ class Risk(models.Model):
     class Meta:
         verbose_name = "Riesgo"
         verbose_name_plural = "Riesgos"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Risk)
+def risk_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
+    
 
-
-
+def Position_validate_name(name):
+    if Position.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Cargo con este nombre.")
 class Position(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Cargo", unique=True)
+    name = models.CharField(max_length=200, verbose_name = "Cargo", validators=[Position_validate_name])
+    lower = models.CharField(max_length=200, unique=True, editable=False)
     risks = models.ManyToManyField(Risk)
 
     def __str__(self):
@@ -95,12 +124,18 @@ class Position(models.Model):
     class Meta:
         verbose_name = "Cargo"
         verbose_name_plural = "Cargos"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Position)
+def Position_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
-
+def Location_validate_name(name):
+    if Location.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Ubicación con este nombre.")
 class Location(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Ubicación', unique=True)
+    name = models.CharField(max_length=50, verbose_name = "Ubicación", validators=[Location_validate_name])
+    lower = models.CharField(max_length=50, unique=True, editable=False)
     risks = models.ManyToManyField(Risk)
     
     def __str__(self):
@@ -109,11 +144,18 @@ class Location(models.Model):
     class Meta:
         verbose_name = "Ubicación"
         verbose_name_plural = "Ubicaciones"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Location)
+def Location_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
+def Paysheet_validate_name(name):
+    if Paysheet.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Tipo de Nómina con este nombre.")
 class Paysheet(models.Model):
-    name = models.CharField(max_length=20, verbose_name='Tipo de Nómina', unique=True)
+    name = models.CharField(max_length=20, verbose_name = "Tipo de Nómina", validators=[Paysheet_validate_name])
+    lower = models.CharField(max_length=20, unique=True, editable=False)
     
     def __str__(self):
         return str(self.name)
@@ -121,12 +163,18 @@ class Paysheet(models.Model):
     class Meta:
         verbose_name = "Tipo de Nómina"
         verbose_name_plural = "Tipos de Nómina"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Paysheet)
+def Paysheet_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
-
+def Type_validate_name(name):
+    if Type.objects.filter(lower=name.lower()).exists():
+            raise ValidationError("Ya existe Tipo de Personal con este nombre.")
 class Type(models.Model):
-    name = models.CharField(max_length=20, verbose_name='Tipo de Personal', unique=True)
+    name = models.CharField(max_length=20, verbose_name = "Tipo de Personal", validators=[Type_validate_name])
+    lower = models.CharField(max_length=20, unique=True, editable=False)
     
     def __str__(self):
         return str(self.name)
@@ -134,7 +182,10 @@ class Type(models.Model):
     class Meta:
         verbose_name = "Tipo de Personal"
         verbose_name_plural = "Tipos de Personal"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Type)
+def Type_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
 
