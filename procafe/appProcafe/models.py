@@ -38,6 +38,7 @@ class Unit(models.Model):
     class Meta:
         verbose_name = "Unidad"
         verbose_name_plural = "Unidades"
+        ordering = ['name']
 
 
 
@@ -52,6 +53,7 @@ class Department(models.Model):
     class Meta:
         verbose_name = "Departamento"
         verbose_name_plural = "Departamentos"
+        ordering = ['name']
 
 
 
@@ -66,6 +68,7 @@ class Section(models.Model):
     class Meta:
         verbose_name = "Sección"
         verbose_name_plural = "Secciones"
+        ordering = ['name']
 
 
 
@@ -78,6 +81,7 @@ class Risk(models.Model):
     class Meta:
         verbose_name = "Riesgo"
         verbose_name_plural = "Riesgos"
+        ordering = ['name']
 
 
 
@@ -91,6 +95,7 @@ class Position(models.Model):
     class Meta:
         verbose_name = "Cargo"
         verbose_name_plural = "Cargos"
+        ordering = ['name']
 
 
 
@@ -104,6 +109,7 @@ class Location(models.Model):
     class Meta:
         verbose_name = "Ubicación"
         verbose_name_plural = "Ubicaciones"
+        ordering = ['name']
 
 
 class Paysheet(models.Model):
@@ -115,6 +121,7 @@ class Paysheet(models.Model):
     class Meta:
         verbose_name = "Tipo de Nómina"
         verbose_name_plural = "Tipos de Nómina"
+        ordering = ['name']
 
 
 
@@ -127,6 +134,7 @@ class Type(models.Model):
     class Meta:
         verbose_name = "Tipo de Personal"
         verbose_name_plural = "Tipos de Personal"
+        ordering = ['name']
 
 
 
@@ -162,6 +170,7 @@ class Telephone(models.Model):
     class Meta:
         verbose_name = "Teléfono"
         verbose_name_plural = "Teléfonos"
+        ordering = ['number']
 
 
 
@@ -184,6 +193,7 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
+        ordering = ['name']
 
 
 
@@ -194,9 +204,13 @@ class Takes(models.Model):
     year = models.IntegerField(max_length=4, verbose_name="Año")
     status = models.CharField(max_length=200, verbose_name="Estado", choices=[("APROBADO", "Aprobado"), ("REPROBADO", "Reprobado"), ("INSCRITO", "Inscrito"), ("RETIRADO", "Retirado")], default=None)
 
+    def __str__(self):
+        return (str(self.user_ID.ID_number) +" cursa "+str(self.course_ID.name))
+
     class Meta:
         verbose_name = "Cursa"
         verbose_name_plural = "Cursa"
+        order_with_respect_to = 'user_ID'
 
 
 
@@ -243,6 +257,7 @@ class UserApplication(models.Model):
     class Meta:
         verbose_name = "Solicitud de Registro"
         verbose_name_plural = "Solicitudes de Registro"
+        ordering = ['ID_number']
         
         
 
