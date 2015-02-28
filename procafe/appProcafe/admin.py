@@ -6,8 +6,6 @@ from appProcafe.models import Department, Unit, Section, Risk, Position, Locatio
 from appProcafe.models import Telephone, Document, Takes, Course
 from appProcafe.models import User, UserProfile, UserApplication, RemoveRequest
 from django.utils.translation import ugettext_lazy as _
-from django import forms
-from django.core.exceptions import ValidationError
 
 
 admin.site.register(Department)
@@ -68,7 +66,7 @@ class MyUserAdmin(UserAdmin):
                 self.fieldsets = UserAdmin.fieldsets
             return response
         else:
-           return UserAdmin.change_view(self, request, *args, **kwargs)
+            return UserAdmin.change_view(self, request, *args, **kwargs)
 
 admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
