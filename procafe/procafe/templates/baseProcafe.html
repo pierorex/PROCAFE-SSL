@@ -65,10 +65,15 @@
                                  <b><a href="/admin">Administración</a>    </b>    
                             </p>
                         {% else %}
+						{% if user.is_staff %}
                             <p align="right">
-                                 <b><a href="/appProcafe/profile">Perfil</a>    </b>    
+                                 <b><a href="/admin">Administración</a>    </b>    
                             </p>
                         {% endif %}
+                        {% endif %}
+                        <p align="right">
+                             <b><a href="/appProcafe/profile">Perfil</a>    </b>    
+                        </p>
 						<p align="right">
 							 <b><a href="/appProcafe/courses">Cursos</a>	</b>	
 						</p>

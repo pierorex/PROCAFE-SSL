@@ -72,7 +72,7 @@ def userLogin(request):
             user = authenticate(username=nombre, password=userPassword)
             if user is not None and user.is_active:
                 login(request, user)
-                if user.is_superuser:
+                if (user.is_superuser or user.is_staff):
                     return HttpResponseRedirect('/admin')
                 else:
                     return HttpResponseRedirect('/appProcafe/profile')
