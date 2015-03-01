@@ -168,7 +168,7 @@ def Type_presave_handler(sender, instance, **kwargs):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    ID_number = models.IntegerField(primary_key=True, verbose_name="Cédula", default=0)
+    ID_number = models.IntegerField(unique=True, verbose_name="Cédula", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     sex = models.CharField(max_length=10, 
                            verbose_name="Sexo", 
