@@ -2,7 +2,7 @@
 from django import forms
 from django.core.validators import RegexValidator
 from appProcafe.models import Location, Position, Paysheet, Type
-
+from django.forms.widgets import SplitDateTimeWidget
 
 cedula_validator =  RegexValidator(
                         regex="^[1-9][0-9]{0,8}$", 
@@ -76,10 +76,11 @@ class RequestForm(forms.Form):
                             })
                         )
     birthdate = forms.DateField(required = True,label="Fecha de Nacimiento",
-                                widget = forms.DateInput(attrs = {
+                                widget = forms.DateTimeInput(attrs = {
                                     'class'       : 'form-control',
                                     'placeholder' : 'Fecha de Nacimiento',
-                                    'message'     : 'Introduzca una fecha valida'
+                                    'message'     : 'Introduzca una fecha valida',
+                                    'type'        : 'date'
                                 }))
     paysheet = forms.ChoiceField(required = True, label="Tipo de Nómina",choices=[])
     type = forms.ChoiceField(required = True, label="Tipo de Personal",choices=[])
