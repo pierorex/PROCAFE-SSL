@@ -61,15 +61,9 @@
 										{% ifnotequal field.name "type" %}
 										{% ifnotequal field.name "sex" %}
 										{% ifnotequal field.name "birthdate" %}
-											<input type="text"
-												   class="form-control" 
-										  	     name="{{field.name}}" placeholder="{{field.label}}" 
-										 	      for="id_{{field.name}}">
+											{{ field }}
 										{% else %}
-											<input type="text"
-												   class="form-control" 
-										  	     name="{{field.name}}" placeholder="Fecha de Nacimiento: dd/mm/aaaa" 
-										 	      for="id_{{field.name}}">
+											{{ field }}
 										{% endifnotequal %}
 										{% else %}
 											<select class="form-control" name="{{field.name}}">

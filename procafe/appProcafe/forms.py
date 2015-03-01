@@ -5,8 +5,8 @@ from appProcafe.models import Location, Position, Paysheet, Type
 
 
 cedula_validator =  RegexValidator(
-                        regex="^[1-9][0-9]{0,7}$", 
-                        message="La cédula debe contener entre 1 y 8 caracteres numéricos.")
+                        regex="^[1-9][0-9]{0,8}$", 
+                        message="La cédula debe contener entre 1 y 9 caracteres numéricos.")
 cedula_length = 9
 
 class DocumentForm(forms.Form):
@@ -39,17 +39,61 @@ class RequestForm(forms.Form):
     ID_number = forms.CharField(required = True,
                     label = "Cédula",
                     max_length = cedula_length,
-                    validators = [cedula_validator])
-    USB_ID = forms.CharField(required = True, max_length=8, validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", message="El USB-ID debe ser de la forma xx-xxxxx.", code="invalid_usbid")])
-    first_name = forms.CharField(required = True,max_length=50, label="Nombre")
-    last_name = forms.CharField(required = True,max_length=50, label="Apellido")
-    birthdate = forms.DateField(required = True,label="Fecha de Nacimiento")
+                    validators = [cedula_validator],
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Cédula',
+                            'pattern'     : '^[1-9][0-9]{0,8}$',
+                            'message'     : 'La cédula debe contener entre 1 y 9 caracteres numéricos'
+                        })
+                )
+    USB_ID = forms.CharField(required = True, 
+                             max_length=8, 
+                             validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", 
+                             message="El USB-ID debe ser de la forma xx-xxxxx", 
+                             code="invalid_usbid")],
+                             widget   = forms.TextInput(attrs = {
+                                'class'       : 'form-control',
+                                'placeholder' : 'USB-ID: xx-xxxxx',
+                                'pattern'     : '^[0-9]{2}-[0-9]{5}$',
+                                'message'     : 'El USB-ID debe ser de la forma xx-xxxxx'
+                            })
+                        )
+    first_name = forms.CharField(required = True,max_length=50, label="Nombre",
+                                widget   = forms.TextInput(attrs = {
+                                'class'       : 'form-control',
+                                'placeholder' : 'Nombre',
+                                'maxlength'   : '50',
+                                'message'     : 'Este nombre es invalido'
+                            })
+                        )
+    last_name = forms.CharField(required = True,max_length=50, label="Apellido",
+                                widget   = forms.TextInput(attrs = {
+                                'class'       : 'form-control',
+                                'placeholder' : 'Apellido',
+                                'maxlength'   : '50',
+                                'message'     : 'Este apellido es invalido'
+                            })
+                        )
+    birthdate = forms.DateField(required = True,label="Fecha de Nacimiento",
+                                widget = forms.DateInput(attrs = {
+                                    'class'       : 'form-control',
+                                    'placeholder' : 'Fecha de Nacimiento',
+                                    'message'     : 'Introduzca una fecha valida'
+                                }))
     paysheet = forms.ChoiceField(required = True, label="Tipo de Nómina",choices=[])
     type = forms.ChoiceField(required = True, label="Tipo de Personal",choices=[])
     location = forms.ChoiceField(required = True,label="Ubicación de Trabajo",choices=[])
     position = forms.ChoiceField(required = True,label="Cargo",choices=[])
     sex = forms.ChoiceField(required = True,label="Sexo",choices=[("MASCULINO","Masculino"),("FEMENINO","Femenino")])
-    email = forms.EmailField(required = True,label="E-mail")
+    email = forms.EmailField(required = True,label="E-mail",
+                             widget = forms.EmailInput(attrs = {
+                                    'class'       : 'form-control',
+                                    'placeholder' : 'E-mail',
+                                    'message'     : 'Introduzca un email valido'
+                                })
+                             
+                            )
     
     def __init__(self, data = None):
         
