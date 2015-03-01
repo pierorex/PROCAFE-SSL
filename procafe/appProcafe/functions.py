@@ -4,6 +4,8 @@ from appProcafe.models import UserProfile, User
 import re
 import datetime
 import os
+import string
+import random
 
 #no se admite que en el archivo exel alguna casilla tenga escrito un " doble comilla, de ser asi el comportamiento de esta funcion puede ser inesperado
 #solo se toman los primeros 3 campos porque los demas se suponen que estan incorrectos
@@ -69,3 +71,6 @@ def csv_to_UserProfile(file_path):
         else:
             continue
     os.remove(file_path)
+    
+def id_generator(size=10,chars=string.ascii_uppercase+string.ascii_lowercase+string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))

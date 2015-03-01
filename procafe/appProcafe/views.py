@@ -10,17 +10,18 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-from appProcafe.models import Document, UserApplication, Location, Position,\
-    Paysheet, Type
-from appProcafe.forms import DocumentForm, UserLogin
-from appProcafe.functions import csv_to_UserProfile
+from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile
+from appProcafe.forms import DocumentForm, UserLogin, newPassword
+from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
-from appProcafe.models import UserProfile
 from procafe import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.tests.custom_user import old_au_local_m2m
+import datetime
+from django.utils import timezone
 
 
 @staff_member_required
@@ -189,6 +190,37 @@ def userLogout(request):
 def actualQuarter(request):
     return render_to_response('trimestreactual.html', context_instance=RequestContext(request))
 
+def Reset(request,uidb100):
+    try:
+        req = PassRequest.objects.get(code=uidb100)
+        now = timezone.make_aware(datetime.datetime.now(), timezone.get_default_timezone())
+        min15 = datetime.timedelta(minutes=15)
+        if (now-req.date>min15):
+            req.delete()
+            return render_to_response('Noreq.html', context_instance=RequestContext(request))
+        else:
+            req.date = datetime.datetime.now()
+            req.save()
+        form = newPassword()
+        mensaje = ''
+        done = ''
+        
+        if request.method == 'POST':
+            form = newPassword(request.POST)
+            if form.is_valid():
+                if(form.cleaned_data['password']==form.cleaned_data['password2']):
+                    user = req.user
+                    user.set_password(form.cleaned_data['password'])
+                    user.save()
+                    done = 'Contraseña cambiada exitosamente.'
+                    req.delete()
+                else:
+                    mensaje = 'Introdusca contraseña correctamente.'
+        return render_to_response('req.html',{'form':form,'mensaje':mensaje,'done':done}, context_instance=RequestContext(request))
+    except PassRequest.DoesNotExist:
+        pass
+    return render_to_response('Noreq.html', context_instance=RequestContext(request))
+   
 def passwordReset(request): 
     form = UserSignUpForm()
     mensaje = ''
@@ -200,18 +232,26 @@ def passwordReset(request):
         if form.is_valid():
             try:
                 userProfile = UserProfile.objects.get(ID_number=int(request.POST['id']))
-                userProfile.user.set_password('testing')
-                userProfile.user.is_active = True
-                userProfile.user.save()
-                mensaje = 'Nombre de Usuario: %d \n Contraseña: %s' % (userProfile.ID_number, 'testing')
+                user = userProfile.user
+                try:
+                    old = PassRequest.objects.get(user=user)
+                    old.delete()
+                except PassRequest.DoesNotExist:
+                    pass
+                string = id_generator(100)
+                new = PassRequest(user=user,date=datetime.datetime.now(),code=string)
+                new.save()
+                string = 'http://127.0.0.1:8000/appProcafe/recover/'+string
+                mensaje = 'Nombre de Usuario: %d \n Ha recibido este mail porque se ha solicitado una renovacion de contraseña, si desconoce de esta operacion ignore este email.\n En caso \
+                contrario dirajase al siguiente enlace: %s' % (userProfile.ID_number, string)
                 send_mail('Cuenta PROCAFE',
                         mensaje, 
                         'appProcafe@procafe.usb.ve', 
                         [ '%s@cedula.usb.ve'%(userProfile.ID_number),
                           '%s@mailinator.com'%(userProfile.ID_number),
-                          userProfile.user.email, 'ProcafeTest@mailinator.com'], 
+                          user.email, 'ProcafeTest@mailinator.com'], 
                         fail_silently=False)
-                mensaje = "Cambio exitoso, revise su correo."
+                mensaje = "De existir el usuario, se ha enviado un email, revise su correo."
                 failure = 'success'
                 success = 'success'
             

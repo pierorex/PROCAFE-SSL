@@ -34,6 +34,23 @@ class UserLogin(forms.Form):
             'password': forms.PasswordInput(),
         }
 
+class newPassword(forms.Form):
+    password = forms.CharField(required = True,
+                    label = "Contraseña",
+                    max_length = 254,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Contraseña'
+                        })
+                )
+    password2 = forms.CharField(required = True,
+                    label = "Contraseña",
+                    max_length = 254,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Contraseña'
+                        })
+                )
         
 class RequestForm(forms.Form):
     ID_number = forms.CharField(required = True,

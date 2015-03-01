@@ -28,6 +28,12 @@ def userProfile_predelete_handler(sender, instance, **kwargs):
 
 
 # Models
+
+class PassRequest(models.Model):
+    user = models.ForeignKey(User)
+    date = models.DateTimeField()
+    code = models.CharField(max_length=101)
+
 class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
