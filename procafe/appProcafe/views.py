@@ -92,7 +92,7 @@ def userLogin(request):
 @login_required(login_url='/appProcafe/login/')
 def profile(request):
     user = request.user.userprofile
-    return render(request,'infopersonal.html', {'loggedUser':user})
+    return render_to_response('infopersonal.html', {'loggedUser':user}, context_instance=RequestContext(request))
 
 
 
