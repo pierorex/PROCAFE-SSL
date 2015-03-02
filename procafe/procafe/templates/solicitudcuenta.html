@@ -15,7 +15,7 @@
 							{% if not failure %}
 								Introduzca su número de cédula
 							{% elif success%}
-								Exito en la creacion de la solicitud
+								Éxito en la creacion de la solicitud
 							{% else %}
 								Planilla de Solicitud de Registro
 							{% endif %}
@@ -27,12 +27,8 @@
 								{% for field in form %}
 								<div class="form-group">
 									<div class="col-sm-9">
-										<input type={%ifequal field.label "Contraseña"%} "password" {%endifequal%}
-													 {%ifequal field.label "Cédula"%}   "text"   {%endifequal%}
-													 {%ifequal field.label "Cédula"%}   "text"   {%endifequal%}
-											   class="form-control" 
-										       name="{{field.name}}" placeholder="{{field.label}}" 
-										       for="id_{{field.name}}">
+										{{ field }}
+										<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 										{% if field.error %}
 									 		<p>{{ field.error }}</p>
 									 	{% else %}
@@ -62,10 +58,10 @@
 										{% ifnotequal field.name "sex" %}
 										{% ifnotequal field.name "birthdate" %}
 											{{ field }}
-											<span class='error' id='{{field.name}}_error' aria-live="polite">{{ field.errors }}</span>
+											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 										{% else %}
 											{{ field }}
-											<span class='error' id='{{field.name}}_error' aria-live="polite">{{ field.errors }}</span>
+											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 										{% endifnotequal %}
 										{% else %}
 											<select class="form-control" name="{{field.name}}">
@@ -170,6 +166,20 @@
 
 
 	{% for field in application %}
+		var error_{{ field.name }} = document.getElementById('{{ field.name }}_error')
+		var {{ field.name }} = document.getElementById('id_{{ field.name }}');
+		{{ field.name }}.addEventListener('blur', function (event) {
+			verifyPattern({{ field.name }}, error_{{ field.name }}, {{ field.name }}.getAttribute('message'));
+		}, false);
+
+		{{ field.name }}.addEventListener('focus', function (event) {
+			error_{{ field.name}}.innerHTML = ""; // Reset the content of the message
+			error_{{ field.name}}.className = "error"; // Reset the visual state of the message
+		}, false);
+
+	{% endfor %}
+	
+	{% for field in form %}
 		var error_{{ field.name }} = document.getElementById('{{ field.name }}_error')
 		var {{ field.name }} = document.getElementById('id_{{ field.name }}');
 		{{ field.name }}.addEventListener('blur', function (event) {

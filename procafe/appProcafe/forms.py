@@ -19,15 +19,30 @@ class UserSignUpForm(forms.Form):
     id = forms.CharField(required = True,
                     label = "Cédula",
                     max_length = cedula_length,
-                    validators = [cedula_validator])
+                    validators = [cedula_validator],
+                    widget = forms.TextInput(attrs={
+                        'class':'form-control',
+                        'pattern':'^[1-9][0-9]{0,8}$',
+                        'placeholder':'Cédula',
+                        'message':'La cédula debe contener entre 1 y 9 caracteres numéricos.'
+                    }))
 
 class UserLogin(forms.Form):
     id = forms.CharField(max_length=cedula_length, 
                          label = "Cédula", 
-                         validators=[cedula_validator])
+                         validators=[cedula_validator],
+                         widget = forms.TextInput(attrs={
+                        'class':'form-control',
+                        'pattern':'^[1-9][0-9]{0,8}$',
+                        'placeholder':'Cédula',
+                        'message':'La cédula debe contener entre 1 y 9 caracteres numéricos.'
+                    }))
     password = forms.CharField(required = True, 
                                label = 'Contraseña',
-                               widget=forms.PasswordInput())
+                               widget=forms.PasswordInput(attrs={
+                                    'class':'form-control',
+                                    'placeholder':'Contraseña'
+                               }))
 
     class Meta:
         widgets = {
