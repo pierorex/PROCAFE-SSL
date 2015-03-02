@@ -252,10 +252,10 @@ def passwordReset(request):
                           user.email, 'ProcafeTest@mailinator.com'], 
                         fail_silently=False)
                 mensaje = "De existir el usuario, se ha enviado un email, revise su correo."
-                failure = 'success'
                 success = 'success'
             
             except UserProfile.DoesNotExist:
+                failure = 'failure'
                 mensaje = "No existe cuenta con esta cedula."
                 
     return render_to_response('requestpasswordreset.html', 
