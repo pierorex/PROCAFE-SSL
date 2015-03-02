@@ -209,17 +209,18 @@ class Telephone(models.Model):
 
 
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=None)
-    name = models.CharField(primary_key=True, max_length=200, verbose_name="Nombre", default=None)
-    description = models.CharField(max_length=200, verbose_name = "Descripción", default=None)
-    content = models.CharField(max_length=200, verbose_name="Contenido", default=None)
+    department_ID = models.ForeignKey(Department, verbose_name="* Dpto", default=None)
+    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    lower = models.CharField(max_length=200, unique=True, editable=False)
+    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
+    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
     video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None)
-    modality = models.CharField(max_length=200, verbose_name="Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
-    instructor = models.CharField(max_length=200, verbose_name="Instructor", default=None)
-    init_date = models.DateTimeField(verbose_name="Fecha de Inicio")
-    end_date = models.DateTimeField(verbose_name="Fecha de Fin")
-    location = models.CharField(max_length=200, verbose_name="Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
-    number_hours = models.IntegerField(verbose_name="Número de Horas")
+    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
+    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
+    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
+    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="* Número de Horas")
 
     def __str__(self):
         return str(self.name)
@@ -227,7 +228,10 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
-        ordering = ['name']
+        ordering = ['lower']
+@receiver (pre_save, sender=Type)
+def Course_presave_handler(sender, instance, **kwargs):
+    instance.lower = instance.name.lower()
 
 
 
@@ -327,7 +331,13 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
                   [ '%s@mailinator.com'%(str(new_userProfile.ID_number)),
                     new_user.email],
                   fail_silently=False)
-    
+    if instance.status == 'RECHAZADA':
+        mensaje = 'Su solicitud ha sido rechazada.\nPara más información, diríjase al Departamento de Seguridad Integral o envíe un correo a procafetest@mailinator.com'
+        send_mail('Cuenta PROCAFE', 
+                  mensaje, 
+                  'appProcafe@procafe.usb.ve', 
+                  [ instance.email],
+                  fail_silently=False)
     # Delete application in 2 cases: aprovada/rechazada
     if instance.status != 'PENDIENTE': instance.delete()
         
