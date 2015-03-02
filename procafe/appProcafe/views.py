@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.views import logout, password_reset,\
-    password_reset_confirm
+from django.contrib.auth.views import logout
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -16,10 +14,6 @@ from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
 from procafe import settings
-from django.core.urlresolvers import reverse
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.tests.custom_user import old_au_local_m2m
 import datetime
 from django.utils import timezone
 
