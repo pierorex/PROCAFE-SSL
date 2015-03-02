@@ -253,10 +253,12 @@ def passwordReset(request):
                         fail_silently=False)
                 mensaje = "De existir el usuario, se ha enviado un email, revise su correo."
                 success = 'success'
+                failure = 'success'
             
             except UserProfile.DoesNotExist:
-                failure = 'failure'
-                mensaje = "No existe cuenta con esta cedula."
+                mensaje = "De existir el usuario, se ha enviado un email, revise su correo."
+                success = 'success'
+                failure = 'success'
                 
     return render_to_response('requestpasswordreset.html', 
                              {'mensaje':mensaje,'failure':failure, 'success':success, 'form':form, 'actual_page' : request.get_full_path()}, 

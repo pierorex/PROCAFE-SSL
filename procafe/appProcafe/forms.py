@@ -52,16 +52,14 @@ class UserLogin(forms.Form):
 class newPassword(forms.Form):
     password = forms.CharField(required = True,
                     label = "Contraseña",
-                    max_length = 254,
-                    widget   = forms.TextInput(attrs = {
+                    widget   = forms.PasswordInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Contraseña'
                         })
                 )
     password2 = forms.CharField(required = True,
                     label = "Contraseña",
-                    max_length = 254,
-                    widget   = forms.TextInput(attrs = {
+                    widget   = forms.PasswordInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Contraseña'
                         })
