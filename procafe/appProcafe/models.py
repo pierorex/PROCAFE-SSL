@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from datetime import datetime
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import pre_delete, post_save, pre_save
+from django.db.models.signals import pre_delete, post_save, pre_save,\
+    m2m_changed
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 
@@ -213,7 +214,7 @@ class Course(models.Model):
     lower = models.CharField(max_length=200, unique=True, editable=False)
     description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
     content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
-    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None)
+    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
     modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
     instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
     init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
@@ -229,7 +230,7 @@ class Course(models.Model):
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
         ordering = ['lower']
-@receiver (pre_save, sender=Type)
+@receiver (pre_save, sender=Course)
 def Course_presave_handler(sender, instance, **kwargs):
     instance.lower = instance.name.lower()
 
@@ -239,7 +240,7 @@ class CourseRequest(models.Model):
     lower = models.CharField(max_length=200, unique=True, editable=False)
     description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
     content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
-    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None)
+    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
     modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
     instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
     init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
@@ -256,6 +257,60 @@ class CourseRequest(models.Model):
     class Meta:
         verbose_name = "Solicitud de creacion de curso"
         verbose_name_plural = "Solicitud de creacion de cursos"
+        ordering = ['lower']
+#receiver (m2m_changed, sender=CourseRequest)
+#def CourseRequest_postsave_handler(sender, instance, **kwargs):
+#    if instance.status == 'APROBADA':
+#        new_course = Course(
+#                            name = instance.name,
+#                            lower = instance.lower,
+#                            description = instance.description,
+#                            content = instance.content,
+#                            video_url = instance.video_url,
+#                            modality = instance.modality,
+#                            instructor = instance.instructor,
+#                            init_date = instance.init_date,
+#                            end_date = instance.end_date,
+#                            location = instance.location,
+#                            number_hours = instance.number_hours
+#                        )
+#        new_course.save()
+#        riesgos = instance.Riesgos.all()
+#        for risk in riesgos:
+#            new_course.Riesgos.add(risk)
+#        new_course.save()
+#    # Delete application in 2 cases: aprovada/rechazada
+#    if instance.status != 'PENDIENTE':
+#        instance.delete()
+#@receiver (post_save, sender=CourseRequest)
+#def CourseRequest_m2m_changed_handler(sender, instance, **kwargs):
+#    if instance.status != 'PENDIENTE':
+#        instance.
+
+class CourseChangeRequest(models.Model):
+    ProposedBy = models.ForeignKey(User, verbose_name="Propuesto por", editable=False)
+    cambiando = models.ForeignKey(Course, verbose_name="cambiando", editable=False)#apuntador al curso que se debe cambiar
+    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    lower = models.CharField(max_length=200, unique=True, editable=False)
+    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
+    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
+    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
+    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
+    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
+    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
+    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    status = models.CharField(max_length=20, 
+                              verbose_name="Estado de la Solicitud", 
+                              choices = [('PENDIENTE','Pendiente'),
+                                         ('APROBADA','Aprobada'),
+                                         ('RECHAZADA','Rechazada')], 
+                              default='PENDIENTE')
+    Riesgos = models.ManyToManyField(Risk)
+    class Meta:
+        verbose_name = "Solicitud de modificación de curso"
+        verbose_name_plural = "Solicitud de modificación de cursos"
         ordering = ['lower']
     
 

@@ -2,7 +2,7 @@
 from django import forms
 from django.core.validators import RegexValidator
 from appProcafe.models import Location, Position, Paysheet, Type, CourseRequest,\
-    Risk
+    Risk, Course
 from django.forms.widgets import SplitDateTimeWidget
 
 cedula_validator =  RegexValidator(
@@ -122,6 +122,28 @@ class CourseRequestForm(forms.Form):
     
     class Meta:
         model = CourseRequest
+        
+class CourseAllForm(forms.Form):
+    cursos = forms.ChoiceField(required = True,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Modalidad *'
+                        }),choices = [])
+    def __init__(self, data = None):
+        
+            if data:
+                super(CourseAllForm,self).__init__(data)
+            else:
+                super(CourseAllForm,self).__init__()
+            cursosList = []
+            c = Course.objects.all()
+            for cargo in c:
+                cursosList.append((cargo.lower,cargo.name))
+            self.fields['cursos'] = forms.ChoiceField(required = True,
+                                                      widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Modalidad *'
+                        }),choices = cursosList)
         
 class RequestForm(forms.Form):
     ID_number = forms.CharField(required = True,

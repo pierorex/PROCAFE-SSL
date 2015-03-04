@@ -17,5 +17,7 @@ urlpatterns = patterns('',
     url(r'^formulariosolicitud/$', 'appProcafe.views.new_userApp'),
     url(r'^passwordreset/$', 'appProcafe.views.passwordReset'),
     url(r'^recover/(?P<uidb100>[0-9A-Za-z]{100})$', 'appProcafe.views.Reset'),
-    url(r'^CourseRequest$', 'appProcafe.views.CourseRequestview')
+    url(r'^CourseRequest$', 'appProcafe.views.CourseRequestview'),
+    url(r'^CourseChangeview1', 'appProcafe.views.CourseChangeview1'),
+    url(r'^CourseChangeview2/(?P<lower>.*)$', 'appProcafe.views.CourseChangeview2'),
 )

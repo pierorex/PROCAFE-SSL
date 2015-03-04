@@ -1,0 +1,46 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+<div class="row clearfix">
+	<div class="col-md-10 column">
+		<div class="page-header">
+			<h3>
+				Solicitud de modificación de curso.
+			</h3>
+		</div>
+
+        {% if bool %}
+        <!-- Upload form. Note enctype attribute! -->
+        <form role="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+{% for field in form %}
+  <div>
+      {{ field.errors }}
+	<select class="form-control" name="{{field.name}}">
+		<option value="" disabled selected>{{field.label}}</option>
+		{% for choice in field.field.choices %}
+			<option value="{{choice.0}}">{{choice.1}}</option> 
+		{% endfor %}
+	</select>
+  </div>
+  <p></p>
+{% endfor %}
+            <div><input type="submit" value="Cargar" /><div/>
+        </form>
+        {% else %}
+        <p>Usted no posee permisos para solicitar modificación cursos, diríjase con su supervisor.</p>
+        {% endif %}
+        
+</div></div>
+
+{% endblock %}

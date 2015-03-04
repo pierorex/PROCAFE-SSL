@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from appProcafe.models import Department, Unit, Section, Risk, Position, Location,\
-    Paysheet, Type
+    Paysheet, Type, CourseRequest, CourseChangeRequest
 from appProcafe.models import Telephone, Document, Takes, Course
 from appProcafe.models import User, UserProfile, UserApplication, RemoveRequest
 from django.utils.translation import ugettext_lazy as _
@@ -16,6 +16,8 @@ admin.site.register(Risk)
 admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
+admin.site.register(CourseRequest)#no puede ser aceptada por vista de administrador, requiere vista especial
+admin.site.register(CourseChangeRequest)#no puede ser aceptada por vista de administrador, requiere vista especial
 
 class TelephoneAdmin(admin.ModelAdmin):
     list_display = ('user_ID', 'number')

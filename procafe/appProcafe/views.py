@@ -9,9 +9,9 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
 from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile,\
-    Course, CourseRequest
+    Course, CourseRequest, CourseChangeRequest
 from appProcafe.forms import DocumentForm, UserLogin, newPassword,\
-    CourseRequestForm
+    CourseRequestForm, CourseAllForm
 from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
@@ -45,6 +45,13 @@ def loadEmployees(request):
                                },
                               context_instance=RequestContext(request)
                             )
+    
+@staff_member_required
+def CourseManageview(request):
+    bool = request.user.has_perm('appProcafe.change_curserequest')
+    form = CourseRequestForm() # empty form
+    mensaje = ''
+    fin = ''
 
 @staff_member_required
 def CourseRequestview(request):
@@ -59,10 +66,12 @@ def CourseRequestview(request):
             try:
                 c = Course.objects.get(lower=form.cleaned_data['name'].lower())
                 mensaje = 'Ya existe un curso con nombre %s.' % c.name
+                fin = 'si'
             except Course.DoesNotExist:
                 try:
                     c = CourseRequest.objects.get(lower=form.cleaned_data['name'].lower())
                     mensaje = 'Ya existe una solicitud de curso con nombre %s.' % c.name
+                    fin = 'si'
                 except CourseRequest.DoesNotExist:
                     newCurseRequest=CourseRequest(ProposedBy=request.user,
                                                  name = form.cleaned_data['name'],
@@ -86,6 +95,69 @@ def CourseRequestview(request):
                     fin = 'si'
     
     return render_to_response('CourseRequest.html',
+                              {'form': form,
+                               'mensaje' : mensaje,
+                               'fin' : fin,
+                               'bool' : bool,
+                               },
+                              context_instance=RequestContext(request)
+                            )
+    
+@staff_member_required
+def CourseChangeview1(request):
+    bool = request.user.has_perm('appProcafe.add_CourseChangeRequest')
+    form = CourseAllForm() # empty form
+
+    if request.method == 'POST':
+        form = CourseAllForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/appProcafe/CourseChangeview2/%s' % form.cleaned_data['cursos'])
+    
+    return render_to_response('CourseAllForChange.html',
+                              {'form': form,
+                               'bool' : bool,
+                               },
+                              context_instance=RequestContext(request)
+                            )
+    
+@staff_member_required
+def CourseChangeview2(request, lower):
+    bool = request.user.has_perm('appProcafe.add_CourseChangeRequest')
+    form = CourseRequestForm() # empty form
+    mensaje = ''
+    fin = ''
+    try:
+        curso = Course.objects.get(lower=lower)
+    except Course.DoesNotExist:
+        mensaje = 'No existe el curso.'
+        fin = 'si'
+    
+    if request.method == 'POST':
+        form = CourseRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+                    newCurseRequest=CourseChangeRequest(ProposedBy=request.user,
+                                                 cambiando=curso,
+                                                 name = form.cleaned_data['name'],
+                                                 lower = form.cleaned_data['name'].lower(),
+                                                 description = form.cleaned_data['description'],
+                                                 content = form.cleaned_data['content'],
+                                                 video_url = form.cleaned_data['video_url'],
+                                                 modality = form.cleaned_data['modality'],
+                                                 instructor = form.cleaned_data['instructor'],
+                                                 init_date = form.cleaned_data['init_date'],
+                                                 end_date = form.cleaned_data['end_date'],
+                                                 location = form.cleaned_data['location'],
+                                                 number_hours = form.cleaned_data['number_hours'],
+                                                 status = 'PENDIENTE'
+                             )
+                    newCurseRequest.save()
+                    for risk in form.cleaned_data['Riesgos']:
+                        newCurseRequest.Riesgos.add(risk)
+                    newCurseRequest.save()
+                    mensaje = 'Solicitud guardada con éxito, espere respuesta.'
+                    fin = 'si'
+    
+    return render_to_response('CourseChange.html',
                               {'form': form,
                                'mensaje' : mensaje,
                                'fin' : fin,
