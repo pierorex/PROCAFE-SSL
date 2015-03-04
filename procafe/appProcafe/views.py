@@ -60,7 +60,7 @@ def CourseRequestview(request):
     mensaje = ''
     fin = ''
     
-    if request.method == 'POST':
+    if request.method == 'POST' and bool:
         form = CourseRequestForm(request.POST, request.FILES)
         if form.is_valid():
             try:
@@ -108,7 +108,7 @@ def CourseChangeview1(request):
     bool = request.user.has_perm('appProcafe.add_coursechangerequest')
     form = CourseAllForm() # empty form
 
-    if request.method == 'POST':
+    if request.method == 'POST' and bool:
         form = CourseAllForm(request.POST)
         if form.is_valid():
             return HttpResponseRedirect('/appProcafe/CourseChangeview2/%s' % form.cleaned_data['cursos'])
@@ -132,7 +132,7 @@ def CourseChangeview2(request, lower):
         mensaje = 'No existe el curso.'
         fin = 'si'
     
-    if request.method == 'POST':
+    if request.method == 'POST' and bool:
         form = CourseRequestForm(request.POST, request.FILES)
         if form.is_valid():
                     newCurseRequest=CourseChangeRequest(ProposedBy=request.user,
@@ -183,6 +183,7 @@ def CourseAproveview1(request):
                               context_instance=RequestContext(request)
                             )
     
+@staff_member_required
 def CourseAproveview2(request,type,action,lower):
     bool2 = request.user.has_perm('appProcafe.change_coursechangerequest')
     bool1 = request.user.has_perm('appProcafe.change_courserequest')
@@ -246,6 +247,7 @@ def CourseAproveview2(request,type,action,lower):
             c.delete()
     return HttpResponseRedirect('/appProcafe/CourseAprove')
 
+@staff_member_required
 def Coursedetail(request, type, lower):
     bool=False
     bool2 = False
