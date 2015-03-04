@@ -28,7 +28,7 @@ class TakesAdmin(admin.ModelAdmin):
 admin.site.register(Takes, TakesAdmin)
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'department_ID', 'number_hours')
+    list_display = ('name', 'number_hours')
     search_fields = ['name']
 
 admin.site.register(Course, CourseAdmin)

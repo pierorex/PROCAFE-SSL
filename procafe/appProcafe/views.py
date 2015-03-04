@@ -8,14 +8,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.core.mail import send_mail
-from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile
-from appProcafe.forms import DocumentForm, UserLogin, newPassword
+from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile,\
+    Course, CourseRequest
+from appProcafe.forms import DocumentForm, UserLogin, newPassword,\
+    CourseRequestForm
 from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
 from procafe import settings
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 @staff_member_required
@@ -23,6 +26,7 @@ def loadEmployees(request):
     form = DocumentForm() # empty form
     file_path = ''
     mensaje = ''
+    bool = request.user.has_perm('appProcafe.add_user')
 
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -37,11 +41,59 @@ def loadEmployees(request):
                               {'form': form,
                                'file_path': file_path,
                                'mensaje' : mensaje,
+                               'bool' : bool,
                                },
                               context_instance=RequestContext(request)
                             )
 
-
+@staff_member_required
+def CourseRequestview(request):
+    bool = request.user.has_perm('appProcafe.add_curserequest')
+    form = CourseRequestForm() # empty form
+    mensaje = ''
+    fin = ''
+    
+    if request.method == 'POST':
+        form = CourseRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                c = Course.objects.get(lower=form.cleaned_data['name'].lower())
+                mensaje = 'Ya existe un curso con nombre %s.' % c.name
+            except Course.DoesNotExist:
+                try:
+                    c = CourseRequest.objects.get(lower=form.cleaned_data['name'].lower())
+                    mensaje = 'Ya existe una solicitud de curso con nombre %s.' % c.name
+                except CourseRequest.DoesNotExist:
+                    newCurseRequest=CourseRequest(ProposedBy=request.user,
+                                                 name = form.cleaned_data['name'],
+                                                 lower = form.cleaned_data['name'].lower(),
+                                                 description = form.cleaned_data['description'],
+                                                 content = form.cleaned_data['content'],
+                                                 video_url = form.cleaned_data['video_url'],
+                                                 modality = form.cleaned_data['modality'],
+                                                 instructor = form.cleaned_data['instructor'],
+                                                 init_date = form.cleaned_data['init_date'],
+                                                 end_date = form.cleaned_data['end_date'],
+                                                 location = form.cleaned_data['location'],
+                                                 number_hours = form.cleaned_data['number_hours'],
+                                                 status = 'PENDIENTE'
+                             )
+                    newCurseRequest.save()
+                    for risk in form.cleaned_data['Riesgos']:
+                        newCurseRequest.Riesgos.add(risk)
+                    newCurseRequest.save()
+                    mensaje = 'Solicitud guardada con éxito, espere respuesta.'
+                    fin = 'si'
+    
+    return render_to_response('CourseRequest.html',
+                              {'form': form,
+                               'mensaje' : mensaje,
+                               'fin' : fin,
+                               'bool' : bool,
+                               },
+                              context_instance=RequestContext(request)
+                            )
+    
 
 def index(request):
     return render_to_response('homepage.html',context_instance=RequestContext(request))

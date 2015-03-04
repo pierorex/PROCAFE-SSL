@@ -1,0 +1,63 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+<div class="row clearfix">
+	<div class="col-md-10 column">
+		<div class="page-header">
+			<h3>
+				Solicitud de creación de curso.
+			</h3>
+		</div>
+
+        {% if bool %}
+        <!-- Upload form. Note enctype attribute! -->
+        {% if not fin %}
+        <form role="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+{% for field in form %}
+  <div>
+    {% if field.name = 'location' or field.name = 'modality' %} 
+      {{ field.errors }}
+	<select class="form-control" name="{{field.name}}">
+		<option value="" disabled selected>{{field.label}}</option>
+		{% for choice in field.field.choices %}
+			<option value="{{choice.0}}">{{choice.1}}</option> 
+		{% endfor %}
+	</select>
+    {% else %}      
+    
+      {{ field.errors }}
+      <!--{{ field.label_tag }}-->
+      {% if field.name = 'Riesgos'%}
+      <p>Riesgos: </p>
+      {% endif %}
+      {{ field }}
+    {% endif %}
+<p></p>
+  </div>
+{% endfor %}
+            <div><input type="submit" value="Cargar" /><div/>
+        </form>
+        {% if mensaje %}
+        <p><t style="color: red;">{{mensaje}}</t></p>
+        {% endif %}
+        {% else %}
+        <p>{{mensaje}}</p>
+        {% endif %}
+        {% else %}
+        <p>Usted no posee permisos para solicitar cursos, diríjase con su supervisor.</p>
+        {% endif %}
+        
+</div></div>
+
+{% endblock %}

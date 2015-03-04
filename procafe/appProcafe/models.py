@@ -209,7 +209,6 @@ class Telephone(models.Model):
 
 
 class Course(models.Model):
-    department_ID = models.ForeignKey(Department, verbose_name="* Dpto", default=None)
     name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
     description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
@@ -221,6 +220,7 @@ class Course(models.Model):
     end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
     location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
     number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    Riesgos = models.ManyToManyField(Risk)
 
     def __str__(self):
         return str(self.name)
@@ -233,7 +233,31 @@ class Course(models.Model):
 def Course_presave_handler(sender, instance, **kwargs):
     instance.lower = instance.name.lower()
 
-
+class CourseRequest(models.Model):
+    ProposedBy = models.ForeignKey(User, verbose_name="Propuesto por", editable=False)
+    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    lower = models.CharField(max_length=200, unique=True, editable=False)
+    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
+    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
+    video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None)
+    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
+    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
+    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
+    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    status = models.CharField(max_length=20, 
+                              verbose_name="Estado de la Solicitud", 
+                              choices = [('PENDIENTE','Pendiente'),
+                                         ('APROBADA','Aprobada'),
+                                         ('RECHAZADA','Rechazada')], 
+                              default='PENDIENTE')
+    Riesgos = models.ManyToManyField(Risk)
+    class Meta:
+        verbose_name = "Solicitud de creacion de curso"
+        verbose_name_plural = "Solicitud de creacion de cursos"
+        ordering = ['lower']
+    
 
 class Takes(models.Model):
     user_ID = models.ForeignKey(UserProfile, verbose_name="Nombre", default=None)

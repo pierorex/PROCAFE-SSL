@@ -11,6 +11,7 @@
 
 {% block content %}
 
+        {% if bool %}
         <!-- Upload form. Note enctype attribute! -->
         <form role="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -22,5 +23,8 @@
             <input type="submit" value="Cargar" /></p>
         </form>
         <p><t style="color: green;">{{mensaje}}</t></p>
+        {% else %}
+        <p>Usted no posee permisos para cargar nómina, diríjase con su supervisor.</p>
+        {% endif %}
 
 {% endblock %}
