@@ -20,4 +20,7 @@ urlpatterns = patterns('',
     url(r'^CourseRequest$', 'appProcafe.views.CourseRequestview'),
     url(r'^CourseChangeview1', 'appProcafe.views.CourseChangeview1'),
     url(r'^CourseChangeview2/(?P<lower>.*)$', 'appProcafe.views.CourseChangeview2'),
+    url(r'^CourseAprove/$', 'appProcafe.views.CourseAproveview1'),
+    url(r'^CourseAprove/(?P<type>[dc])/(?P<action>[dcr])/(?P<lower>.*)$', 'appProcafe.views.CourseAproveview2'),
+    url(r'^Coursedetail/(?P<type>[dc])/(?P<lower>.*)$', 'appProcafe.views.Coursedetail'),
 )

@@ -36,12 +36,7 @@ def csv_to_UserProfile(file_path):
                 consulta = None
 
             if (consulta==None): #crea user y userprofile si no existe
-                usernametemp = (nombre + apellido).split(" ")
-                name = ''
-                for n in usernametemp:
-                    name+=n
-                if (User.objects.filter(username = name).exists()):
-                    name+=cedula
+                name = cedula
                 new_user = User.objects.create_user(
                                             username = name,
                                             email = 'ProcafeTest@mailinator.com',

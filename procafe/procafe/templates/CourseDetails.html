@@ -1,0 +1,50 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+<div class="row clearfix">
+	<div class="col-md-10 column">
+		<div class="page-header">
+			<h3>
+			{% if bool2 %}
+				Detalles de solicitud de modificación de curso.
+			{% else %}
+				Detalles de solicitud de creación de curso.
+			{% endif %}
+			</h3>
+		</div>
+		
+		<p>Propuesto por: {{c.ProposedBy.username}}</p>
+		{% if bool2 %}
+		<p>Cambiando curso: {{c.cambiando.name}}</p>
+		{% endif %}
+		<p>Nombre: {{c.name}}</p>
+		<p>Descripción: {{c.description}}</p>
+		<p>Contenido: {{c.content}}</p>
+		<p>Video: {{c.video_url}}</p>
+		<p>Modalidad: {{c.modality}}</p>
+		<p>Instructor: {{c.instructor}}</p>
+		<p>Fecha de inicio: {{c.init_date}}</p>
+		<p>Fecha de fin: {{c.end_date}}</p>
+		<p>Lugar: {{c.location}}</p>
+		<p>Numero de horas: {{c.number_hours}}</p>
+		<p>Estado: {{c.status}}</p>
+		<p>Riesgos:</p>
+		{% for risk in riesgos %}
+		<p>---{{risk}}</p>
+		{% endfor %}
+		<br />
+		<p><a href="/appProcafe/CourseAprove">&lt;--Regresar</a></p>
+
+</div></div>
+
+{% endblock %}

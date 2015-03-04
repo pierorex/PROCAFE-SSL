@@ -16,8 +16,6 @@ admin.site.register(Risk)
 admin.site.register(Paysheet)
 admin.site.register(Position)
 admin.site.register(Location)
-admin.site.register(CourseRequest)#no puede ser aceptada por vista de administrador, requiere vista especial
-admin.site.register(CourseChangeRequest)#no puede ser aceptada por vista de administrador, requiere vista especial
 
 class TelephoneAdmin(admin.ModelAdmin):
     list_display = ('user_ID', 'number')

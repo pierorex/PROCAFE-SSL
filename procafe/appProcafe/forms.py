@@ -186,11 +186,11 @@ class RequestForm(forms.Form):
                             })
                         )
     birthdate = forms.DateField(required = True,label="Fecha de Nacimiento",
-                                widget = forms.DateTimeInput(attrs = {
+                                widget = forms.TextInput(attrs = {
                                     'class'       : 'form-control',
                                     'placeholder' : 'Fecha de Nacimiento',
                                     'message'     : 'Introduzca una fecha valida',
-                                    'type'        : 'date'
+                                    'type'        : 'text'
                                 }))
     paysheet = forms.ChoiceField(required = True, label="Tipo de Nómina",choices=[])
     type = forms.ChoiceField(required = True, label="Tipo de Personal",choices=[])

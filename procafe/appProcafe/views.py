@@ -26,7 +26,7 @@ def loadEmployees(request):
     form = DocumentForm() # empty form
     file_path = ''
     mensaje = ''
-    bool = request.user.has_perm('appProcafe.add_user')
+    bool = request.user.has_perm('auth.add_user')
 
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -55,7 +55,7 @@ def CourseManageview(request):
 
 @staff_member_required
 def CourseRequestview(request):
-    bool = request.user.has_perm('appProcafe.add_curserequest')
+    bool = request.user.has_perm('appProcafe.add_courserequest')
     form = CourseRequestForm() # empty form
     mensaje = ''
     fin = ''
@@ -105,7 +105,7 @@ def CourseRequestview(request):
     
 @staff_member_required
 def CourseChangeview1(request):
-    bool = request.user.has_perm('appProcafe.add_CourseChangeRequest')
+    bool = request.user.has_perm('appProcafe.add_coursechangerequest')
     form = CourseAllForm() # empty form
 
     if request.method == 'POST':
@@ -122,7 +122,7 @@ def CourseChangeview1(request):
     
 @staff_member_required
 def CourseChangeview2(request, lower):
-    bool = request.user.has_perm('appProcafe.add_CourseChangeRequest')
+    bool = request.user.has_perm('appProcafe.add_coursechangerequest')
     form = CourseRequestForm() # empty form
     mensaje = ''
     fin = ''
@@ -166,6 +166,115 @@ def CourseChangeview2(request, lower):
                               context_instance=RequestContext(request)
                             )
     
+@staff_member_required
+def CourseAproveview1(request):
+    bool2 = request.user.has_perm('appProcafe.change_coursechangerequest')
+    bool1 = request.user.has_perm('appProcafe.change_courserequest')
+    
+    NewCursos = CourseRequest.objects.all()
+    Cambios = CourseChangeRequest.objects.all()
+    
+    return render_to_response('CourseManage.html',
+                              {'NewCursos' : NewCursos,
+                               'Cambios' : Cambios,
+                               'bool1' : bool1,
+                               'bool2' : bool2,
+                               },
+                              context_instance=RequestContext(request)
+                            )
+    
+def CourseAproveview2(request,type,action,lower):
+    bool2 = request.user.has_perm('appProcafe.change_coursechangerequest')
+    bool1 = request.user.has_perm('appProcafe.change_courserequest')
+    
+    if(type=='c' and bool1):
+        try:
+            c = CourseRequest.objects.get(lower=lower)
+        except CourseRequest.DoesNotExist:
+            return HttpResponseRedirect('/appProcafe/CourseAprove')
+        if(action=="d"):
+            return HttpResponseRedirect('/appProcafe/Coursedetail/c/'+lower)
+        if(action=="c"):
+            new_course = Course(
+                            name = c.name,
+                            lower = c.lower,
+                            description = c.description,
+                            content = c.content,
+                            video_url = c.video_url,
+                            modality = c.modality,
+                            instructor = c.instructor,
+                            init_date = c.init_date,
+                            end_date = c.end_date,
+                            location = c.location,
+                            number_hours = c.number_hours
+                        )
+            new_course.save()
+            for risk in c.Riesgos.all():
+                new_course.Riesgos.add(risk)
+            new_course.save()
+            c.delete()
+        if(action=="r"):
+            c.delete()
+            
+    if(type=='d' and bool2):
+        try:
+            c = CourseChangeRequest.objects.get(lower=lower)
+        except CourseRequest.DoesNotExist:
+            return HttpResponseRedirect('/appProcafe/CourseAprove')
+        if(action=="d"):
+            return HttpResponseRedirect('/appProcafe/Coursedetail/d/'+lower)
+        if(action=="c"):
+            curse = c.cambiando
+            curse.name = c.name
+            curse.lower = c.lower
+            curse.description = c.description
+            curse.content = c.content
+            curse.video_url = c.video_url
+            curse.modality = c.modality
+            curse.instructor = c.instructor
+            curse.init_date = c.init_date
+            curse.end_date = c.end_date
+            curse.location = c.location
+            curse.number_hours = c.number_hours
+            curse.Riesgos.clear()
+            curse.save()
+            for risk in c.Riesgos.all():
+                curse.Riesgos.add(risk)
+            curse.save()
+            c.delete()
+        if(action=="r"):
+            c.delete()
+    return HttpResponseRedirect('/appProcafe/CourseAprove')
+
+def Coursedetail(request, type, lower):
+    bool=False
+    bool2 = False
+    if (type == "c"):
+        try:
+            c = CourseRequest.objects.get(lower=lower)
+            bool = True
+            bool2 = False
+            
+        except CourseRequest.DoesNotExist:
+            return HttpResponseRedirect('/appProcafe/CourseAprove')
+    if (type == "d"):
+        try:
+            c = CourseChangeRequest.objects.get(lower=lower)
+            bool = True
+            bool2 = True
+        except CourseRequest.DoesNotExist:
+            return HttpResponseRedirect('/appProcafe/CourseAprove')
+        
+    if not bool:
+        return HttpResponseRedirect('/appProcafe/CourseAprove')
+    riesgos = c.Riesgos.all()
+    return render_to_response('CourseDetails.html',
+                              {'c' : c,
+                               'bool2' : bool2,
+                               'riesgos' : riesgos,
+                               },
+                              context_instance=RequestContext(request)
+                            )
 
 def index(request):
     return render_to_response('homepage.html',context_instance=RequestContext(request))
@@ -244,7 +353,9 @@ def signup(request):
                             [ '%s@cedula.usb.ve'%(str(new_userProfile.ID_number)),
                               '%s@mailinator.com'%(str(new_userProfile.ID_number))], 
                             fail_silently=False)
-                return HttpResponseRedirect('/appProcafe/')
+                return render_to_response('emailsended.html', 
+                             {}, 
+                             context_instance=RequestContext(request))
             
             except UserProfile.DoesNotExist: return HttpResponseRedirect('/appProcafe/formulariosolicitud')
             

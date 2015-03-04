@@ -60,8 +60,12 @@
 											{{ field }}
 											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 										{% else %}
+											<div class='input-group date' id='datetimepicker'>
 											{{ field }}
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    						</span>
 											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
+											</div>
 										{% endifnotequal %}
 										{% else %}
 											<select class="form-control" name="{{field.name}}">
@@ -194,5 +198,11 @@
 	{% endfor %}
 
 </script>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker').datetimepicker();
+            });
+        </script>
 
 {% endblock %}

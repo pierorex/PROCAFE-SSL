@@ -1,0 +1,79 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+
+<div class="row clearfix">
+	<div class="col-md-10 column">
+		<div class="page-header">
+			<h3>
+				Solicitudes de creación de curso.
+			</h3>
+		</div>
+		
+		{% if bool1 %}
+			{% if not NewCursos %}
+			<p>No existen solicitudes de modificación de curso.</p>
+			{% else %}
+		<table class="table table-striped">
+        <thead>
+            <tr><th>#</th><th>Nombre</th><th>Propuesto por</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+				{% for obj in NewCursos%}
+					<tr><td>{{forloop.counter}}{{" - "}}</td>
+					<td>{{obj.name}}</td>
+					<td>{{obj.ProposedBy.first_name}}{{" "}}{{obj.ProposedBy.last_name}}</td>
+					<td><a href="./c/d/{{obj.lower}}"><i class="fa fa-search" title="Detalles"></i></a>&nbsp;<a href="./c/c/{{obj.lower}}"><i class="fa fa-check" style="color: green;" title="Aprobar"></i></a>&nbsp;<a href="./c/r/{{obj.lower}}"><i class="fa fa-times" style="color: red;" title="Rechazar"></i></a></td></tr>
+				{% endfor %}
+			</tbody>
+			</table>
+			{% endif %}
+		{% else %}
+		<p>Usted no tiene permisos para modificar solicitudes de creación de curso.</p>
+		{% endif %}
+		
+</div></div>
+<p></p><p></p>
+
+<div class="row clearfix">
+	<div class="col-md-10 column">
+		<div class="page-header">
+			<h3>
+				Solicitudes de modificación de curso.
+			</h3>
+		</div>
+		
+		{% if bool2 %}
+			{% if not Cambios %}
+			<p>No existen solicitudes de modificación de curso.</p>
+			{% else %}
+					<table class="table table-striped">
+        <thead>
+			 <tr><th>#</th><th>Nombre</th><th>Propuesto por</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+				{% for obj in Cambios%}
+					<tr><td>{{forloop.counter}}{{" - "}}</td>
+					<td>{{obj.name}}</td>
+					<td>{{obj.ProposedBy.first_name}}{{" "}}{{obj.ProposedBy.last_name}}</td>
+					<td><a href="./d/d/{{obj.lower}}"><i class="fa fa-search" title="Detalles"></i></a>&nbsp;<a href="./d/c/{{obj.lower}}"><i class="fa fa-check" style="color: green;" title="Aprobar"></i></a>&nbsp;<a href="./d/r/{{obj.lower}}"><i class="fa fa-times" style="color: red;" title="Rechazar"></i></a></td></tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			{% endif %}
+		{% else %}
+		<p>Usted no tiene permisos para modificar solicitudes de modificación de curso.</p>
+		{% endif %}
+		
+</div></div>
+
+{% endblock %}
