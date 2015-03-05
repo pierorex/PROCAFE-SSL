@@ -238,3 +238,65 @@ class RequestForm(forms.Form):
             self.fields['type'] = forms.ChoiceField(required = False, label="Tipo de Personal",choices=tt)
             self.fields['location'] = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=lugares)
             self.fields['position'] = forms.ChoiceField(required = False,label="Cargo",choices=cargos)
+
+class FaltanDatosForm(forms.Form):
+    USB_ID = forms.CharField(required = True, 
+                             max_length=8, 
+                             validators=[RegexValidator(regex="^[0-9]{2}-[0-9]{5}$", 
+                             message="El USB-ID debe ser de la forma xx-xxxxx", 
+                             code="invalid_usbid")],
+                             widget   = forms.TextInput(attrs = {
+                                'class'       : 'form-control',
+                                'placeholder' : 'USB-ID: xx-xxxxx',
+                            })
+                        )
+    birthdate = forms.DateField(required = True,label="Fecha de Nacimiento",
+                                widget = forms.TextInput(attrs = {
+                                    'class'       : 'form-control',
+                                    'placeholder' : 'Fecha de Nacimiento',
+                                }))
+    paysheet = forms.ChoiceField(required = True, label="Tipo de Nómina",choices=[])
+    type = forms.ChoiceField(required = True, label="Tipo de Personal",choices=[])
+    location = forms.ChoiceField(required = True,label="Ubicación de Trabajo",choices=[])
+    position = forms.ChoiceField(required = True,label="Cargo",choices=[])
+    sex = forms.ChoiceField(required = True,label="Sexo",choices=[("MASCULINO","Masculino"),("FEMENINO","Femenino")])
+    email = forms.EmailField(required = True,label="E-mail",
+                             widget = forms.EmailInput(attrs = {
+                                    'class'       : 'form-control',
+                                    'placeholder' : 'E-mail',
+                                })
+                             
+                            )
+    
+    def __init__(self, data = None):
+        
+            if data:
+                super(FaltanDatosForm,self).__init__(data)
+            else:
+                super(FaltanDatosForm,self).__init__()
+    
+            pp = []
+            p = Paysheet.objects.all()
+            for pay in p:
+                pp.append((pay.name,pay.name))
+            pp.sort()
+            tt = []
+            t = Type.objects.all()
+            for typ in t:
+                tt.append((typ.name,typ.name))
+            tt.sort()
+            lugares = []
+            l = Location.objects.all()
+            for lugar in l:
+                lugares.append((lugar.name,lugar.name))
+            lugares.sort()
+            cargos = []
+            c = Position.objects.all()
+            for cargo in c:
+                cargos.append((cargo.name,cargo.name))
+            cargos.sort()
+            
+            self.fields['paysheet'] = forms.ChoiceField(required = False, label="Tipo de Nómina",choices=pp)
+            self.fields['type'] = forms.ChoiceField(required = False, label="Tipo de Personal",choices=tt)
+            self.fields['location'] = forms.ChoiceField(required = False,label="Ubicación de Trabajo",choices=lugares)
+            self.fields['position'] = forms.ChoiceField(required = False,label="Cargo",choices=cargos)

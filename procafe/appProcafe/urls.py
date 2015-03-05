@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     url(r'^CourseAprove/$', 'appProcafe.views.CourseAproveview1'),
     url(r'^CourseAprove/(?P<type>[dc])/(?P<action>[dcr])/(?P<lower>.*)$', 'appProcafe.views.CourseAproveview2'),
     url(r'^Coursedetail/(?P<type>[dc])/(?P<lower>.*)$', 'appProcafe.views.Coursedetail'),
+    url(r'^faltanDatos/$', 'appProcafe.views.faltanDatos'),
 )

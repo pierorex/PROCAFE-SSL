@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile,\
     Course, CourseRequest, CourseChangeRequest
 from appProcafe.forms import DocumentForm, UserLogin, newPassword,\
-    CourseRequestForm, CourseAllForm
+    CourseRequestForm, CourseAllForm, FaltanDatosForm
 from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
@@ -305,7 +305,12 @@ def userLogin(request):
                 if (user.is_superuser or user.is_staff):
                     return HttpResponseRedirect('/admin')
                 else:
-                    return HttpResponseRedirect('/appProcafe/profile')
+                    up = UserProfile.objects.get(user=user)
+                    if(up.USB_ID==None or up.sex==None or up.birthdate==None or up.paysheet==None or up.type==None or up.location==None or \
+                       up.position==None or user.email==None):
+                        return HttpResponseRedirect('/appProcafe/faltanDatos')
+                    else:
+                        return HttpResponseRedirect('/appProcafe/profile')
             else:
                 return render_to_response('login.html', {'failure':failure,'form':form}, context_instance=RequestContext(request))
  
@@ -317,7 +322,34 @@ def userLogin(request):
                              {'form':form, 'actual_page' : request.get_full_path()}, 
                               context_instance=RequestContext(request))
 
-
+@login_required(login_url='/appProcafe/login/')
+def faltanDatos(request):
+    user = request.user
+    up = request.user.userprofile
+    form = FaltanDatosForm()
+    
+    if not (up.USB_ID==None or up.sex==None or up.birthdate==None or up.paysheet==None or up.type==None or up.location==None or \
+                       up.position==None or user.email==None):
+        return HttpResponseRedirect('/appProcafe/profile')
+    
+    if request.method == 'POST':
+        form = FaltanDatosForm(request.POST)
+        if form.is_valid():
+            user.email = form.cleaned_data['email']
+            up.sex = form.cleaned_data['sex']
+            up.position = Position.objects.get(name=form.cleaned_data['position'])
+            up.location = Location.objects.get(name=form.cleaned_data['location'])
+            up.type = Type.objects.get(name=form.cleaned_data['type'])
+            up.paysheet = Paysheet.objects.get(name=form.cleaned_data['paysheet'])
+            up.birthdate = form.cleaned_data['birthdate']
+            up.USB_ID = form.cleaned_data['USB_ID']
+            user.save()
+            up.save()
+            return HttpResponseRedirect('/appProcafe/profile')
+    
+    return render_to_response('FaltanDatos.html',
+                             {'form':form}, 
+                              context_instance=RequestContext(request))
     
 @login_required(login_url='/appProcafe/login/')
 def profile(request):
