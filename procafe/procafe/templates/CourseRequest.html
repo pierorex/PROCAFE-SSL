@@ -2,13 +2,7 @@
 {% load i18n admin_static %}
 
 {% block extrastyle %}{{ block.super }}  <script>
-    $(function() {
-        $('#datepicker').datepicker({
-          "format": "yyyy-mm-dd"
-          }
-          )
-        }
-    );
+
   </script><link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
@@ -18,7 +12,16 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+      <script>
+    $(function() {
+        $('#datepicker1,datepicker2').datepicker({
+          "format": "yyyy-mm-dd"
+          }
+          )
+        }
+    );
 
+  </script>
 <div class="row clearfix">
 	<div class="col-md-10 column">
 		<div class="page-header">
