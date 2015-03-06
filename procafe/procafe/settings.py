@@ -31,10 +31,10 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR,'procafe/static/media/'),
 SECRET_KEY = 'e$h4gpt@rv*!gxp5+1+-8%s=w9fa=szcwi6t+vuw5=_i_z^ja_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
-ALLOWED_HOSTS = ["localhost","127.0.0.1"]
+ALLOWED_HOSTS = []
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

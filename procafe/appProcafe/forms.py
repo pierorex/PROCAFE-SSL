@@ -98,12 +98,12 @@ class CourseRequestForm(forms.Form):
                             'class'       : 'form-control',
                             'placeholder' : 'Instructor *'
                         }))
-    init_date = forms.DateTimeField(required = True,
+    init_date = forms.DateField(required = True,
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Fecha de Inicio *'
                         }))
-    end_date = forms.DateTimeField(required = True,
+    end_date = forms.DateField(required = True,
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Fecha de Fin *'
