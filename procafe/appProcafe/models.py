@@ -36,9 +36,9 @@ class PassRequest(models.Model):
     code = models.CharField(max_length=101)
 
 class Unit(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
+    name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción(*)", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    sede = models.CharField(max_length=10, verbose_name="Sede(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
     Activado = models.BooleanField(default=True)
 
     def __str__(self):
@@ -54,10 +54,10 @@ def Unit_presave_handler(sender, instance, **kwargs):
 
 
 class Department(models.Model):
-    unit_ID = models.ForeignKey(Unit, verbose_name="Unidad de Adscripción", default=None)
-    name = models.CharField(max_length=200, verbose_name="Nombre")
+    unit_ID = models.ForeignKey(Unit, verbose_name="Unidad de Adscripción(*)", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombre(*)")
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    sede = models.CharField(max_length=10, verbose_name="Sede(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.name)
@@ -72,10 +72,10 @@ def Department_presave_handler(sender, instance, **kwargs):
 
 
 class Section(models.Model):
-    department_ID = models.ForeignKey(Department, verbose_name="Dpto", default=True)
-    name = models.CharField(max_length=200, verbose_name="Nombre")
+    department_ID = models.ForeignKey(Department, verbose_name="Dpto(*)", default=True)
+    name = models.CharField(max_length=200, verbose_name="Nombre(*)")
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    sede = models.CharField(max_length=10, verbose_name="Sede(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
 
     def __str__(self):
         return str(self.department_ID) + ":" + str(self.name)
@@ -90,7 +90,7 @@ def Section_presave_handler(sender, instance, **kwargs):
 
 
 class Risk(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Riesgo")
+    name = models.CharField(max_length=200, verbose_name = "Riesgo(*)")
     lower = models.CharField(max_length=200, unique=True, editable=False)
     Ubicaciones = models.ManyToManyField('Location',blank=True)
     Cargos = models.ManyToManyField('Position',blank=True)
@@ -109,7 +109,7 @@ def risk_presave_handler(sender, instance, **kwargs):
     
 
 class Position(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Cargo")
+    name = models.CharField(max_length=200, verbose_name = "Cargo(*)")
     lower = models.CharField(max_length=200, unique=True, editable=False)
     Riesgos = models.ManyToManyField(Risk,through=Risk.Cargos.through)
 
@@ -126,7 +126,7 @@ def Position_presave_handler(sender, instance, **kwargs):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=200, verbose_name = "Ubicación")
+    name = models.CharField(max_length=200, verbose_name = "Ubicación(*)")
     lower = models.CharField(max_length=200, unique=True, editable=False)
     Riesgos = models.ManyToManyField(Risk,through=Risk.Ubicaciones.through)
     
@@ -143,7 +143,7 @@ def Location_presave_handler(sender, instance, **kwargs):
 
 
 class Paysheet(models.Model):
-    name = models.CharField(max_length=20, verbose_name = "Tipo de Nómina")
+    name = models.CharField(max_length=20, verbose_name = "Tipo de Nómina(*)")
     lower = models.CharField(max_length=20, unique=True, editable=False)
     
     def __str__(self):
@@ -159,7 +159,7 @@ def Paysheet_presave_handler(sender, instance, **kwargs):
 
 
 class Type(models.Model):
-    name = models.CharField(max_length=20, verbose_name = "Tipo de Personal")
+    name = models.CharField(max_length=20, verbose_name = "Tipo de Personal(*)")
     lower = models.CharField(max_length=20, unique=True, editable=False)
     
     def __str__(self):
@@ -177,20 +177,20 @@ def Type_presave_handler(sender, instance, **kwargs):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    ID_number = models.IntegerField(unique=True, verbose_name="Cédula", default=0)
+    ID_number = models.IntegerField(unique=True, verbose_name="Cédula(*)", default=0)
     USB_ID = models.CharField(max_length=8, unique=True, validators=[USBIDValidator], null=True)
     sex = models.CharField(max_length=10, 
-                           verbose_name="Sexo", 
+                           verbose_name="Sexo(*)", 
                            choices=[
                                     ('MASCULINO','Masculino'),
                                     ('FEMENINO','Femenino')],
                            null=True)
-    birthdate = models.DateField(verbose_name="Fecha de Nacimiento", default=datetime.today(), null=True)
-    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina', default=None, null=True)
-    type = models.ForeignKey(Type, verbose_name='Tipo de Personal', default=None, null=True)
-    location = models.ForeignKey(Location, verbose_name='Ubicación', default=None, null=True)
-    position = models.ForeignKey(Position, verbose_name="Cargo", default=None, null=True)    
-    finished_hours = models.PositiveIntegerField(default=0, verbose_name="Horas finalizadas")
+    birthdate = models.DateField(verbose_name="Fecha de Nacimiento(*)", default=datetime.today(), null=True)
+    paysheet = models.ForeignKey(Paysheet, verbose_name='Tipo de Nómina(*)', default=None, null=True)
+    type = models.ForeignKey(Type, verbose_name='Tipo de Personal(*)', default=None, null=True)
+    location = models.ForeignKey(Location, verbose_name='Ubicación(*)', default=None, null=True)
+    position = models.ForeignKey(Position, verbose_name="Cargo(*)", default=None, null=True)    
+    finished_hours = models.PositiveIntegerField(default=0, verbose_name="Horas finalizadas(*)")
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -212,17 +212,17 @@ class Telephone(models.Model):
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombre(*)", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
-    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
+    description = models.CharField(max_length=200, verbose_name = "Descripción(*)", default=None)
+    content = models.CharField(max_length=200, verbose_name="Contenido(*)", default=None)
     video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
-    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
-    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
-    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
-    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
-    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
-    number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    modality = models.CharField(max_length=200, verbose_name="Modalidad(*)", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="Instructor(*)", default=None)
+    init_date = models.DateTimeField(verbose_name="Fecha de Inicio(*)")
+    end_date = models.DateTimeField(verbose_name="Fecha de Fin(*)")
+    location = models.CharField(max_length=200, verbose_name="Lugar(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="Número de Horas(*)")
     Activado = models.BooleanField(default=True)
     Riesgos = models.ManyToManyField(Risk)
 
@@ -239,19 +239,19 @@ def Course_presave_handler(sender, instance, **kwargs):
 
 class CourseRequest(models.Model):
     ProposedBy = models.ForeignKey(User, verbose_name="Propuesto por", editable=False)
-    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombr(*)e", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
-    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
+    description = models.CharField(max_length=200, verbose_name = "Descripción(*)", default=None)
+    content = models.CharField(max_length=200, verbose_name="Contenido(*)", default=None)
     video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
-    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
-    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
-    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
-    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
-    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
-    number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    modality = models.CharField(max_length=200, verbose_name="Modalidad(*)", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="Instructor(*)", default=None)
+    init_date = models.DateTimeField(verbose_name="Fecha de Inicio(*)")
+    end_date = models.DateTimeField(verbose_name="Fecha de Fin(*)")
+    location = models.CharField(max_length=200, verbose_name="Lugar(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="Número de Horas")
     status = models.CharField(max_length=20, 
-                              verbose_name="Estado de la Solicitud", 
+                              verbose_name="Estado de la Solicitud(*)", 
                               choices = [('PENDIENTE','Pendiente'),
                                          ('APROBADA','Aprobada'),
                                          ('RECHAZADA','Rechazada')], 
@@ -293,19 +293,19 @@ class CourseRequest(models.Model):
 class CourseChangeRequest(models.Model):
     ProposedBy = models.ForeignKey(User, verbose_name="Propuesto por", editable=False)
     cambiando = models.ForeignKey(Course, verbose_name="cambiando", editable=False)#apuntador al curso que se debe cambiar
-    name = models.CharField(max_length=200, verbose_name="* Nombre", default=None)
+    name = models.CharField(max_length=200, verbose_name="Nombre(*)", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
-    description = models.CharField(max_length=200, verbose_name = "* Descripción", default=None)
-    content = models.CharField(max_length=200, verbose_name="* Contenido", default=None)
+    description = models.CharField(max_length=200, verbose_name = "Descripción(*)", default=None)
+    content = models.CharField(max_length=200, verbose_name="Contenido(*)", default=None)
     video_url = models.URLField(max_length=1000, verbose_name = "URL del video", default=None, null=True)
-    modality = models.CharField(max_length=200, verbose_name="* Modalidad", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
-    instructor = models.CharField(max_length=200, verbose_name="* Instructor", default=None)
-    init_date = models.DateTimeField(verbose_name="* Fecha de Inicio")
-    end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
-    location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
-    number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    modality = models.CharField(max_length=200, verbose_name="Modalidad(*)", choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")], default="PRESENCIAL")
+    instructor = models.CharField(max_length=200, verbose_name="Instructor(*)", default=None)
+    init_date = models.DateTimeField(verbose_name="Fecha de Inicio(*)")
+    end_date = models.DateTimeField(verbose_name="Fecha de Fin(*)")
+    location = models.CharField(max_length=200, verbose_name="Lugar(*)", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    number_hours = models.IntegerField(verbose_name="Número de Horas(*)")
     status = models.CharField(max_length=20, 
-                              verbose_name="Estado de la Solicitud", 
+                              verbose_name="Estado de la Solicitud(*)", 
                               choices = [('PENDIENTE','Pendiente'),
                                          ('APROBADA','Aprobada'),
                                          ('RECHAZADA','Rechazada')], 
