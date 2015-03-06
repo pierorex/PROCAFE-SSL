@@ -78,11 +78,3 @@ class UserApplicationAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(UserApplication, UserApplicationAdmin)
-
-class RemoveRequestAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ('Datos del Solicitante', {'fields': ('ID_number', 'USB_ID', 'first_name', 'last_name', 'email')}),
-        ('Solicitud', {'fields': ('course_ID', 'request_type', 'request_date', 'status')}),
-    )
-
-admin.site.register(RemoveRequest, RemoveRequestAdmin)
