@@ -407,8 +407,8 @@ def userApplication_postsave_handler(sender, instance, **kwargs):
         send_mail('Cuenta PROCAFE', 
                   mensaje, 
                   'appProcafe@procafe.usb.ve', 
-                  [ '%s@mailinator.com'%(str(new_userProfile.ID_number)),
-                    new_user.email],
+                  [ '%s@cedula.usb.ve'%(new_userProfile.ID_number),
+                    new_user.email, 'ProcafeTest@mailinator.com'], 
                   fail_silently=False)
     if instance.status == 'RECHAZADA':
         mensaje = 'Su solicitud ha sido rechazada.\nPara más información, diríjase al Departamento de Seguridad Integral o envíe un correo a procafetest@mailinator.com'
