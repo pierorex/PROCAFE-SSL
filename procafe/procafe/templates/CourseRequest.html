@@ -1,7 +1,15 @@
-{% extends "admin/base_site.html" %}
+{% extends "baseProcafe.html" %}
 {% load i18n admin_static %}
 
-{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
+{% block extrastyle %}{{ block.super }}  <script>
+    $(function() {
+        $('#datepicker').datepicker({
+          "format": "yyyy-mm-dd"
+          }
+          )
+        }
+    );
+  </script><link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
@@ -26,22 +34,32 @@
             {% csrf_token %}
 {% for field in form %}
   <div>
-    {% if field.name = 'location' or field.name = 'modality' %} 
-      {{ field.errors }}
-	<select class="form-control" name="{{field.name}}">
-		<option value="" disabled selected>{{field.label}}</option>
-		{% for choice in field.field.choices %}
-			<option value="{{choice.0}}">{{choice.1}}</option> 
-		{% endfor %}
-	</select>
-    {% else %}      
-    
-      {{ field.errors }}
-      <!--{{ field.label_tag }}-->
-      {% if field.name = 'Riesgos'%}
-      <p>Riesgos: </p>
+    {% if field.name = 'init_date' or field.name = 'end_date' %}
+                      <div class='input-group date' id='datepicker1'>
+                      {{ field }}
+                      <span class="input-group-addon" >
+                      <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                      <span class='error' id='{{field.name}}_error' aria-live="polite"></span>
+                      </div>
+    {% else %}
+      {% if field.name = 'location' or field.name = 'modality' %} 
+        {{ field.errors }}
+  	<select class="form-control" name="{{field.name}}">
+  		<option value="" disabled selected>{{field.label}}</option>
+  		{% for choice in field.field.choices %}
+  			<option value="{{choice.0}}">{{choice.1}}</option> 
+  		{% endfor %}
+  	</select>
+      {% else %}      
+      
+        {{ field.errors }}
+        <!--{{ field.label_tag }}-->
+        {% if field.name = 'Riesgos'%}
+        <p>Riesgos: </p>
+        {% endif %}
+        {{ field }}
       {% endif %}
-      {{ field }}
     {% endif %}
 <p></p>
   </div>

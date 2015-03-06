@@ -87,7 +87,7 @@ class CourseRequestForm(forms.Form):
                             'class'       : 'form-control',
                             'placeholder' : 'URL del video'
                         }))
-    modality = forms.ChoiceField(required = True,
+    modality = forms.ChoiceField(required = True, label="Modalidad",
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Modalidad *'
@@ -98,17 +98,17 @@ class CourseRequestForm(forms.Form):
                             'class'       : 'form-control',
                             'placeholder' : 'Instructor *'
                         }))
-    init_date = forms.DateTimeField(required = True,
+    init_date = forms.DateField(required = True,
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Fecha de Inicio *'
                         }))
-    end_date = forms.DateTimeField(required = True,
+    end_date = forms.DateField(required = True,
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Fecha de Fin *'
                         }))
-    location = forms.ChoiceField(required = True,
+    location = forms.ChoiceField(required = True, label="Lugar",
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Lugar *'
@@ -177,7 +177,7 @@ class RequestForm(forms.Form):
                                 'message'     : 'Este nombre es invalido'
                             })
                         )
-    last_name = forms.CharField(required = True,max_length=50, label="Apellido",
+    last_name = forms.CharField(required = True,max_length=50, label="Apellido", 
                                 widget   = forms.TextInput(attrs = {
                                 'class'       : 'form-control',
                                 'placeholder' : 'Apellido',

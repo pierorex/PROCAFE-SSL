@@ -1,11 +1,11 @@
 {% load admin_static %}{% load firstof from future %}<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE|default:"es" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
     
 <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
-    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
-     <link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet">
-    
+<link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-datetimepicker.min.css" />
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -23,9 +23,33 @@
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link href="{% static 'favicon.ico'%}" rel="shortcut icon" type="image/vnd.microsoft.icon">
   
-    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-    <script src="{{ STATIC_URL }}js/scripts.js"></script>
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/scripts.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-datetimepicker.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/moment.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/transition.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/collapse.js"></script>
+
+
+
+      <script>
+    $(function() {
+        $('#datepicker1,datepicker2').datepicker({
+          "format": "yyyy-mm-dd"
+          }
+          )
+        }
+    );
+
+  </script>
+
+  <style>
+    #container     {width:30ex; outline:1px solid black; padding:0 .2em; background:white;}
+    #container>div {display:inline-block; margin:.2em 0; background:#fca;}
+</style>
     
 {% block extrastyle %}
 {% endblock %}
@@ -71,12 +95,14 @@
                         </p>
                         <p align="right">
                              <b><a href='/appProcafe/CourseAprove'>Administración de cursos</a>    </b><br />
-                             <a href='/appProcafe/CourseRequest' class='submenu-item'>Solicitud de creación de cursos</a><br />
-                             <a href='/appProcafe/CourseChangeview1' class='submenu-item'>Solicitud de modificación de cursos</a>
+                             <b><a href='/appProcafe/CourseRequest' class='submenu-item'>Solicitud de creación de cursos</a></b><br />
+                             <b><a href='/appProcafe/CourseChangeview1' class='submenu-item'>Modificación de cursos</a></b>
                         </p>
+                        {% if not user.is_superuser %}
                         <p align="right">
                              <b><a href="/appProcafe/profile">Perfil</a>    </b>    
                         </p>
+                        {% endif %}
                         <p align="right">
                              <b><a href="/appProcafe/courses">Cursos</a>    </b>    
                         </p>
