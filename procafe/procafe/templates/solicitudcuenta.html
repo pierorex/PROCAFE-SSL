@@ -60,9 +60,10 @@
 											{{ field }}
 											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 										{% else %}
-											<div class='input-group date' id='datetimepicker'>
+											<div class='input-group date' id='datepicker'>
 											{{ field }}
-											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+											<span class="input-group-addon" id="datepicker">
+											<span class="glyphicon glyphicon-calendar"></span>
                     						</span>
 											<span class='error' id='{{field.name}}_error' aria-live="polite"></span>
 											</div>

@@ -43,6 +43,15 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}js/transition.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/collapse.js"></script>
 
+	<script>
+		$(function() {
+		  	$('#datepicker').datepicker({
+				  "format": "yyyy-mm-dd"
+					}
+			  	)
+		  	}
+		);
+  </script>
 
 	<style>
     #container     {width:30ex; outline:1px solid black; padding:0 .2em; background:white;}

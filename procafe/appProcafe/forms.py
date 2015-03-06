@@ -177,7 +177,7 @@ class RequestForm(forms.Form):
                                 'message'     : 'Este nombre es invalido'
                             })
                         )
-    last_name = forms.CharField(required = True,max_length=50, label="Apellido",
+    last_name = forms.CharField(required = True,max_length=50, label="Apellido", 
                                 widget   = forms.TextInput(attrs = {
                                 'class'       : 'form-control',
                                 'placeholder' : 'Apellido',
