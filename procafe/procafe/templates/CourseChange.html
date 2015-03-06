@@ -24,29 +24,29 @@
         {% if not fin %}
         <form role="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-{% for field in form %}
-  <div>
-    {% if field.name = 'location' or field.name = 'modality' %} 
-      {{ field.errors }}
-	<select class="form-control" name="{{field.name}}">
-		<option value="" disabled selected>{{field.label}}</option>
-		{% for choice in field.field.choices %}
-			<option value="{{choice.0}}">{{choice.1}}</option> 
-		{% endfor %}
-	</select>
-    {% else %}      
-    
-      {{ field.errors }}
-      <!--{{ field.label_tag }}-->
-      {% if field.name = 'Riesgos'%}
-      <p>Riesgos: </p>
-      {% endif %}
-      {{ field }}
-    {% endif %}
-<p></p>
-  </div>
-{% endfor %}
-            <div><input type="submit" value="Cargar" /><div/>
+                {% for field in form %}
+                  <div>
+                    {% if field.name = 'location' or field.name = 'modality' %} 
+                      {{ field.errors }}
+                	<select class="form-control" name="{{field.name}}">
+                		<option value="" disabled selected>{{field.label}}</option>
+                		{% for choice in field.field.choices %}
+                			<option value="{{choice.0}}">{{choice.1}}</option> 
+                		{% endfor %}
+                	</select>
+                    {% else %}      
+                    
+                      {{ field.errors }}
+                      <!--{{ field.label_tag }}-->
+                      {% if field.name = 'Riesgos'%}
+                      <p>Riesgos: </p>
+                      {% endif %}
+                      {{ field }}
+                    {% endif %}
+                    <p></p>
+                  </div>
+                {% endfor %}
+            <div><input type="submit" value="Guardar Cambios" /><div/>
         </form>
         {% if mensaje %}
         <p><t style="color: red;">{{mensaje}}</t></p>
@@ -59,5 +59,6 @@
         {% endif %}
         
 </div></div>
+<br><br><br>
 
 {% endblock %}
