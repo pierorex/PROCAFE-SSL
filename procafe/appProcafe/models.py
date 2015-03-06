@@ -39,6 +39,7 @@ class Unit(models.Model):
     name = models.CharField(max_length=200, verbose_name="Unidad de Adscripción", default=None)
     lower = models.CharField(max_length=200, unique=True, editable=False)
     sede = models.CharField(max_length=10, verbose_name="Sede", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
+    Activado = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.name)
@@ -93,6 +94,7 @@ class Risk(models.Model):
     lower = models.CharField(max_length=200, unique=True, editable=False)
     Ubicaciones = models.ManyToManyField('Location',blank=True)
     Cargos = models.ManyToManyField('Position',blank=True)
+    Activado = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.name)
@@ -221,6 +223,7 @@ class Course(models.Model):
     end_date = models.DateTimeField(verbose_name="* Fecha de Fin")
     location = models.CharField(max_length=200, verbose_name="* Lugar", choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")], default="SARTENEJAS")
     number_hours = models.IntegerField(verbose_name="* Número de Horas")
+    Activado = models.BooleanField(default=True)
     Riesgos = models.ManyToManyField(Risk)
 
     def __str__(self):
