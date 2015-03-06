@@ -123,6 +123,58 @@ class CourseRequestForm(forms.Form):
     class Meta:
         model = CourseRequest
         
+class CourseChangeRequestForm(forms.Form):
+    description = forms.CharField(required = True,max_length=200,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Descripción *'
+                        }))
+    content = forms.CharField(required = True,max_length=200,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Contenido *'
+                        }))
+    video_url = forms.URLField(required=False,max_length=1000,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'URL del video'
+                        }))
+    modality = forms.ChoiceField(required = True, label="Modalidad",
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Modalidad *'
+                        }),
+                    choices=[("PRESENCIAL","Presencial"),("DISTANCIA", "A distancia")])
+    instructor = forms.CharField(required = True,max_length=200,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Instructor *'
+                        }))
+    init_date = forms.DateField(required = True,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Fecha de Inicio *'
+                        }))
+    end_date = forms.DateField(required = True,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Fecha de Fin *'
+                        }))
+    location = forms.ChoiceField(required = True, label="Lugar",
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Lugar *'
+                        }), choices=[("SARTENEJAS", "Sartenejas"), ("LITORAL", "Litoral")])
+    number_hours = forms.IntegerField(required = True,min_value=0,
+                    widget   = forms.TextInput(attrs = {
+                            'class'       : 'form-control',
+                            'placeholder' : 'Número de Horas *'
+                        }))
+    Riesgos = forms.ModelMultipleChoiceField(queryset=Risk.objects.all())
+    
+    class Meta:
+        model = CourseRequest
+        
 class CourseAllForm(forms.Form):
     cursos = forms.ChoiceField(required = True,
                     widget   = forms.TextInput(attrs = {

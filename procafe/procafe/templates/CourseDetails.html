@@ -26,8 +26,9 @@
 		<p>Propuesto por: {{c.ProposedBy.username}}</p>
 		{% if bool2 %}
 		<p>Cambiando curso: {{c.cambiando.name}}</p>
-		{% endif %}
+		{% else %}
 		<p>Nombre: {{c.name}}</p>
+		{% endif %}
 		<p>Descripción: {{c.description}}</p>
 		<p>Contenido: {{c.content}}</p>
 		<p>Video: {{c.video_url}}</p>

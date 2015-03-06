@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from appProcafe.models import Document, UserApplication, Location, Position, Paysheet, Type, PassRequest, UserProfile,\
     Course, CourseRequest, CourseChangeRequest
 from appProcafe.forms import DocumentForm, UserLogin, newPassword,\
-    CourseRequestForm, CourseAllForm, FaltanDatosForm
+    CourseRequestForm, CourseAllForm, FaltanDatosForm, CourseChangeRequestForm
 from appProcafe.functions import csv_to_UserProfile, id_generator
 from appProcafe.forms import RequestForm
 from appProcafe.forms import UserSignUpForm
@@ -123,7 +123,7 @@ def CourseChangeview1(request):
 @staff_member_required
 def CourseChangeview2(request, lower):
     bool = request.user.has_perm('appProcafe.add_coursechangerequest')
-    form = CourseRequestForm() # empty form
+    form = CourseChangeRequestForm() # empty form
     mensaje = ''
     fin = ''
     try:
@@ -133,12 +133,12 @@ def CourseChangeview2(request, lower):
         fin = 'si'
     
     if request.method == 'POST' and bool:
-        form = CourseRequestForm(request.POST, request.FILES)
+        form = CourseChangeRequestForm(request.POST, request.FILES)
         if form.is_valid():
                     newCurseRequest=CourseChangeRequest(ProposedBy=request.user,
                                                  cambiando=curso,
-                                                 name = form.cleaned_data['name'],
-                                                 lower = form.cleaned_data['name'].lower(),
+                                                 name = curso.name,
+                                                 lower = curso.name,
                                                  description = form.cleaned_data['description'],
                                                  content = form.cleaned_data['content'],
                                                  video_url = form.cleaned_data['video_url'],
