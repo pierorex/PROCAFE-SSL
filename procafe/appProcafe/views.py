@@ -436,19 +436,8 @@ def new_userApp(request):
                              context_instance=RequestContext(request))
             
     form = RequestForm()
-    year = []
-    day  = []
-    for i in range(1,32):
-      day.append(i)
-    for i in range(1900,2015):
-      year.append(i)
-    month = ["enero","febrero","marzo",
-             "abril","mayo","junio",
-             "julio","agosto","septiembre",
-             "octubre","noviembre","diciembre",]
     return render_to_response('solicitudcuenta.html', 
-                             {'day':day, 'month':month, "year":year,
-                             'failure':failure,'application':form, 'actual_page' : request.get_full_path()}, 
+                             {'failure':failure,'application':form, 'actual_page' : request.get_full_path()}, 
                              context_instance=RequestContext(request))
     
     

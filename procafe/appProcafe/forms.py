@@ -87,7 +87,7 @@ class CourseRequestForm(forms.Form):
                             'class'       : 'form-control',
                             'placeholder' : 'URL del video'
                         }))
-    modality = forms.ChoiceField(required = True,
+    modality = forms.ChoiceField(required = True, label="Modalidad",
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Modalidad *'
@@ -108,7 +108,7 @@ class CourseRequestForm(forms.Form):
                             'class'       : 'form-control',
                             'placeholder' : 'Fecha de Fin *'
                         }))
-    location = forms.ChoiceField(required = True,
+    location = forms.ChoiceField(required = True, label="Lugar",
                     widget   = forms.TextInput(attrs = {
                             'class'       : 'form-control',
                             'placeholder' : 'Lugar *'
