@@ -21,7 +21,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
-@staff_member_required
+
 def loadEmployees(request):
     form = DocumentForm() # empty form
     file_path = ''
