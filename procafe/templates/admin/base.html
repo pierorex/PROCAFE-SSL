@@ -78,6 +78,7 @@
                          <b><a href="/">Dirección</a></b>
                     </p>
                     {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
                         <p align="right">
                              <b><a href="/admin">Administración</a>    </b>    
                         </p>
@@ -85,7 +86,12 @@
                              <b><a href="/appProcafe/loadEmployees">Cargar Nómina</a>    </b>    
                         </p>
                         <p align="right">
-                             <b><a href='/appProcafe/CourseAprove'>Administración de cursos</a>    </b><br />
+                            <b>
+                             <a href='/appProcafe/CourseAprove'>Administración de cursos</a></b>
+                        </p>
+                        {% endif %}
+                        
+                        <p align="right">
                              <b><a href='/appProcafe/CourseRequest' class='submenu-item'>Solicitud de creación de cursos</a></b><br />
                              <b><a href='/appProcafe/CourseChangeview1' class='submenu-item'>Modificación de cursos</a></b>
                         </p>
