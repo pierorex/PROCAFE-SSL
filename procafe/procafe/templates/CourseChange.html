@@ -10,7 +10,16 @@
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
+      <script>
+    $(function() {
+        $('#datepicker1,datepicker2').datepicker({
+          "format": "yyyy-mm-dd"
+          }
+          )
+        }
+    );
 
+  </script>
 <div class="row clearfix">
 	<div class="col-md-10 column">
 		<div class="page-header">
@@ -26,6 +35,15 @@
             {% csrf_token %}
 {% for field in form %}
   <div>
+      {% if field.name = 'init_date' or field.name = 'end_date' %}
+                      <div class='input-group date' id='datepicker1'>
+                      {{ field }}
+                      <span class="input-group-addon" >
+                      <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                      <span class='error' id='{{field.name}}_error' aria-live="polite"></span>
+                      </div>
+    {% else %}
     {% if field.name = 'location' or field.name = 'modality' %} 
       {{ field.errors }}
 	<select class="form-control" name="{{field.name}}">
@@ -43,6 +61,7 @@
       {% endif %}
       {{ field }}
     {% endif %}
+  {%endif%}
 <p></p>
   </div>
 {% endfor %}
