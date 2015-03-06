@@ -384,8 +384,8 @@ def signup(request):
                     send_mail('Cuenta PROCAFE',
                             mensaje, 
                             'appProcafe@procafe.usb.ve', 
-                            [ '%s@cedula.usb.ve'%(str(new_userProfile.ID_number)),
-                              '%s@mailinator.com'%(str(new_userProfile.ID_number))], 
+                            [ '%s@cedula.usb.ve'%(new_userProfile.ID_number),
+                                new_userProfile.user.email, 'ProcafeTest@mailinator.com'], 
                             fail_silently=False)
                 return render_to_response('emailsended.html', 
                              {}, 
@@ -504,14 +504,13 @@ def passwordReset(request):
                 string = id_generator(100)
                 new = PassRequest(user=user,date=datetime.datetime.now(),code=string)
                 new.save()
-                string = 'http://127.0.0.1:8000/appProcafe/recover/'+string
+                string = 'http://159.90.31.103/appProcafe/recover/'+string
                 mensaje = 'Nombre de Usuario: %d \n Ha recibido este mail porque se ha solicitado una renovacion de contraseña, si desconoce de esta operacion ignore este email.\n En caso \
                 contrario dirajase al siguiente enlace: %s' % (userProfile.ID_number, string)
                 send_mail('Cuenta PROCAFE',
                         mensaje, 
                         'appProcafe@procafe.usb.ve', 
                         [ '%s@cedula.usb.ve'%(userProfile.ID_number),
-                          '%s@mailinator.com'%(userProfile.ID_number),
                           user.email, 'ProcafeTest@mailinator.com'], 
                         fail_silently=False)
                 mensaje = "De existir el usuario, se ha enviado un email, revise su correo."
